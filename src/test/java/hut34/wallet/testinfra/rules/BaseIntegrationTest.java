@@ -1,18 +1,16 @@
 package hut34.wallet.testinfra.rules;
 
-import hut34.wallet.framework.usermanagement.dto.AuthUser;
-import hut34.wallet.framework.usermanagement.model.LoginIdentifier;
-import hut34.wallet.framework.usermanagement.model.User;
+import hut34.wallet.framework.usermanagement.repository.UserRepository;
 import hut34.wallet.testinfra.TestApplicationContext;
 import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Collections;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -20,14 +18,13 @@ import java.util.Collections;
 @ContextConfiguration(classes = TestApplicationContext.class)
 @SpringBootTest
 public abstract class BaseIntegrationTest {
-    protected User loggedIn = User.byEmail("admin@3wks.com.au", "myPass");
+    @Autowired
+    protected UserRepository userRepository;
 
     @Rule
-    public SetUpSecurityContextRule setUpSecurityContextRule =
-        new SetUpSecurityContextRule(new AuthUser(loggedIn.getId(), "andres", "passw", Collections.emptyList()));
-
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Rule
-    public LocalServicesRule localServicesRule = new LocalServicesRule(User.class, LoginIdentifier.class);
+    public LocalServicesRule localServicesRule = new LocalServicesRule();
 
 }

@@ -2,13 +2,15 @@ package hut34.wallet.framework.usermanagement.model;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
-import org.springframework.contrib.gae.security.UserAdapter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import hut34.wallet.framework.usermanagement.Role;
 import hut34.wallet.framework.usermanagement.dto.AuthUser;
 import hut34.wallet.framework.usermanagement.service.UserService;
+import hut34.wallet.util.Assert;
+import org.springframework.contrib.gae.security.UserAdapter;
+import org.springframework.contrib.gae.util.Nulls;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,22 +18,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class UserAdapterImpl implements UserAdapter<User> {
+public class UserAdapterGae implements UserAdapter<User> {
 
     private final boolean byEmail;
     private final UserService userService;
 
-    private UserAdapterImpl(UserService userService, boolean byEmail) {
+    private UserAdapterGae(UserService userService, boolean byEmail) {
         this.userService = userService;
         this.byEmail = byEmail;
     }
 
-    public static UserAdapterImpl byEmail(UserService userService) {
-        return new UserAdapterImpl(userService, true);
+    public static UserAdapterGae byEmail(UserService userService) {
+        return new UserAdapterGae(userService, true);
     }
 
-    public static UserAdapterImpl byUsername(UserService userService) {
-        return new UserAdapterImpl(userService, false);
+    public static UserAdapterGae byUsername(UserService userService) {
+        return new UserAdapterGae(userService, false);
     }
 
     @Override
@@ -79,15 +81,32 @@ public class UserAdapterImpl implements UserAdapter<User> {
             .map(Key::create);
     }
 
+    @SuppressWarnings("ConstantConditions")
+    public User getCurrentUserRequired() {
+        Optional<User> currentUser = getCurrentUser();
+        return Assert.isPresent(currentUser, "Authenticated user required")
+            .get();
+    }
+
+    public Optional<User> getCurrentUser() {
+        return currentUserId()
+            .flatMap(userService::getById);
+    }
+
     public static Optional<Ref<User>> currentUserRef() {
         return currentUserKey()
             .map(Ref::create);
     }
 
     public static Optional<Key<User>> currentUserKey() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return currentUserId()
+            .map(id -> Key.create(User.class, id));
+    }
+
+    private static Optional<String> currentUserId() {
+        Object principal = Nulls.ifNotNull(SecurityContextHolder.getContext().getAuthentication(), auth -> auth.getPrincipal());
         if (principal instanceof AuthUser) {
-            return Optional.of(Key.create(User.class, ((AuthUser) principal).getId()));
+            return Optional.of(((AuthUser) principal).getId());
         }
         return Optional.empty();
     }

@@ -6,6 +6,7 @@ import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.appengine.tools.development.testing.LocalTaskQueueTestConfig;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.util.Closeable;
+import hut34.wallet.framework.config.ObjectifyConfig;
 import org.junit.rules.ExternalResource;
 
 public class LocalServicesRule extends ExternalResource {
@@ -13,6 +14,13 @@ public class LocalServicesRule extends ExternalResource {
         new LocalTaskQueueTestConfig());
     private Closeable ofyService;
     private Class<?>[] entities;
+
+    /**
+     * By default this will register all entities as defined in {@link ObjectifyConfig}.
+     */
+    public LocalServicesRule() {
+        this.entities = new ObjectifyConfig().registerObjectifyEntities().toArray(new Class[0]);
+    }
 
     public LocalServicesRule(Class<?>... entities) {
         this.entities = entities;

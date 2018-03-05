@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * <p>
@@ -69,6 +70,20 @@ public final class Assert {
 
     public static String notBlank(String object, String messageFormat, Object... messageParams) {
         if (StringUtils.isBlank(object)) {
+            throwException(messageFormat, messageParams);
+        }
+        return object;
+    }
+
+    public static <T> Optional<T> isPresent(Optional<T> object, String messageFormat, Object... messageParams) {
+        if (!object.isPresent()) {
+            throwException(messageFormat, messageParams);
+        }
+        return object;
+    }
+
+    public static <T> Optional<T> isAbsent(Optional<T> object, String messageFormat, Object... messageParams) {
+        if (object.isPresent()) {
             throwException(messageFormat, messageParams);
         }
         return object;

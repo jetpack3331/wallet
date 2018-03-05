@@ -8,7 +8,7 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.OnSave;
 import hut34.wallet.framework.usermanagement.model.User;
-import hut34.wallet.framework.usermanagement.model.UserAdapterImpl;
+import hut34.wallet.framework.usermanagement.model.UserAdapterGae;
 import org.springframework.contrib.gae.objectify.Refs;
 import org.springframework.contrib.gae.search.IndexType;
 import org.springframework.contrib.gae.search.SearchIndex;
@@ -116,7 +116,7 @@ public abstract class BaseEntity {
     }
 
     private Ref<User> getCurrentUserRef() {
-        return UserAdapterImpl.currentUserRef()
+        return UserAdapterGae.currentUserRef()
             .orElse(null);
     }
 

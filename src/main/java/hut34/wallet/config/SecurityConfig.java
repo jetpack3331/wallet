@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import hut34.wallet.framework.usermanagement.model.User;
-import hut34.wallet.framework.usermanagement.model.UserAdapterImpl;
+import hut34.wallet.framework.usermanagement.model.UserAdapterGae;
 import hut34.wallet.framework.usermanagement.service.UserService;
 
 import static org.springframework.http.HttpMethod.GET;
@@ -88,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public UserAdapter<User> gaeUserHelper(UserService userService) {
-        return UserAdapterImpl.byEmail(userService);
+    public UserAdapter<User> gaeUserAdapter(UserService userService) {
+        return UserAdapterGae.byEmail(userService);
     }
 }

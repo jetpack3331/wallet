@@ -187,7 +187,7 @@
         <dependency>
             <groupId>com.threewks.spring</groupId>
             <artifactId>spring-boot-gae</artifactId>
-            <version>1.0.0-beta-13</version>
+            <version>1.0.0-beta-14</version>
         </dependency>
 
         <dependency>

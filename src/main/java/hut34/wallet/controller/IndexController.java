@@ -43,7 +43,7 @@ public class IndexController {
             .setTitle(applicationName)
             .setUrl(request.getRequestURI())
             .setDescription(String.format("Try %s today!", applicationName))
-            .setImage("https://lh3.googleusercontent.com/sm_h6TfeNXSFRKr3hB8C9Ir8lcWa4PYf56OwLeOieU3Y9G1HYiy-N0AvZzAN2dgJBnwWq-HKM5Bo9atsos8_FnXfHOJlXgLjjB_ZKaNfBt8rZTIOQad2x0YEbiSLOjj99sHRmbH_");
+            .setImage("https://avatars3.githubusercontent.com/u/29348141?s=200&v=4");
 
         model.addAttribute("meta", meta);
 

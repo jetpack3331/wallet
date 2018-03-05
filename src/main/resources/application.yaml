@@ -1,7 +1,12 @@
 logging:
     level:
-        threewks: DEBUG
+        ROOT: WARN
+        hut34: DEBUG
         org.springframework: INFO
+        # Log how long scanning objectify entity classes takes
+        org.springframework.contrib.gae.objectify.config.ObjectifyEntityScanner: DEBUG
+        # Detailed startup logs
+        org.springframework.boot.StartupInfoLogger: DEBUG
         # Below is to log servlet response mapping exceptions
         org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod: TRACE
 

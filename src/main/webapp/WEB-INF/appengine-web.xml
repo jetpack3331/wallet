@@ -7,19 +7,23 @@
 
     <!-- INSTANCE TYPE control
             https://cloud.google.com/appengine/pricing
-            https://cloud.google.com/appengine/docs/standard/#instance_classes
 
             B1              128mb   600mhz  $0.05
             B2              256mb   1.2ghz  $0.10
             B4              512mb   2.4ghz  $0.20
             B4_1G           1024mb  2.4ghz  $0.30
             B8              1024mb  4.8ghz  $0.40
-            F1              128mb   600mhz  $0.05
+            F1 (default)    128mb   600mhz  $0.05
             F2              256mb   1.2ghz  $0.10
             F4              512mb   2.4ghz  $0.20
             F4_1G           1024mb  2.4ghz  $0.30
 
-    <instance-class>B2</instance-class>
+
+            https://cloud.google.com/appengine/docs/standard/#instance_classes
+            F = autoscaled
+            B = manual scaling
+
+        <instance-class>F2</instance-class>
     -->
 
     <system-properties>

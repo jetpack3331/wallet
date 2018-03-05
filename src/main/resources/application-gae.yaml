@@ -1,0 +1,6 @@
+logging:
+    pattern:
+        console: '%-40.40logger{39} %n%-5p %m%n'
+
+app:
+    host: https://${app.id}

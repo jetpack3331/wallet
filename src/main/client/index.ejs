@@ -1,0 +1,24 @@
+<!doctype html>
+<html class="no-js"
+      lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      itemscope="" itemtype="http://schema.org/WebPage">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" itemprop="description" property="og:description" content="" th:content="<%-"${meta.description}"%>"/>
+    <meta property="og:url" content="/" th:content="<%-"${meta.url}"%>"/>
+    <meta property="og:title" content="Hut34 Wallet" th:content="<%-"${meta.title}"%>"/>
+    <meta property="og:image" content="" th:content="<%-"${meta.image}"%>"/>
+    <meta property="og:type" content="website"/>
+
+    <title th:text="<%-"${meta.title}"%>">Local</title>
+
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,fetch,intl"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>

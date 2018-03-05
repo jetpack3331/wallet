@@ -1,0 +1,39 @@
+logging:
+    level:
+        threewks: DEBUG
+        org.springframework: INFO
+        # Below is to log servlet response mapping exceptions
+        org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod: TRACE
+
+app:
+    name: Hut34 Wallet
+    id: ${com.google.appengine.application.id:no_app_id}
+    environment: ${com.google.appengine.runtime.environment:Local Test}
+    host: '- no host -'
+
+
+tasks:
+    email:
+        queue: default
+        invite: /task/send-user-invite
+
+spring:
+    mail:
+        default-encoding: UTF-8
+
+    jackson:
+        serialization.WRITE_DATES_AS_TIMESTAMPS: false
+        default-property-inclusion: non_null
+
+    thymeleaf:
+        prefix: /WEB-INF/th/
+        mode: LEGACYHTML5
+
+    contrib:
+        gae:
+            security:
+                remember-me:
+                    key: 'tb:[91bt;6u6N:aUh|(mm}!$b0a |{|+6&P;3`<]tD wtAbCUe|uG =IYQx^(9d}'
+
+mailSender:
+    fromAddress: 'hut34-wallet@email.org'

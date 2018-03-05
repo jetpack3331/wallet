@@ -1,0 +1,12 @@
+spring:
+    contrib:
+        gae:
+            security:
+                remember-me:
+                    key: '&amp;[tSN!`s~`3k:UZ0F59bIQ~K0$_TdpXgH+|*0Mx}}FFvvHA;|4/A&amp;N+Fz;N.bRsW'
+
+    thymeleaf:
+        cache: false
+
+app:
+    host: http://localhost:3000

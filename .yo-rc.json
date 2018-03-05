@@ -1,0 +1,11 @@
+{
+  "generator-spring-gae-react": {
+    "promptValues": {
+      "project": "hut34-wallet",
+      "projectName": "Hut34 Wallet",
+      "gitPath": "https://github.com/hut34/wallet.git",
+      "adminEmail": "dummy@email.org",
+      "emailFromAddress": "hut34-wallet@email.org"
+    }
+  }
+}

@@ -14,7 +14,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class WalletAccountRepositoryIT extends BaseIntegrationTest {
+public class WalletAccountRepositoryIntegrationTest extends BaseIntegrationTest {
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();

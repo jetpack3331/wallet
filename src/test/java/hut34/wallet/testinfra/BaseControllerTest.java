@@ -1,39 +1,31 @@
 package hut34.wallet.testinfra;
 
+
 import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import hut34.wallet.framework.ref.ReferenceDataService;
-import hut34.wallet.framework.usermanagement.service.UserService;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+/**
+ * Test controller via {@link MockMvc} without requiring a full container load - faster. If you want to test
+ * Spring Security, use {@link BaseControllerIntegrationTest} which sets up web application context.
+ */
+@RunWith(MockitoJUnitRunner.class)
 public abstract class BaseControllerTest {
 
     protected MockMvc mvc;
 
-    @MockBean
-    protected UserService userService;
-
-    @MockBean
-    protected ReferenceDataService referenceDataService;
-
-    @Autowired
-    private WebApplicationContext wac;
+    protected abstract Object controller();
 
     @Before
     public void setup() {
         mvc = MockMvcBuilders
-            .webAppContextSetup(wac)
-            .apply(springSecurity())
-            .build();
+                .standaloneSetup(controller())
+                .alwaysDo(print())
+                .build();
     }
+
 }

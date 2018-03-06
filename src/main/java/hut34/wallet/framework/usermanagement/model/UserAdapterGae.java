@@ -8,6 +8,7 @@ import hut34.wallet.framework.usermanagement.service.UserService;
 import hut34.wallet.util.Assert;
 import org.springframework.contrib.gae.security.UserAdapter;
 import org.springframework.contrib.gae.util.Nulls;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -104,7 +105,7 @@ public class UserAdapterGae implements UserAdapter<User> {
     }
 
     private static Optional<String> currentUserId() {
-        Object principal = Nulls.ifNotNull(SecurityContextHolder.getContext().getAuthentication(), auth -> auth.getPrincipal());
+        Object principal = Nulls.ifNotNull(SecurityContextHolder.getContext().getAuthentication(), Authentication::getPrincipal);
         if (principal instanceof AuthUser) {
             return Optional.of(((AuthUser) principal).getId());
         }

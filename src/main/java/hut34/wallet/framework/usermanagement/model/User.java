@@ -3,8 +3,9 @@ package hut34.wallet.framework.usermanagement.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import org.springframework.contrib.gae.security.GaeUser;
+import hut34.wallet.framework.BaseEntityCore;
 import hut34.wallet.framework.usermanagement.Role;
+import org.springframework.contrib.gae.security.GaeUser;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -15,7 +16,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-public class User implements GaeUser, Serializable {
+public class User extends BaseEntityCore implements GaeUser, Serializable {
     @Id
     private String id;
     private String email;

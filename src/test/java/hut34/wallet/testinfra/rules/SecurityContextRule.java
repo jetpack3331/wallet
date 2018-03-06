@@ -12,15 +12,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import static org.mockito.Mockito.when;
 
-public class SetUpSecurityContextRule extends ExternalResource {
+public class SecurityContextRule extends ExternalResource {
     private final AuthUser authUser;
     private final User user;
 
-    public SetUpSecurityContextRule() {
+    public SecurityContextRule() {
         this(TestData.user());
     }
 
-    public SetUpSecurityContextRule(User user) {
+    public SecurityContextRule(User user) {
         this.user = user;
         this.authUser = (AuthUser) UserAdapterGae.byEmail(null).toUserDetails(user);
     }

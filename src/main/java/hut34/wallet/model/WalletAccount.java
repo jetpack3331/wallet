@@ -3,6 +3,7 @@ package hut34.wallet.model;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import hut34.wallet.framework.BaseEntity;
 import hut34.wallet.framework.usermanagement.model.User;
 import hut34.wallet.util.Assert;
 import org.springframework.contrib.gae.objectify.Refs;

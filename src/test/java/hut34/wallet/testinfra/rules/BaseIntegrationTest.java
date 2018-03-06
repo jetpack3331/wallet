@@ -12,6 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
 @TestPropertySource(properties = { "app.host=http://testinghost:8080" })
@@ -26,5 +28,12 @@ public abstract class BaseIntegrationTest {
 
     @Rule
     public LocalServicesRule localServicesRule = new LocalServicesRule();
+
+
+    @SuppressWarnings("unchecked")
+    protected <E> E save(E entity) {
+        ofy().save().entities(entity).now();
+        return entity;
+    }
 
 }

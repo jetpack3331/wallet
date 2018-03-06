@@ -4,7 +4,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import hut34.wallet.framework.usermanagement.service.UserService;
 import hut34.wallet.testinfra.rules.LocalServicesRule;
-import hut34.wallet.testinfra.rules.SetUpSecurityContextRule;
+import hut34.wallet.testinfra.rules.SecurityContextRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class UserAdapterGaeTest {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
     @Rule
-    public SetUpSecurityContextRule setUpSecurityContextRule = new SetUpSecurityContextRule();
+    public SecurityContextRule securityContextRule = new SecurityContextRule();
     @Rule
     public LocalServicesRule localServicesRule = new LocalServicesRule();
 
@@ -48,7 +48,7 @@ public class UserAdapterGaeTest {
         Optional<Key<User>> result = UserAdapterGae.currentUserKey();
 
         assertThat(result.isPresent(), is(true));
-        assertThat(result.get().getName(), is(setUpSecurityContextRule.getUser().getId()));
+        assertThat(result.get().getName(), is(securityContextRule.getUser().getId()));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class UserAdapterGaeTest {
         Optional<Ref<User>> result = UserAdapterGae.currentUserRef();
 
         assertThat(result.isPresent(), is(true));
-        assertThat(result.get().getKey().getName(), is(setUpSecurityContextRule.getUser().getId()));
+        assertThat(result.get().getKey().getName(), is(securityContextRule.getUser().getId()));
     }
 
     @Test
@@ -92,18 +92,18 @@ public class UserAdapterGaeTest {
 
     @Test
     public void getCurrentUser() {
-        when(userService.getById(setUpSecurityContextRule.getUserId()))
-            .thenReturn(Optional.of(setUpSecurityContextRule.getUser()));
+        when(userService.getById(securityContextRule.getUserId()))
+            .thenReturn(Optional.of(securityContextRule.getUser()));
 
         Optional<User> result = userAdapter.getCurrentUser();
 
         assertThat(result.isPresent(), is(true));
-        assertThat(result.get(), is(setUpSecurityContextRule.getUser()));
+        assertThat(result.get(), is(securityContextRule.getUser()));
     }
 
     @Test
     public void getCurrentUser_willReturnEmpty_whenUserNotInDatabase() {
-        when(userService.getById(setUpSecurityContextRule.getUserId()))
+        when(userService.getById(securityContextRule.getUserId()))
             .thenReturn(Optional.empty());
 
         Optional<User> result = userAdapter.getCurrentUser();
@@ -122,12 +122,12 @@ public class UserAdapterGaeTest {
 
     @Test
     public void getCurrentUserRequired() {
-        when(userService.getById(setUpSecurityContextRule.getUserId()))
-            .thenReturn(Optional.of(setUpSecurityContextRule.getUser()));
+        when(userService.getById(securityContextRule.getUserId()))
+            .thenReturn(Optional.of(securityContextRule.getUser()));
 
         User result = userAdapter.getCurrentUserRequired();
 
-        assertThat(result, is(setUpSecurityContextRule.getUser()));
+        assertThat(result, is(securityContextRule.getUser()));
     }
 
     @Test

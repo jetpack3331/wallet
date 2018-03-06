@@ -16,7 +16,6 @@ app:
     environment: ${com.google.appengine.runtime.environment:Local Test}
     host: '- no host -'
 
-
 tasks:
     email:
         queue: default
@@ -33,12 +32,6 @@ spring:
     thymeleaf:
         prefix: /WEB-INF/th/
         mode: LEGACYHTML5
-
-    contrib:
-        gae:
-            security:
-                remember-me:
-                    key: 'tb:[91bt;6u6N:aUh|(mm}!$b0a |{|+6&P;3`<]tD wtAbCUe|uG =IYQx^(9d}'
 
 mailSender:
     fromAddress: 'hut34-wallet@email.org'

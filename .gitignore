@@ -26,3 +26,8 @@ hotspot.log
 *.orig
 
 rebel.xml
+
+application-hut34-wallet-local.yaml
+application-hut34-wallet-dev.yaml
+application-hut34-wallet-uat.yaml
+application-hut34-wallet-prod.yaml

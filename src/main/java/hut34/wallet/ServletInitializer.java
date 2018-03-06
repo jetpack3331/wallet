@@ -20,8 +20,12 @@ public class ServletInitializer extends SpringBootServletInitializer {
             // Allow us to reference "dev", "uat" without full app id
             .setAdditionalProfileExtractor(ProfileExtractors.AFTER_LAST_DASH)
             .getProfiles();
-        LOG.info("Setting profiles: {}", profiles);
 
+        if (profiles.contains("local")) {
+            profiles.add("hut34-wallet-local");
+        }
+
+        LOG.info("Setting profiles: {}", profiles);
         return application.sources(Application.class)
             .profiles(profiles.toArray(new String[profiles.size()]));
     }

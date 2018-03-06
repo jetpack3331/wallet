@@ -1,9 +1,11 @@
 package hut34.wallet.framework.usermanagement.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hut34.wallet.framework.usermanagement.dto.AuthUser;
 import hut34.wallet.framework.usermanagement.service.UserService;
 import hut34.wallet.testinfra.BaseControllerIntegrationTest;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -23,6 +25,8 @@ public class UserControllerTest extends BaseControllerIntegrationTest {
 
     @MockBean
     private UserService userService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     public void user_WillGetUserByCurrentPrincipal() throws Exception {

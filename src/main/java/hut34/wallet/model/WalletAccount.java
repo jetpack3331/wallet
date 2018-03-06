@@ -20,6 +20,10 @@ public class WalletAccount extends BaseEntity {
     private Ref<User> owner;
     private String encryptedPrivateKey;
 
+    private WalletAccount() {
+
+    }
+
     public WalletAccount(String address, User owner) {
         // TODO: see how to integrate JSR validation annotations
         Assert.notBlank(address, "address required");

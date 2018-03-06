@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http
             .csrf()
-                .ignoringAntMatchers("/system/**", "/task/**", "/cron/**", "/_ah/**")
+                .ignoringAntMatchers("/api/**", "/task/**", "/cron/**", "/_ah/**")
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         .and()
             .exceptionHandling()

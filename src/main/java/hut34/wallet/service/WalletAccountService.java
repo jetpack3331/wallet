@@ -17,11 +17,11 @@ public class WalletAccountService {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public WalletAccount create(String address, String encrtyptedPrivateKey) {
+    public WalletAccount create(String address, String encryptedPrivateKey) {
         Assert.isAbsent(walletAccountRepository.findById(address), "Wallet account already exists for address");
 
         WalletAccount walletAccount = new WalletAccount(address, userAdapter.getCurrentUserRequired())
-            .setEncryptedPrivateKey(encrtyptedPrivateKey);
+            .setEncryptedPrivateKey(encryptedPrivateKey);
 
         return walletAccountRepository.save(walletAccount);
     }

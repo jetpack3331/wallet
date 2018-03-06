@@ -1,7 +1,36 @@
+@import "../../less/mixins/mixins.less";
+
 .home-page {
+    background: none;
+    text-align: center;
 
     .widgets > * {
         margin: 20px 0;
+    }
+
+    .google-login {
+        display: inline-block;
+        margin: 1.5rem 0;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 600;
+        background: #fff;
+        border-radius: 3px;
+        padding: 0 18px 0 14px;
+        height: 40px;
+        line-height: 40px;
+        color: rgba(0,0,0,0.54);
+        clear: both;
+        overflow: hidden;
+        transition: 0.25s ease all;
+        img {
+            width: 18px;
+            margin: 11px 16px 11px 0;
+            float: left;
+        }
+        &:hover {
+            color: @hut-orange;
+        }
     }
 
 }

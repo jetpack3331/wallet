@@ -1,8 +1,13 @@
 @import "../mixins/mixins.less";
 
+html, body {
+    background: @hut-orange;
+    color: #ffffff;
+}
+
 body {
   *:focus {
-    outline: none;
+      outline: none;
   }
 }
 
@@ -21,6 +26,7 @@ body {
 
 .default-layout {
     padding: 32px 24px;
+    background: @hut-orange;
 }
 
 .admin-layout {
@@ -81,3 +87,77 @@ body {
         }
     }
 }
+
+
+.container {
+    width: 1100px;
+    max-width: 90%; /*1178px;*/
+    margin: auto;
+}
+
+.main-icon img {
+    width: 90px;
+    margin-bottom: 1rem;
+}
+
+h1.display-1 {
+    margin-bottom: 2rem;
+}
+
+button.btn-primary {
+    margin: 1rem 0;
+    border: 2px solid #fff;
+    background: none;
+    color: #fff;
+    box-shadow: none;
+    border-radius: 3px;
+    text-transform: none;
+
+    &:hover {
+        background: #ffffff;
+        color: @hut-orange;
+    }
+}
+
+.footer-disclaimer {
+    margin-top: 3rem;
+    font-size: 0.686rem;
+    color: fade(#ffffff, 60%);
+}
+
+/* Wallet Page */
+
+.wallet-page {
+    text-align: center;
+}
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media screen and (max-width: 575px) {
+    .container {
+        width: 90%; /*1178px;*/
+    }
+}
+
+// Small devices (landscape phones, less than 768px)
+@media screen and (max-width: 767px) {
+    .container {
+        width: 707px; /*1178px;*/
+    }
+}
+
+// Medium devices (tablets, less than 992px)
+@media screen and (max-width: 991px) {
+    .container {
+        width: 800px; /*1178px;*/
+    }
+}
+
+// Large devices (desktops, less than 1200px)
+@media screen and (max-width: 1199px) {
+    .container {
+        width: 900px; /*1178px;*/
+    }
+}
+
+

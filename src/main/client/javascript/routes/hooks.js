@@ -18,6 +18,18 @@ export const composeOnEnterHooks = (...hooks) => (nextState, replace, callback) 
   });
 };
 
+export const initSession = (nextState, replace, callback) => {
+  const isAuthenticated = getIsAuthenticated(getState());
+
+  if (!isAuthenticated) {
+    dispatch(fetchUser())
+      .then(() => callback())
+      .catch(error => callback(error));
+  } else {
+    callback();
+  }
+};
+
 export const loginRequired = (nextState, replace, callback) => {
   const isAuthenticated = getIsAuthenticated(getState());
   if (isAuthenticated) {

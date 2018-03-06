@@ -17,8 +17,9 @@ const isAuthenticated = (state = false, action) => {
   switch (action.type) {
     case 'REQUEST_LOGIN_SUCCESS':
     case 'REQUEST_REGISTER_SUCCESS':
-    case 'REQUEST_LOGGED_IN_USER_SUCCESS':
       return true;
+    case 'REQUEST_LOGGED_IN_USER_SUCCESS':
+      return action.loggedIn;
     case 'REQUEST_LOGIN_FAILURE':
     case 'REQUEST_REGISTER_FAILURE':
     case 'REQUEST_LOGGED_IN_USER_FAILURE':

@@ -10,7 +10,7 @@ export const fetchUser = () => (dispatch) => {
 
   return users.me()
     .then((user) => {
-      dispatch({ type: 'REQUEST_LOGGED_IN_USER_SUCCESS' });
+      dispatch({ type: 'REQUEST_LOGGED_IN_USER_SUCCESS', loggedIn: !!user });
       dispatch(setUser(user));
       return user;
     })

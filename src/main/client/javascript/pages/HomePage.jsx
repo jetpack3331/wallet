@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import './HomePage.less';
 
 
@@ -7,7 +8,7 @@ const HomePage = () => (
     <h1 className="display-2">Hut34 Wallet</h1>
     <div className="widgets">
       <div>
-        Coming soon ...
+        <Link to="/login/google" target="_self">Login</Link>
       </div>
     </div>
   </div>

@@ -87,10 +87,16 @@ describe('Reducer: Auth', () => {
   });
 
   describe('REQUEST_LOGGED_IN_USER_SUCCESS', () => {
-    test('REQUEST_LOGGED_IN_USER_SUCCESS sets isAuthenticated to true', () => {
-      const state = reducer(undefined, { type: 'REQUEST_LOGGED_IN_USER_SUCCESS' });
+    test('REQUEST_LOGGED_IN_USER_SUCCESS sets isAuthenticated to true when logged in', () => {
+      const state = reducer(undefined, { type: 'REQUEST_LOGGED_IN_USER_SUCCESS', loggedIn: true });
 
       expect(state.isAuthenticated).toBe(true);
+    });
+
+    test('REQUEST_LOGGED_IN_USER_SUCCESS sets isAuthenticated to false when not logged in', () => {
+      const state = reducer(undefined, { type: 'REQUEST_LOGGED_IN_USER_SUCCESS', loggedIn: false });
+
+      expect(state.isAuthenticated).toBe(false);
     });
 
     test('REQUEST_LOGGED_IN_USER_FAILURE sets isAuthenticated to false', () => {
@@ -100,7 +106,7 @@ describe('Reducer: Auth', () => {
     });
 
     test('REQUEST_LOGGED_IN_USER_SUCCESS sets error to null', () => {
-      const state = reducer(undefined, { type: 'REQUEST_LOGGED_IN_USER_SUCCESS' });
+      const state = reducer(undefined, { type: 'REQUEST_LOGGED_IN_USER_SUCCESS', loggedIn: true });
 
       expect(state.error).toBe(null);
     });

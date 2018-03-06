@@ -1,6 +1,7 @@
 package hut34.wallet.framework.usermanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import hut34.wallet.framework.BaseEntityCore;
@@ -15,6 +16,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+@Cache
 @Entity
 public class User extends BaseEntityCore implements GaeUser, Serializable {
     @Id

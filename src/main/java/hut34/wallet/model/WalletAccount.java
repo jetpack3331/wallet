@@ -18,7 +18,7 @@ public class WalletAccount extends BaseEntity {
     private String address;
     @NotNull
     private Ref<User> owner;
-    private String encryptedPrivateKey;
+    private String secretStorageJson;
 
     private WalletAccount() {
 
@@ -37,12 +37,12 @@ public class WalletAccount extends BaseEntity {
         return address;
     }
 
-    public String getEncryptedPrivateKey() {
-        return encryptedPrivateKey;
+    public String getSecretStorageJson() {
+        return secretStorageJson;
     }
 
-    public WalletAccount setEncryptedPrivateKey(String encryptedPrivateKey) {
-        this.encryptedPrivateKey = encryptedPrivateKey;
+    public WalletAccount setSecretStorageJson(String secretStorageJson) {
+        this.secretStorageJson = secretStorageJson;
         return this;
     }
 

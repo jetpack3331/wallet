@@ -21,7 +21,7 @@ public class WalletAccountService {
         Assert.isAbsent(walletAccountRepository.findById(address), "Wallet account already exists for address");
 
         WalletAccount walletAccount = new WalletAccount(address, userAdapter.getCurrentUserRequired())
-            .setEncryptedPrivateKey(encryptedPrivateKey);
+            .setSecretStorageJson(encryptedPrivateKey);
 
         return walletAccountRepository.save(walletAccount);
     }

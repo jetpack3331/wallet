@@ -1,15 +1,19 @@
 package hut34.wallet.controller.dto;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class CreateWalletRequest {
+    @NotBlank
     private String address;
-    private String encryptedPrivateKey;
+    @NotBlank
+    private String secretStorageJson;
 
     public CreateWalletRequest() {
     }
 
-    public CreateWalletRequest(String address, String encryptedPrivateKey) {
+    public CreateWalletRequest(String address, String secretStorageJson) {
         this.address = address;
-        this.encryptedPrivateKey = encryptedPrivateKey;
+        this.secretStorageJson = secretStorageJson;
     }
 
     public String getAddress() {
@@ -20,12 +24,12 @@ public class CreateWalletRequest {
         this.address = address;
     }
 
-    public String getEncryptedPrivateKey() {
-        return encryptedPrivateKey;
+    public String getSecretStorageJson() {
+        return secretStorageJson;
     }
 
-    public void setEncryptedPrivateKey(String encryptedPrivateKey) {
-        this.encryptedPrivateKey = encryptedPrivateKey;
+    public void setSecretStorageJson(String secretStorageJson) {
+        this.secretStorageJson = secretStorageJson;
     }
 
 }

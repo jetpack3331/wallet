@@ -57,7 +57,7 @@ public class WalletAccountServiceTest {
         WalletAccount result = walletAccountService.create(address, "encryptedPrivateKey");
 
         assertThat(result.getAddress(), is(address));
-        assertThat(result.getEncryptedPrivateKey(), is("encryptedPrivateKey"));
+        assertThat(result.getSecretStorageJson(), is("encryptedPrivateKey"));
         assertThat(result, hasFieldWithUserRef("owner", user));
 
         verify(walletAccountRepository).save(result);

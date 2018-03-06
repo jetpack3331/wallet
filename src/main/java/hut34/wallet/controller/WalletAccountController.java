@@ -22,7 +22,7 @@ public class WalletAccountController {
 
     @RequestMapping(method = POST, path = "/api/wallets/accounts")
     public WalletAccountDto create(@RequestBody CreateWalletRequest request) {
-        WalletAccount walletAccount = walletAccountService.create(request.getAddress(), request.getEncryptedPrivateKey());
+        WalletAccount walletAccount = walletAccountService.create(request.getAddress(), request.getSecretStorageJson());
         return Transformers.TO_WALLET_ACCOUNT_DTO.apply(walletAccount);
     }
 

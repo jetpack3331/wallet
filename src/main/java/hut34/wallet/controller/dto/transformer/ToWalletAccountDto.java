@@ -12,7 +12,7 @@ public class ToWalletAccountDto implements Function<WalletAccount, WalletAccount
     public WalletAccountDto apply(WalletAccount walletAccount) {
         WalletAccountDto dto = BaseDto.fromEntity(new WalletAccountDto(), walletAccount);
         dto.setAddress(walletAccount.getAddress());
-        dto.setEncryptedPrivateKey(walletAccount.getEncryptedPrivateKey());
+        dto.setSecretStorageJson(walletAccount.getSecretStorageJson());
         return dto;
     }
 

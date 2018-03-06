@@ -4,7 +4,7 @@ import hut34.wallet.framework.BaseDto;
 
 public class WalletAccountDto extends BaseDto {
     private String address;
-    private String encryptedPrivateKey;
+    private String secretStorageJson;
 
     public String getAddress() {
         return address;
@@ -14,12 +14,12 @@ public class WalletAccountDto extends BaseDto {
         this.address = address;
     }
 
-    public String getEncryptedPrivateKey() {
-        return encryptedPrivateKey;
+    public String getSecretStorageJson() {
+        return secretStorageJson;
     }
 
-    public void setEncryptedPrivateKey(String encryptedPrivateKey) {
-        this.encryptedPrivateKey = encryptedPrivateKey;
+    public void setSecretStorageJson(String secretStorageJson) {
+        this.secretStorageJson = secretStorageJson;
     }
 
 }

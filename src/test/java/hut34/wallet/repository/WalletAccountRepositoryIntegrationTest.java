@@ -33,14 +33,14 @@ public class WalletAccountRepositoryIntegrationTest extends BaseIntegrationTest 
     @WithMockUser("admin@3wks.com.au")
     public void save_get() {
         WalletAccount walletAccount = new WalletAccount("234", user)
-            .setEncryptedPrivateKey("someencryptedprivateKey");
+            .setSecretStorageJson("someencryptedprivateKey");
 
         repository.save(walletAccount);
         WalletAccount retrieved = repository.getById(walletAccount.getAddress());
 
         assertThat(retrieved.getAddress(), is(walletAccount.getAddress()));
         assertThat(retrieved.getOwner(), is(user));
-        assertThat(retrieved.getEncryptedPrivateKey(), is(walletAccount.getEncryptedPrivateKey()));
+        assertThat(retrieved.getSecretStorageJson(), is(walletAccount.getSecretStorageJson()));
     }
 
 }

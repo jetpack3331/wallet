@@ -30,8 +30,8 @@ public class WalletAccountControllerTest extends BaseControllerTest {
     public void create() throws Exception {
         CreateWalletRequest request = new CreateWalletRequest("0xASDFMEWIFREVNERIGVNERTIGRTNBRT", "femfefiefowejfno43ifnm34ofin3498f3498598");
         WalletAccount walletAccount = new WalletAccount(request.getAddress(), TestData.user())
-            .setEncryptedPrivateKey(request.getEncryptedPrivateKey());
-        when(walletAccountService.create(request.getAddress(), request.getEncryptedPrivateKey())).thenReturn(walletAccount);
+            .setSecretStorageJson(request.getSecretStorageJson());
+        when(walletAccountService.create(request.getAddress(), request.getSecretStorageJson())).thenReturn(walletAccount);
 
         mvc.perform(
             post("/api/wallets/accounts")
@@ -40,7 +40,7 @@ public class WalletAccountControllerTest extends BaseControllerTest {
                 .content(asString(request)))
             .andExpect(status().isOk())
             .andExpect(jsonPath("address", is(request.getAddress())))
-            .andExpect(jsonPath("encryptedPrivateKey", is(request.getEncryptedPrivateKey())));
+            .andExpect(jsonPath("encryptedPrivateKey", is(request.getSecretStorageJson())));
     }
 
 

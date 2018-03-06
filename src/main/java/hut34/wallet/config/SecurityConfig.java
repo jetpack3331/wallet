@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
             .addFilterBefore(oauthAuthenticationFilter(), BasicAuthenticationFilter.class)
             .headers()
-            .contentSecurityPolicy("default-src 'self'; script-src 'self' https://cdn.polyfill.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com blob:; font-src 'self' https://fonts.gstatic.com");
+            .contentSecurityPolicy("default-src 'self'; script-src 'self' https://cdn.polyfill.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com blob:; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com");
         // @formatter:on
     }
 

@@ -1,12 +1,11 @@
 package hut34.wallet.framework.usermanagement.dto.transformer;
 
 import hut34.wallet.framework.BaseDto;
+import hut34.wallet.framework.Transformer;
 import hut34.wallet.framework.usermanagement.dto.UserDto;
 import hut34.wallet.framework.usermanagement.model.User;
 
-import java.util.function.Function;
-
-public class ToUserDto implements Function<User, UserDto> {
+public class ToUserDto implements Transformer<User, UserDto> {
 
     public static final ToUserDto INSTANCE = new ToUserDto();
 

@@ -2,11 +2,10 @@ package hut34.wallet.controller.dto.transformer;
 
 import hut34.wallet.controller.dto.WalletAccountDto;
 import hut34.wallet.framework.BaseDto;
+import hut34.wallet.framework.Transformer;
 import hut34.wallet.model.WalletAccount;
 
-import java.util.function.Function;
-
-public class ToWalletAccountDto implements Function<WalletAccount, WalletAccountDto> {
+public class ToWalletAccountDto implements Transformer<WalletAccount, WalletAccountDto> {
 
     @Override
     public WalletAccountDto apply(WalletAccount walletAccount) {

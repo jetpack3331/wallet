@@ -40,7 +40,7 @@ public class WalletAccountControllerTest extends BaseControllerTest {
                 .content(asString(request)))
             .andExpect(status().isOk())
             .andExpect(jsonPath("address", is(request.getAddress())))
-            .andExpect(jsonPath("encryptedPrivateKey", is(request.getSecretStorageJson())));
+            .andExpect(jsonPath("secretStorageJson", is(request.getSecretStorageJson())));
     }
 
 

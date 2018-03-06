@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoT
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.contrib.gae.security.rest.RestLogoutSuccessHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -60,6 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/error/**").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/**").permitAll()
+        .and()
+            .logout()
+            .logoutUrl("/api/logout")
+            .logoutSuccessHandler(new RestLogoutSuccessHandler())
+            .permitAll()
         .and()
             .addFilterBefore(oauthAuthenticationFilter(), BasicAuthenticationFilter.class)
             .headers()

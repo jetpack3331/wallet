@@ -4,3 +4,11 @@ logging:
 
 app:
     host: https://${app.id}.appspot.com
+
+spring:
+    contrib:
+        gae:
+            datastore:
+                backup:
+                    bucket: ${app.id}-backup
+                    queue: backup-queue

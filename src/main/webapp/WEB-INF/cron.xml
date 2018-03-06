@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cronentries>
+
+    <cron>
+        <url>/task/backup/start?name=FullBackup</url>
+        <description>Datastore backup of all data</description>
+        <schedule>every day 03:00</schedule>
+        <timezone>Australia/NSW</timezone>
+    </cron>
+
+</cronentries>

@@ -1,10 +1,10 @@
 package hut34.wallet.framework.security;
 
-import hut34.wallet.framework.usermanagement.dto.UpdateUserRequest;
+import hut34.wallet.framework.usermanagement.dto.OAuthUserRequest;
+import hut34.wallet.framework.usermanagement.model.AuthProvider;
 import hut34.wallet.framework.usermanagement.model.User;
 import hut34.wallet.framework.usermanagement.service.UserService;
 import hut34.wallet.util.Assert;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
@@ -29,18 +29,22 @@ public class GooglePrincipalExtractor implements PrincipalExtractor {
 
     @Override
     public Object extractPrincipal(Map<String, Object> map) {
+        String externalId = (String) map.get("sub");
         String email = (String) map.get("email");
+        Assert.notNull(email, "External ID must be provided in details map");
         Assert.notNull(email, "Email must be provided in details map");
 
         Optional<User> optionalUser = this.userService.get(email);
         if (!optionalUser.isPresent()) {
             LOG.info("Auto registering user with email '{}'", email);
             String name = (String) map.get("name");
-            UpdateUserRequest updateUserRequest = new UpdateUserRequest()
-                .setEmail(email)
-                .setName(name);
+            OAuthUserRequest userRequest = new OAuthUserRequest();
+            userRequest.setProvider(AuthProvider.GOOGLE);
+            userRequest.setExternalId(externalId);
+            userRequest.setEmail(email);
+            userRequest.setName(name);
 
-            userService.create(updateUserRequest, RandomStringUtils.randomAlphanumeric(24));
+            userService.create(userRequest);
         }
 
         LOG.debug("Loading user details for email '{}'", email);

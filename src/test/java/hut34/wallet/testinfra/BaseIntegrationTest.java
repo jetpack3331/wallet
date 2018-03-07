@@ -1,7 +1,7 @@
-package hut34.wallet.testinfra.rules;
+package hut34.wallet.testinfra;
 
 import hut34.wallet.framework.usermanagement.repository.UserRepository;
-import hut34.wallet.testinfra.TestApplicationContext;
+import hut34.wallet.testinfra.rules.LocalServicesRule;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;

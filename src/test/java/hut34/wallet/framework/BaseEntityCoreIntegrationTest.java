@@ -2,7 +2,7 @@ package hut34.wallet.framework;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import hut34.wallet.testinfra.rules.BaseIntegrationTest;
+import hut34.wallet.testinfra.BaseIntegrationTest;
 import hut34.wallet.testinfra.rules.FixedClock;
 import hut34.wallet.util.DateTimeUtils;
 import org.junit.Before;

@@ -6,6 +6,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import hut34.wallet.framework.BaseEntityCore;
 import hut34.wallet.framework.usermanagement.Role;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.contrib.gae.security.GaeUser;
 
 import java.io.Serializable;
@@ -26,6 +27,9 @@ public class User extends BaseEntityCore implements GaeUser, Serializable {
     private String name;
     private Set<Role> roles = new LinkedHashSet<>();
     private boolean enabled = true;
+
+    private String externalId;
+    private AuthProvider provider = AuthProvider.INTERNAL;
 
     private User() {
     }
@@ -50,6 +54,14 @@ public class User extends BaseEntityCore implements GaeUser, Serializable {
         User user = new User();
         user.id = username;
         user.password = password;
+        return user;
+    }
+
+    public static User byProviderEmail(AuthProvider provider, String externalId, String email) {
+        User user = byEmail(email, null);
+        user.setProvider(provider);
+        user.setExternalId(externalId);
+        user.setPassword(RandomStringUtils.randomAlphanumeric(24));
         return user;
     }
 
@@ -81,6 +93,24 @@ public class User extends BaseEntityCore implements GaeUser, Serializable {
 
     public User setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public User setExternalId(String externalId) {
+        this.externalId = externalId;
+        return this;
+    }
+
+    public AuthProvider getProvider() {
+        return provider;
+    }
+
+    public User setProvider(AuthProvider provider) {
+        this.provider = provider;
         return this;
     }
 

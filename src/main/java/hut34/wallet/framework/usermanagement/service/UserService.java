@@ -1,14 +1,15 @@
 package hut34.wallet.framework.usermanagement.service;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import hut34.wallet.framework.usermanagement.dto.OAuthUserRequest;
 import hut34.wallet.framework.usermanagement.dto.UpdateUserRequest;
 import hut34.wallet.framework.usermanagement.model.LoginIdentifier;
 import hut34.wallet.framework.usermanagement.model.User;
 import hut34.wallet.framework.usermanagement.repository.LoginIdentifierRepository;
 import hut34.wallet.framework.usermanagement.repository.UserRepository;
 import hut34.wallet.util.Assert;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +57,14 @@ public class UserService {
 
     public User create(UpdateUserRequest request, String password) {
         User user = User.byEmail(request.getEmail(), passwordEncoder.encode(password))
+            .setName(request.getName())
+            .setRoles(request.getRoles());
+
+        return create(user);
+    }
+
+    public User create(OAuthUserRequest request) {
+        User user = User.byProviderEmail(request.getProvider(), request.getExternalId(), request.getEmail())
             .setName(request.getName())
             .setRoles(request.getRoles());
 

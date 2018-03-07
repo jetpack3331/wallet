@@ -3,7 +3,7 @@ package hut34.wallet.repository;
 import hut34.wallet.framework.usermanagement.model.User;
 import hut34.wallet.model.WalletAccount;
 import hut34.wallet.testinfra.TestData;
-import hut34.wallet.testinfra.rules.BaseIntegrationTest;
+import hut34.wallet.testinfra.BaseIntegrationTest;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

@@ -5,7 +5,7 @@ import com.googlecode.objectify.annotation.Id;
 import hut34.wallet.framework.BaseEntity;
 import hut34.wallet.framework.usermanagement.model.User;
 import hut34.wallet.testinfra.TestData;
-import hut34.wallet.testinfra.rules.BaseIntegrationTest;
+import hut34.wallet.testinfra.BaseIntegrationTest;
 import hut34.wallet.testinfra.rules.SecurityContextRule;
 import org.junit.Before;
 import org.junit.Rule;

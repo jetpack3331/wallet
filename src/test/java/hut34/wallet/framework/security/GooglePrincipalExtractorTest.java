@@ -1,12 +1,14 @@
 package hut34.wallet.framework.security;
 
 import hut34.wallet.framework.usermanagement.dto.AuthUser;
-import hut34.wallet.framework.usermanagement.dto.UpdateUserRequest;
+import hut34.wallet.framework.usermanagement.dto.OAuthUserRequest;
+import hut34.wallet.framework.usermanagement.model.AuthProvider;
 import hut34.wallet.framework.usermanagement.service.UserService;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -50,12 +52,13 @@ public class GooglePrincipalExtractorTest {
         Map<String, Object> infoMap = new HashMap<>();
         infoMap.put("email", "bob@email.com");
         infoMap.put("name", "Bob");
+        infoMap.put("sub", "googleId");
 
         UserDetails principal = (UserDetails) principalExtractor.extractPrincipal(infoMap);
 
         assertThat(principal.getUsername(), is("bob@email.com"));
         assertThat(principal.isEnabled(), is(true));
-        verify(userService, never()).create(any(UpdateUserRequest.class), any(String.class));
+        verify(userService, never()).create(any(OAuthUserRequest.class));
     }
 
     @Test
@@ -67,10 +70,17 @@ public class GooglePrincipalExtractorTest {
         Map<String, Object> infoMap = new HashMap<>();
         infoMap.put("email", "bob@email.com");
         infoMap.put("name", "Bob");
+        infoMap.put("sub", "googleId");
 
         UserDetails principal = (UserDetails) principalExtractor.extractPrincipal(infoMap);
 
         assertThat(principal.getUsername(), is("bob@email.com"));
-        verify(userService).create(any(UpdateUserRequest.class), any(String.class));
+
+        ArgumentCaptor<OAuthUserRequest> argument = ArgumentCaptor.forClass(OAuthUserRequest.class);
+        verify(userService).create(argument.capture());
+        assertThat(argument.getValue().getExternalId(), is("googleId"));
+        assertThat(argument.getValue().getProvider(), is(AuthProvider.GOOGLE));
+        assertThat(argument.getValue().getEmail(), is("bob@email.com"));
+        assertThat(argument.getValue().getName(), is("Bob"));
     }
 }

@@ -45,7 +45,14 @@ export const getFirst = state => (state.listIds.walletAccounts.length &&
   getById(state, state.listIds.walletAccounts[0])) || null;
 export const listWalletAccountsIsLoading = state => state.listIds.loading;
 
-export default combineReducers({
+const walletReducers = combineReducers({
   byId,
   listIds,
 });
+
+const resetOnLogoutReducer = (state, action) => {
+  const walletState = action.type === 'REQUEST_LOGOUT_SUCCESS' ? undefined : state;
+  return walletReducers(walletState, action);
+};
+
+export default resetOnLogoutReducer;

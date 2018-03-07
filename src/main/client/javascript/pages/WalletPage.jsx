@@ -1,4 +1,4 @@
-import { CircularProgress } from 'material-ui';
+import { CircularProgress, Grid } from 'material-ui';
 import * as PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -7,7 +7,10 @@ import { createWalletAccount, fetchMyWalletAccounts } from '../actions/wallets';
 import CreateWalletForm from '../components/forms/CreateWalletForm';
 import { walletAccount } from '../model';
 import { getFirstWalletAccount, listWalletAccountsIsLoading } from '../reducers';
-import './HomePage.less';
+import './WalletPage.less';
+import DownloadKeystoreButton from '../components/wallet/DownloadKeystoreButton';
+
+const iconWallet = require('../../images/icon-wallet.png');
 
 class WalletPage extends React.Component {
   static propTypes = {
@@ -34,10 +37,18 @@ class WalletPage extends React.Component {
               {this.props.walletAccountsLoading && <CircularProgress/>}
 
               {!this.props.walletAccountsLoading && this.props.walletAccount &&
-              <div className="row wallets">
-                <h1 className="display-1"><strong>My Wallet</strong></h1>
-                <p>Wallet created: {this.props.walletAccount.address}</p>
-              </div>
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={6}>
+                  <img src={iconWallet} className="icon-wallet" alt="Wallet icon"/>
+                  <h1 className="display-1 inline-title"><strong>My Wallet</strong></h1>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <DownloadKeystoreButton walletAccount={this.props.walletAccount}/>
+                </Grid>
+                <Grid item xs={12}>
+                  <p>Wallet created: {this.props.walletAccount.address}</p>
+                </Grid>
+              </Grid>
               }
 
               {!this.props.walletAccountsLoading && !this.props.walletAccount &&

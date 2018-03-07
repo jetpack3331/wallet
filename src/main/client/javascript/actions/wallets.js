@@ -3,13 +3,13 @@ import { normalize } from 'normalizr';
 import schemas from '../schemas';
 import wallets from '../services/api/wallets';
 
-export const createWalletAccount = password => (dispatch) => {
+export const createWalletAccount = request => (dispatch) => {
   dispatch({ type: 'CREATE_WALLET_ACCOUNT_INPROGRESS' });
 
   const wallet = Wallet.createRandom();
 
   console.log('Encrypting wallet ...');
-  return wallet.encrypt(password)
+  return wallet.encrypt(request.password)
     .then((secretStorageJson) => {
       console.log('Encryption complete. Saving wallet');
       return wallets.createWalletAccount({

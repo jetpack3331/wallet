@@ -3,11 +3,20 @@ import { createMuiTheme } from 'material-ui/styles';
 
 const spacing = 8;
 
+const hutOrange = '#fd562b';
+const white = '#ffffff';
+const black = '#000000';
+
 export default createMuiTheme({
   palette: {
+    background: hutOrange,
+    type: 'dark',
     primary: {
-      main: Color('#8bd1cc').darken(0.15).hex(),
-      contrastText: '#ffffff',
+      main: white,
+      contrastText: Color(white).darken(0.15).hex(),
+    },
+    error: {
+      main: black,
     },
   },
   spacing: {
@@ -32,8 +41,8 @@ export default createMuiTheme({
     },
     MuiAppBar: {
       colorPrimary: {
-        backgroundColor: 'rgba(0, 0, 0, 0.87)',
-        color: '#FFFFFF',
+        backgroundColor: hutOrange,
+        color: white,
       },
     },
   },

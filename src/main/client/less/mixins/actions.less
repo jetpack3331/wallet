@@ -1,0 +1,29 @@
+.actions {
+    margin-top: 24px;
+
+    &.actions-top {
+        margin-top: 0;
+    }
+
+    &.actions-right {
+        text-align: right;
+    }
+
+    >div + div {
+        margin-left: 18px;
+    }
+}
+
+.header-with-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    >:first-child {
+        flex-grow: 1;
+    }
+
+    >h1, >h2 {
+        margin: 0;
+    }
+}

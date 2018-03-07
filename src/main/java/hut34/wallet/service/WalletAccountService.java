@@ -1,5 +1,7 @@
 package hut34.wallet.service;
 
+import com.googlecode.objectify.Key;
+import hut34.wallet.framework.usermanagement.model.User;
 import hut34.wallet.framework.usermanagement.model.UserAdapterGae;
 import hut34.wallet.model.WalletAccount;
 import hut34.wallet.repository.WalletAccountRepository;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WalletAccountService {
@@ -35,4 +38,13 @@ public class WalletAccountService {
             .orElseGet(ArrayList::new);
     }
 
+    public Optional<WalletAccount> get(String address) {
+        return walletAccountRepository.findById(address)
+            .filter(walletAccount -> currentUserAuthorisedToView(walletAccount.getOwnerKey()));
+    }
+
+    private boolean currentUserAuthorisedToView(Key<User> objectOwner) {
+        Optional<Key<User>> currentUserKey = UserAdapterGae.currentUserKey();
+        return currentUserKey.isPresent() && currentUserKey.get().equals(objectOwner);
+    }
 }

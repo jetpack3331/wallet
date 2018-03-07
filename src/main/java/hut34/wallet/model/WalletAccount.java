@@ -1,5 +1,6 @@
 package hut34.wallet.model;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -51,6 +52,10 @@ public class WalletAccount extends BaseEntity {
 
     public User getOwner() {
         return Refs.deref(owner);
+    }
+
+    public Key<User> getOwnerKey() {
+        return owner.getKey();
     }
 
     @Override

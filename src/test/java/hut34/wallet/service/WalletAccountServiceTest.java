@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static hut34.wallet.testinfra.MockHelpers.mockSave;
+import static hut34.wallet.testinfra.TestData.user;
 import static hut34.wallet.testinfra.matcher.Matchers.hasFieldWithUserRef;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -48,7 +49,7 @@ public class WalletAccountServiceTest extends BaseTest {
 
     @Before
     public void before() {
-        user = TestData.user();
+        user = user();
         mockSave(walletAccountRepository, WalletAccount.class);
     }
 
@@ -97,5 +98,43 @@ public class WalletAccountServiceTest extends BaseTest {
         verifyNoMoreInteractions(walletAccountRepository);
     }
 
+    @Test
+    public void get_willReturnEmpty_whenNotFound() {
+        String address = "address";
+        when(walletAccountRepository.findById(address)).thenReturn(Optional.empty());
 
+        Optional<WalletAccount> result = walletAccountService.get("address");
+        assertThat(result.isPresent(), is(false));
+    }
+
+    @Test
+    public void get_willReturnEmpty_whenNoCurrentUser() {
+        String address = "address";
+        when(walletAccountRepository.findById(address)).thenReturn(Optional.of(TestData.walletAccount(address)));
+        SecurityContextHolder.clearContext();
+
+        Optional<WalletAccount> result = walletAccountService.get("address");
+        assertThat(result.isPresent(), is(false));
+    }
+
+    @Test
+    public void get_willReturnEmpty_whenCurrentUserNotAuthorised() {
+        String address = "address";
+        WalletAccount wallet = TestData.walletAccount(address, user("notauth@email.com"));
+        when(walletAccountRepository.findById(address)).thenReturn(Optional.of(wallet));
+
+        Optional<WalletAccount> result = walletAccountService.get("address");
+        assertThat(result.isPresent(), is(false));
+    }
+
+    @Test
+    public void get_willReturnWallet_whenExistsAndUserAuthorised() {
+        String address = "address";
+        WalletAccount wallet = TestData.walletAccount(address, securityContextRule.getUser());
+        when(walletAccountRepository.findById(address)).thenReturn(Optional.of(wallet));
+
+        Optional<WalletAccount> result = walletAccountService.get("address");
+        assertThat(result.isPresent(), is(true));
+        assertThat(result.get().getAddress(), is("address"));
+    }
 }

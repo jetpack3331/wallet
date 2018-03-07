@@ -8,8 +8,11 @@ import hut34.wallet.testinfra.TestData;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.http.MediaType;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import java.time.OffsetDateTime;
 import java.util.Collections;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -18,6 +21,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -61,5 +66,29 @@ public class WalletAccountControllerTest extends BaseControllerTest {
             .andExpect(jsonPath("[0].secretStorageJson", is(walletAccount.getSecretStorageJson())));
     }
 
+    @Test
+    public void download_willReturn404_whenWalletNotFound() throws Exception {
+        when(walletAccountService.get("WalletAddress")).thenReturn(Optional.empty());
 
+        mvc.perform(
+            get("/api/wallets/accounts/WalletAddress/download"))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("error", is("NotFoundException")))
+            .andExpect(jsonPath("message", is("Not found")));
+    }
+
+    @Test
+    public void download_willDownloadSecretStorageJson() throws Exception {
+        WalletAccount walletAccount = TestData.walletAccount();
+        ReflectionTestUtils.setField(walletAccount, "created", OffsetDateTime.parse("2018-03-07T09:28:10.445Z"));
+        when(walletAccountService.get("0xASDFMEWIFREVNERIGVNERTIGRTNBRT")).thenReturn(Optional.of(walletAccount));
+        String expectedFilename = "UTC--2018-03-07T09-28-10.445Z--0xASDFMEWIFREVNERIGVNERTIGRTNBRT";
+
+        mvc.perform(
+            get("/api/wallets/accounts/0xASDFMEWIFREVNERIGVNERTIGRTNBRT/download"))
+            .andExpect(status().isOk())
+            .andExpect(header().string("Content-Type", "application/json"))
+            .andExpect(header().string("Content-Disposition", String.format("attachment; filename=%s;", expectedFilename)))
+            .andExpect(content().string(walletAccount.getSecretStorageJson()));
+    }
 }

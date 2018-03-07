@@ -6,7 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import hut34.wallet.framework.controller.advice.ExceptionHandlerAdvice;
 import hut34.wallet.testinfra.rules.LocalServicesRule;
+import hut34.wallet.util.DateTimeUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,9 +49,10 @@ public abstract class BaseControllerTest {
             )
             .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         mvc = MockMvcBuilders
-                .standaloneSetup(controller())
-                .alwaysDo(print())
-                .build();
+            .standaloneSetup(controller())
+            .setControllerAdvice(new ExceptionHandlerAdvice())
+            .alwaysDo(print())
+            .build();
     }
 
     protected String asString(Object object) {

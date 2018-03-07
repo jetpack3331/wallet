@@ -9,14 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
-@TestPropertySource(properties = { "app.host=http://testinghost:8080" })
 @ContextConfiguration(classes = TestApplicationContext.class)
 @SpringBootTest
 public abstract class BaseIntegrationTest {

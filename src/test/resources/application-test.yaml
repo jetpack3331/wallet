@@ -1,0 +1,11 @@
+app:
+    host: http://testinghost:8080
+
+oauth:
+    google:
+        client:
+            clientId: test-google-client-id.apps.googleusercontent.com
+            clientSecret: test-google-client-secret
+
+etherscan:
+    apiKey: test-etherscan-key

@@ -39,6 +39,15 @@ hot module reloading.
 
 ### Deploying
 
+Before deploying you will need privileged environment-specific configuration which cannot be shared
+on a public repository for obvious security reasons. These are maintained separately and we create symlinks
+in `src/main/resources` on our local drive for the following files (these are in `.gitignore`):
+
+* application-hut34-wallet-local.yaml
+* application-hut34-wallet-dev.yaml 
+* application-hut34-wallet-uat.yaml
+* application-hut34-wallet-prod.yaml
+
 When you're ready to deploy your application you can:
 
 1. **Package your app for deployment**

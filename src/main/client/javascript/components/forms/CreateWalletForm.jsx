@@ -1,4 +1,4 @@
-import { Button } from 'material-ui';
+import { Button, CircularProgress } from 'material-ui';
 import * as PropTypes from 'prop-types';
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
@@ -10,7 +10,7 @@ const CreateWalletForm = props => (
     {props.error && <p style={{ color: 'red' }}>{props.error}</p>}
     <div>
       <Field
-        autofocus
+        autoFocus
         name="password"
         component={TextField}
         label="Password"
@@ -21,6 +21,7 @@ const CreateWalletForm = props => (
           format({ with: /.*\d+.*/i, msg: 'must have one or more numeric digits' }),
           format({ with: /.*\D+.*/i, msg: 'must have one or more non-numeric character' }),
         ]}
+        disabled={props.submitting}
       />
     </div>
     <div>
@@ -32,9 +33,11 @@ const CreateWalletForm = props => (
         validate={[
           confirmation({ field: 'password', msg: 'passwords do not match' }),
         ]}
+        disabled={props.submitting}
       />
     </div>
     <div className="actions">
+      {!props.submitting &&
       <Button
         className="btn-primary"
         variant="raised"
@@ -42,6 +45,8 @@ const CreateWalletForm = props => (
       >
         Create Wallet
       </Button>
+      }
+      {props.submitting && <CircularProgress/>}
     </div>
   </form>
 );
@@ -49,6 +54,7 @@ const CreateWalletForm = props => (
 CreateWalletForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.string,
+  submitting: PropTypes.bool.isRequired,
 };
 
 CreateWalletForm.defaultProps = {

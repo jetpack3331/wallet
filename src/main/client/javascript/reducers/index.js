@@ -24,5 +24,7 @@ export const getIsAuthenticated = state =>
 
 export const getFirstWalletAccount = state =>
   fromWalletAccounts.getFirst(state.walletAccounts);
+export const listWalletAccountsIsLoading = state =>
+  fromWalletAccounts.listWalletAccountsIsLoading(state.walletAccounts);
 
 export default rootReducer;

@@ -6,6 +6,9 @@ import hut34.wallet.repository.WalletAccountRepository;
 import hut34.wallet.util.Assert;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class WalletAccountService {
     private final WalletAccountRepository walletAccountRepository;
@@ -24,6 +27,12 @@ public class WalletAccountService {
             .setSecretStorageJson(encryptedPrivateKey);
 
         return walletAccountRepository.save(walletAccount);
+    }
+
+    public List<WalletAccount> listForCurrentUser() {
+        return UserAdapterGae.currentUserKey()
+            .map(key -> walletAccountRepository.findAllByField(WalletAccount.Fields.owner, key))
+            .orElseGet(ArrayList::new);
     }
 
 }

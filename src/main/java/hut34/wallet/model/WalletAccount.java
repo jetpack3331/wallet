@@ -3,20 +3,23 @@ package hut34.wallet.model;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import hut34.wallet.framework.BaseEntity;
 import hut34.wallet.framework.usermanagement.model.User;
 import hut34.wallet.util.Assert;
 import org.springframework.contrib.gae.objectify.Refs;
 
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
 public class WalletAccount extends BaseEntity {
-    @NotNull
+    public static class Fields {
+        public static final String owner = "owner";
+    }
+
     @Id
     private String address;
-    @NotNull
+    @Index
     private Ref<User> owner;
     private String secretStorageJson;
 

@@ -4,33 +4,37 @@ import hut34.wallet.framework.usermanagement.model.User;
 import hut34.wallet.framework.usermanagement.model.UserAdapterGae;
 import hut34.wallet.model.WalletAccount;
 import hut34.wallet.repository.WalletAccountRepository;
+import hut34.wallet.testinfra.BaseTest;
 import hut34.wallet.testinfra.TestData;
-import hut34.wallet.testinfra.rules.LocalServicesRule;
+import hut34.wallet.testinfra.rules.SecurityContextRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.contrib.gae.objectify.Refs;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static hut34.wallet.testinfra.MockHelpers.mockSave;
 import static hut34.wallet.testinfra.matcher.Matchers.hasFieldWithUserRef;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class WalletAccountServiceTest {
+public class WalletAccountServiceTest extends BaseTest {
 
     @Rule
-    public final ExpectedException thrown = ExpectedException.none();
-    @Rule
-    public LocalServicesRule localServicesRule = new LocalServicesRule();
+    public SecurityContextRule securityContextRule = new SecurityContextRule();
 
     @InjectMocks
     private WalletAccountService walletAccountService;
@@ -72,5 +76,26 @@ public class WalletAccountServiceTest {
         thrown.expectMessage("Wallet account already exists for address");
         walletAccountService.create(address, "encryptedPrivateKey");
     }
+
+    @Test
+    public void listForCurrentUser() {
+        List<WalletAccount> expectedResults = Collections.singletonList(TestData.walletAccount());
+        when(walletAccountRepository.findAllByField(WalletAccount.Fields.owner, Refs.key(securityContextRule.getUser()))).thenReturn(expectedResults);
+
+        List<WalletAccount> result = walletAccountService.listForCurrentUser();
+
+        assertThat(result, is(expectedResults));
+    }
+
+    @Test
+    public void listForCurrentUser_willReturnEmptyList_whenNoCurrentUser() {
+        SecurityContextHolder.clearContext();
+
+        List<WalletAccount> result = walletAccountService.listForCurrentUser();
+
+        assertThat(result, empty());
+        verifyNoMoreInteractions(walletAccountRepository);
+    }
+
 
 }

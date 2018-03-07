@@ -11,12 +11,23 @@ const byId = (state = {}, action) => {
   return state;
 };
 
-const listIds = (state = { walletAccounts: [] }, action) => {
+const listIds = (state = { walletAccounts: [], loading: false }, action) => {
   switch (action.type) {
     case 'CREATE_WALLET_ACCOUNT_SUCCESS':
       return {
         ...state,
         walletAccounts: [...state.walletAccounts, action.response.result],
+      };
+    case 'WALLET_ACCOUNTS_FETCH_INPROGRESS':
+      return {
+        ...state,
+        loading: true,
+      };
+    case 'WALLET_ACCOUNTS_FETCH_SUCCESS':
+      return {
+        ...state,
+        walletAccounts: [...action.response.result],
+        loading: false,
       };
     default:
       return state;
@@ -32,6 +43,7 @@ export const getAll = createSelector(
 export const getById = (state, id) => state.byId[id];
 export const getFirst = state => (state.listIds.walletAccounts.length &&
   getById(state, state.listIds.walletAccounts[0])) || null;
+export const listWalletAccountsIsLoading = state => state.listIds.loading;
 
 export default combineReducers({
   byId,

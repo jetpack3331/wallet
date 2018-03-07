@@ -2,6 +2,14 @@ import { Wallet } from 'ethers';
 import { normalize } from 'normalizr';
 import schemas from '../schemas';
 import wallets from '../services/api/wallets';
+import { asyncAction } from './actions';
+
+export const fetchMyWalletAccounts = () => asyncAction(
+  'WALLET_ACCOUNTS_FETCH',
+  wallets.fetchMyWalletAccounts(), {
+    responseTransformer: walletAccounts => normalize(walletAccounts, schemas.arrayOfWalletAccounts),
+  },
+);
 
 export const createWalletAccount = request => (dispatch) => {
   dispatch({ type: 'CREATE_WALLET_ACCOUNT_INPROGRESS' });

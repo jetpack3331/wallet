@@ -334,6 +334,11 @@
                     <version>${app.version}</version>
                     <port>8080</port>
                     <promote>false</promote>
+                    <deployables>
+                        <param>target/appengine-staging/app.yaml</param>
+                        <param>target/appengine-staging/WEB-INF/appengine-generated/cron.yaml</param>
+                        <param>target/appengine-staging/WEB-INF/appengine-generated/queue.yaml</param>
+                    </deployables>
                 </configuration>
             </plugin>
         </plugins>

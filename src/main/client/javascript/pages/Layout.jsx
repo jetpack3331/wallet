@@ -42,18 +42,17 @@ class Layout extends Component {
 
     return (
       <div className="layout">
-        <AppBar className="app-bar" position="static" color="inherit">
+        <AppBar className="app-bar" position="static" color="primary">
           <Toolbar>
             <div className="title-container">
               <img className="logo" src={logoImage} alt="HUT34 Wallet"/>
             </div>
-            {user && user.name && (
+            {user && user.email && (
               <div>
                 <IconButton
                   aria-owns={anchorEl ? 'menu-appbar' : null}
                   aria-haspopup="true"
                   onClick={this.handleMenu}
-                  color="inherit"
                 >
                   <AccountCircle/>
                 </IconButton>
@@ -61,14 +60,6 @@ class Layout extends Component {
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
                   open={Boolean(anchorEl)}
                   onClose={this.handleClose}
                 >

@@ -9,7 +9,6 @@ const black = '#000000';
 
 export default createMuiTheme({
   palette: {
-    background: hutOrange,
     type: 'dark',
     primary: {
       main: white,

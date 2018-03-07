@@ -11,7 +11,7 @@ import { logout } from '../actions/auth';
 const logoImage = require('../../images/logo-hut34-wallet.png');
 
 class Layout extends Component {
-  propTypes = {
+  static propTypes = {
     user: PropTypes.object,
     handleLogout: PropTypes.func.isRequired,
     children: PropTypes.oneOfType([
@@ -20,7 +20,7 @@ class Layout extends Component {
     ]).isRequired,
   };
 
-  defaultProps = {
+  static defaultProps = {
     user: undefined,
   };
 

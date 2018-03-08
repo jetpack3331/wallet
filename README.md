@@ -2,7 +2,7 @@
 
 This project aims to make wallets easier for humans and bots. The codebase is still very
 much evolving, so stay tuned!
-
+ 
 ## Technical info
 
 This project was generated using the [React Spring GAE generator][generator-spring-gae-react]. 

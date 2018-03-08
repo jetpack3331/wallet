@@ -42,8 +42,8 @@ class WalletPage extends React.Component {
               <div className="row no-wallet">
                 <div className="main-icon"><img className="icon no-wallet" src={NoWalletIcon} alt="No Wallet"/></div>
                 <h1 className="display-1"><strong>No Wallet</strong></h1>
-                <p>Choose a password to create one now!</p>
-                <p>
+                <p><strong>Choose a password to create one now!</strong></p>
+                <p className="important-message">
                   <strong>Important: </strong> We have no knowledge of your password and
                   cannot help if it is lost or forgotten. <br/>
                   Please take care in choosing a secure password, and also making sure you

@@ -1,16 +1,149 @@
 @import "../../less/mixins/mixins.less";
 
+
+/* Wallet Page */
+
 .wallet-page {
-
-    .inline-title {
-        display: inline-block;
-        margin: 0;
-        vertical-align: middle;
+    .no-wallet {
+        text-align: center;
     }
+    .wallet-header {
+        text-align: left;
 
-    .icon-wallet {
-        height: 48px;
-        vertical-align: middle;
-        margin-right: 1rem;
+        .icon-wallet {
+            float: left;
+            height: 54px;
+            margin-top: 6px;
+            margin-right: 1rem;
+        }
+        .details {
+            h1 {
+                margin-bottom: 0;
+            }
+            p {
+                font-size: 0.813rem;
+                line-height: 2rem;
+            }
+        }
+    }
+    .wallet-actions {
+        text-align: right;
+    }
+    .wallet-balance {
+        text-align: right;
+        margin-bottom: 0;
+        font-size: 0.813rem;
+        strong {
+            display: block;
+            font-weight: 500;
+            margin-top: 3px;
+        }
+        .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+            .currency {
+                color: rgba(255,255,255,1);
+                font-size: 1rem;
+                font-weight: 700;
+                margin-left: 3px;
+            }
+        }
     }
 }
+
+
+// Large devices (desktops, less than 1200px)
+@media screen and (max-width: 1279px) {
+
+}
+
+
+// Medium devices (tablets, less than 992px)
+@media screen and (max-width: 959px) {
+    .wallet-page {
+        .wallet-header {
+            .icon-wallet {
+                float: left;
+                margin-bottom: 0.5rem;
+            }
+            .details {
+                display: block;
+                h1 {
+                    margin-bottom: 0.187rem;
+                }
+                p {
+                    line-height: 140%;
+                    margin-bottom: 0;
+                    font-size: 0.75rem;
+                }
+            }
+        }
+        .wallet-actions {
+            text-align: right;
+        }
+        .wallet-balance {
+            border-top: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            margin-top: 1px;
+            padding: 0.5rem 0 1rem;
+            text-align: right;
+            strong {
+                font-weight: 600;
+                margin-top: 3px;
+            }
+            .value {
+                .currency {
+                    color: rgba(255,255,255,0.75);
+                    font-size: 0.813rem;
+
+                }
+            }
+        }
+    }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media screen and (max-width: 599px) {
+    .wallet-page {
+        .wallet-header {
+            .icon-wallet {
+                float: none;
+                margin-bottom: 1rem;
+            }
+
+            .details {
+                h1 {
+                    margin-bottom: 1rem;
+                }
+                p {
+                    line-height: 140%;
+                    margin-bottom: 0;
+                    font-size: 0.625rem;
+                }
+            }
+        }
+        .wallet-actions {
+            text-align: left;
+        }
+        .wallet-balance {
+            border-top: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            margin-top: 1px;
+            padding: 1rem 0 1.5rem;
+            text-align: left;
+            strong {
+                font-weight: 600;
+                margin-top: 3px;
+            }
+            .value {
+                .currency {
+                    color: rgba(255,255,255,0.75);
+                    font-size: 0.813rem;
+
+                }
+            }
+        }
+    }
+}
+

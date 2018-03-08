@@ -3,8 +3,9 @@ import React from 'react';
 import { fromTokenBase, getDecimalFromEtherUnit } from '../util/crypto-units';
 
 const EtherDisplay = ({ value }) => (
-  <span>
-    {value && `${fromTokenBase(value, getDecimalFromEtherUnit('ether'))} ETH`}
+  <span className="value">
+    <span className="label">{ value && `${fromTokenBase(value, getDecimalFromEtherUnit('ether'))}` }</span>
+    <span className="currency">{ value && 'ETH' }</span>
   </span>
 );
 

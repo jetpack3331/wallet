@@ -7,7 +7,7 @@ const DownloadKeystoreButton = ({ walletAccount }) => (
   <Tooltip title="Download encrypted keystore" enterDelay={300}>
     <Button className="btn-primary" variant="raised" size="small" href={`/api/wallets/accounts/${walletAccount.address}/download`}>
       <LockOutline className="btn-icon-left"/>
-      Download keystore
+      Keystore
     </Button>
   </Tooltip>
 );

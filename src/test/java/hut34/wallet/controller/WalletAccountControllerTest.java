@@ -1,6 +1,9 @@
 package hut34.wallet.controller;
 
 import hut34.wallet.client.etherscan.EtherscanClient;
+import hut34.wallet.client.etherscan.Sort;
+import hut34.wallet.client.etherscan.TestEtherscan;
+import hut34.wallet.client.etherscan.model.Transaction;
 import hut34.wallet.controller.dto.CreateWalletRequest;
 import hut34.wallet.model.WalletAccount;
 import hut34.wallet.service.WalletAccountService;
@@ -80,6 +83,19 @@ public class WalletAccountControllerTest extends BaseControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("address", is(ETHEREUM_ADDRESS)))
             .andExpect(jsonPath("balance", is(ONE_ETH)));
+    }
+
+    @Test
+    public void getTransactions() throws Exception {
+        Transaction transaction = TestEtherscan.transaction();
+        when(etherscanClient.getTransactions(ETHEREUM_ADDRESS, Sort.DESC)).thenReturn(Collections.singletonList(transaction));
+
+        mvc.perform(
+            get("/api/wallets/accounts/{address}/transactions", ETHEREUM_ADDRESS).contentType(APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("address", is(ETHEREUM_ADDRESS)))
+            .andExpect(jsonPath("transactions", hasSize(1)))
+            .andExpect(jsonPath("transactions[0].hash", is(transaction.getHash())));
     }
 
     @Test

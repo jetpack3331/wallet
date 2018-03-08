@@ -1,9 +1,11 @@
 package hut34.wallet.controller;
 
 import hut34.wallet.client.etherscan.EtherscanClient;
+import hut34.wallet.client.etherscan.Sort;
 import hut34.wallet.controller.dto.CreateWalletRequest;
 import hut34.wallet.controller.dto.WalletAccountBalance;
 import hut34.wallet.controller.dto.WalletAccountDto;
+import hut34.wallet.controller.dto.WalletAccountTransactions;
 import hut34.wallet.model.WalletAccount;
 import hut34.wallet.service.WalletAccountService;
 import hut34.wallet.util.NotFoundException;
@@ -50,6 +52,11 @@ public class WalletAccountController {
     @GetMapping("/api/wallets/accounts/{address}/balance")
     public WalletAccountBalance getBalance(@PathVariable String address) {
         return new WalletAccountBalance(address, etherscanClient.getBalance(address));
+    }
+
+    @GetMapping("/api/wallets/accounts/{address}/transactions")
+    public WalletAccountTransactions getTransactions(@PathVariable String address) {
+        return new WalletAccountTransactions(address, etherscanClient.getTransactions(address, Sort.DESC));
     }
 
     @GetMapping("/api/wallets/accounts/{address}/download")

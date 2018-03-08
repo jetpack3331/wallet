@@ -4,6 +4,8 @@ import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogT
 import { Wallet } from 'ethers';
 import { SubmissionError, submit } from 'redux-form';
 import { connect } from 'react-redux';
+import Visibility from 'material-ui-icons/Visibility';
+import VisibilityOff from 'material-ui-icons/VisibilityOff';
 import ViewPrivateKeyForm from '../forms/ViewPrivateKeyForm';
 import ViewPrivateKeyPanel from './ViewPrivateKeyPanel';
 
@@ -45,7 +47,6 @@ class ViewPrivateKeyDialog extends React.Component {
   render() {
     return (
       <Dialog
-        title="View private key"
         open={this.props.open}
         onClose={this.props.onClose}
         onExited={this.clearState}
@@ -62,6 +63,7 @@ class ViewPrivateKeyDialog extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button variant="flat" onTouchTap={this.props.onClose}>
+              <VisibilityOff className="btn-icon-left"/>
               Close
             </Button>
           </DialogActions>
@@ -77,6 +79,7 @@ class ViewPrivateKeyDialog extends React.Component {
               Cancel
             </Button>
             <Button variant="flat" color="primary" onTouchTap={this.handleSubmit} disabled={this.state.submitting}>
+              {!this.state.submitting && <Visibility className="btn-icon-left"/>}
               {!this.state.submitting && 'View key'}
               {this.state.submitting && <CircularProgress size={20}/>}
             </Button>

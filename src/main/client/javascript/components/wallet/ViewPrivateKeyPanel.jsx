@@ -40,7 +40,7 @@ class ViewPrivateKeyPanel extends Component {
       <div>
         <p>
           Your private key is shown below.
-          It will be automatically hidden in {this.state.timeRemaining} seconds.
+          It will be hidden automatically in {this.state.timeRemaining} seconds.
         </p>
         <TextField
           className="private-key-field"

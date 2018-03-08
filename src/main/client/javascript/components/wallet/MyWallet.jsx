@@ -8,7 +8,7 @@ import { walletAccount, walletBalance } from '../../model';
 import { getWalletBalance } from '../../reducers';
 import EtherDisplay from '../EtherDisplay';
 import DownloadKeystoreButton from './DownloadKeystoreButton';
-
+import ViewPrivateKeyButton from './ViewPrivateKeyButton';
 
 class MyWallet extends React.Component {
   static propTypes = {
@@ -39,15 +39,20 @@ class MyWallet extends React.Component {
         </Grid>
         <Grid item xs={12} sm={5} md={3} lg={4}>
           {this.props.walletBalance &&
-            <p className="wallet-balance">
-              <strong>Wallet Balance</strong>
-              <EtherDisplay value={this.props.walletBalance.balance}/>
-            </p>
+          <p className="wallet-balance">
+            <strong>Wallet Balance</strong>
+            <EtherDisplay value={this.props.walletBalance.balance}/>
+          </p>
           }
         </Grid>
         <Grid item xs={12} sm={12} md={2} lg={1}>
           <div className="wallet-actions">
-            <DownloadKeystoreButton walletAccount={this.props.walletAccount}/>
+            <div className="wallet-action">
+              <DownloadKeystoreButton walletAccount={this.props.walletAccount}/>
+            </div>
+            <div className="wallet-action">
+              <ViewPrivateKeyButton walletAccount={this.props.walletAccount}/>
+            </div>
           </div>
         </Grid>
       </Grid>

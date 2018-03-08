@@ -13,8 +13,16 @@ export const fetchMyWalletAccounts = () => asyncAction(
 
 export const fetchWalletBalance = address => asyncAction(
   'WALLET_BALANCE_FETCH',
-  wallets.getBalance(address), {
+  wallets.fetchWalletBalance(address), {
     responseTransformer: walletBalance => normalize(walletBalance, schemas.walletBalance),
+  },
+);
+
+export const fetchWalletTransactions = address => asyncAction(
+  'WALLET_TRANSACTIONS_FETCH',
+  wallets.fetchWalletTransactions(address), {
+    responseTransformer: walletTransactions =>
+      normalize(walletTransactions, schemas.walletTransactions),
   },
 );
 

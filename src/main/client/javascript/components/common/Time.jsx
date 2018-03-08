@@ -3,7 +3,7 @@ import React from 'react';
 import { FormattedTime } from 'react-intl';
 
 const Time = ({ value }) => (
-  <FormattedTime timeZone="Australia/Sydney" value={value}/>
+  <FormattedTime value={value}/>
 );
 
 Time.propTypes = {

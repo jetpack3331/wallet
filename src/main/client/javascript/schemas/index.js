@@ -7,6 +7,8 @@ const walletAccount = new schema.Entity('walletAccounts', {}, { idAttribute: 'ad
 const arrayOfWalletAccounts = new schema.Array(walletAccount);
 
 const walletBalance = new schema.Entity('walletBalances', {}, { idAttribute: 'address' });
+const walletTransactions = new schema.Entity('walletTransactions', {}, { idAttribute: 'address' });
+
 
 export default {
   user,
@@ -14,4 +16,5 @@ export default {
   walletAccount,
   arrayOfWalletAccounts,
   walletBalance,
+  walletTransactions,
 };

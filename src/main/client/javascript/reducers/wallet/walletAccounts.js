@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
+import resetOnLogout from '../resetOnLogout';
 
 const byId = (state = {}, action) => {
   if (action.response && action.response.entities) {
@@ -45,14 +45,7 @@ export const getFirst = state => (state.listIds.walletAccounts.length &&
   getById(state, state.listIds.walletAccounts[0])) || null;
 export const listWalletAccountsIsLoading = state => state.listIds.loading;
 
-const walletReducers = combineReducers({
+export default resetOnLogout({
   byId,
   listIds,
 });
-
-const resetOnLogoutReducer = (state, action) => {
-  const walletState = action.type === 'REQUEST_LOGOUT_SUCCESS' ? undefined : state;
-  return walletReducers(walletState, action);
-};
-
-export default resetOnLogoutReducer;

@@ -78,6 +78,7 @@ public class WalletAccountControllerTest extends BaseControllerTest {
         mvc.perform(
             get("/api/wallets/accounts/{address}/balance", ETHEREUM_ADDRESS).contentType(APPLICATION_JSON))
             .andExpect(status().isOk())
+            .andExpect(jsonPath("address", is(ETHEREUM_ADDRESS)))
             .andExpect(jsonPath("balance", is(ONE_ETH)));
     }
 

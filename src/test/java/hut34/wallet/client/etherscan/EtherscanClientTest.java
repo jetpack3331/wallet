@@ -106,7 +106,7 @@ public class EtherscanClientTest {
         ListResponse<T> listResponse = new ListResponse<>();
         listResponse.setStatus("1");
         listResponse.setMessage("OK");
-        listResponse.setResponse(response);
+        listResponse.setResult(response);
         return asString(listResponse);
     }
 
@@ -114,7 +114,7 @@ public class EtherscanClientTest {
         StringResponse stringResponse = new StringResponse();
         stringResponse.setStatus("1");
         stringResponse.setMessage("OK");
-        stringResponse.setResponse(value);
+        stringResponse.setResult(value);
         return asString(stringResponse);
     }
 

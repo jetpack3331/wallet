@@ -1,4 +1,4 @@
-import reducer from '../../../main/client/javascript/reducers/walletAccounts';
+import reducer from '../../../main/client/javascript/reducers/wallet/walletAccounts';
 
 describe('Reducer: WalletAccounts', () => {
   const initialState = {

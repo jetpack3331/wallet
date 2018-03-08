@@ -29,7 +29,7 @@ public class EtherscanClient {
 
         validateResponse(response);
 
-        return response.getResponse();
+        return response.getResult();
     }
 
     public List<Transaction> getTransactions(String address, Sort sort) {
@@ -38,7 +38,7 @@ public class EtherscanClient {
 
         validateResponse(response);
 
-        return response.getResponse();
+        return response.getResult();
     }
 
     private <T> Response<T> validateResponse(Response<T> response) {

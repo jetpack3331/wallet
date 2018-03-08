@@ -6,7 +6,7 @@ import java.util.List;
 public class ListResponse<T> extends Response<List<T>> {
 
     public ListResponse() {
-        setResponse(new ArrayList<>());
+        setResult(new ArrayList<>());
     }
 
 }

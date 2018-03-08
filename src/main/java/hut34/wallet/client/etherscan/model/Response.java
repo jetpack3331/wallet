@@ -3,7 +3,7 @@ package hut34.wallet.client.etherscan.model;
 public class Response<T> {
     private String status;
     private String message;
-    private T response;
+    private T result;
 
     public String getStatus() {
         return status;
@@ -21,11 +21,11 @@ public class Response<T> {
         this.message = message;
     }
 
-    public T getResponse() {
-        return response;
+    public T getResult() {
+        return result;
     }
 
-    public void setResponse(T response) {
-        this.response = response;
+    public void setResult(T result) {
+        this.result = result;
     }
 }

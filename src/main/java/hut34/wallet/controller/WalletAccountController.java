@@ -49,7 +49,7 @@ public class WalletAccountController {
 
     @GetMapping("/api/wallets/accounts/{address}/balance")
     public WalletAccountBalance getBalance(@PathVariable String address) {
-        return new WalletAccountBalance(etherscanClient.getBalance(address));
+        return new WalletAccountBalance(address, etherscanClient.getBalance(address));
     }
 
     @GetMapping("/api/wallets/accounts/{address}/download")

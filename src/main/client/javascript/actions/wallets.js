@@ -11,6 +11,13 @@ export const fetchMyWalletAccounts = () => asyncAction(
   },
 );
 
+export const fetchWalletBalance = address => asyncAction(
+  'WALLET_BALANCE_FETCH',
+  wallets.getBalance(address), {
+    responseTransformer: walletBalance => normalize(walletBalance, schemas.walletBalance),
+  },
+);
+
 export const createWalletAccount = request => (dispatch) => {
   dispatch({ type: 'CREATE_WALLET_ACCOUNT_INPROGRESS' });
 

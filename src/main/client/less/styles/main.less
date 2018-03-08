@@ -90,8 +90,7 @@ body {
 
 
 .container {
-    width: 1100px;
-    max-width: 90%; /*1178px;*/
+    max-width: 1100px; /*1178px;*/
     margin: auto;
 }
 
@@ -130,11 +129,6 @@ button.btn-margin {
     margin-top: 3rem;
     font-size: 0.686rem;
     color: fade(#ffffff, 60%);
-}
-
-/* Wallet Page */
-
-.wallet-page {
     text-align: center;
 }
 
@@ -142,28 +136,32 @@ button.btn-margin {
 // Extra small devices (portrait phones, less than 576px)
 @media screen and (max-width: 575px) {
     .container {
-        width: 90%; /*1178px;*/
+        width: auto; /*90%;*/
+        max-width: 100%;
     }
 }
 
 // Small devices (landscape phones, less than 768px)
 @media screen and (max-width: 767px) {
     .container {
-        width: 707px; /*1178px;*/
+        width: auto; /*707px;*/
+        max-width: 100%;
     }
 }
 
 // Medium devices (tablets, less than 992px)
 @media screen and (max-width: 991px) {
     .container {
-        width: 800px; /*1178px;*/
+        width: auto; /*800px;*/
+        max-width: 100%;
     }
 }
 
 // Large devices (desktops, less than 1200px)
 @media screen and (max-width: 1199px) {
     .container {
-        width: 900px; /*1178px;*/
+        width: auto; /*900px;*/
+        max-width: 100%;
     }
 }
 

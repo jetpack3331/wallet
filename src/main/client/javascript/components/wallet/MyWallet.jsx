@@ -28,18 +28,27 @@ class MyWallet extends React.Component {
   render() {
     return (
       <Grid container spacing={24}>
-        <Grid item xs={12} sm={6}>
-          <img src={WalletIcon} className="icon-wallet" alt="Wallet icon"/>
-          <h1 className="display-1 inline-title"><strong>My Wallet</strong></h1>
+        <Grid item xs={12} sm={7} md={7} lg={7}>
+          <div className="wallet-header">
+            <img src={WalletIcon} className="icon-wallet" alt="Wallet icon"/>
+            <div className="details">
+              <h1 className="display-1 inline-title"><strong>My Wallet</strong></h1>
+              <p className="wallet-address" title="Wallet Address"><strong>Address:</strong> {this.props.walletAccount.address}</p>
+            </div>
+          </div>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <DownloadKeystoreButton walletAccount={this.props.walletAccount}/>
-        </Grid>
-        <Grid item xs={12}>
-          <p>Wallet address: {this.props.walletAccount.address}</p>
+        <Grid item xs={12} sm={5} md={3} lg={4}>
           {this.props.walletBalance &&
-            <p>Wallet balance: <EtherDisplay value={this.props.walletBalance.balance}/></p>
+            <p className="wallet-balance">
+              <strong>Wallet Balance</strong>
+              <EtherDisplay value={this.props.walletBalance.balance}/>
+            </p>
           }
+        </Grid>
+        <Grid item xs={12} sm={12} md={2} lg={1}>
+          <div className="wallet-actions">
+            <DownloadKeystoreButton walletAccount={this.props.walletAccount}/>
+          </div>
         </Grid>
       </Grid>
     );

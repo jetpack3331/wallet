@@ -3,6 +3,7 @@ package hut34.wallet.client.etherscan;
 import hut34.wallet.client.etherscan.model.Transaction;
 
 public class TestEtherscan {
+    public static final String ONE_ETH = "1000000000000000000";
 
     // From: http://api.etherscan.io/api?module=account&action=txlist&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&startblock=54092&endblock=54092
     public static Transaction transaction() {

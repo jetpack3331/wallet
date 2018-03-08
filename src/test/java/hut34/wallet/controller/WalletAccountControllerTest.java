@@ -1,5 +1,6 @@
 package hut34.wallet.controller;
 
+import hut34.wallet.client.etherscan.EtherscanClient;
 import hut34.wallet.controller.dto.CreateWalletRequest;
 import hut34.wallet.model.WalletAccount;
 import hut34.wallet.service.WalletAccountService;
@@ -14,6 +15,7 @@ import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
+import static hut34.wallet.client.etherscan.TestEtherscan.ONE_ETH;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -28,17 +30,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class WalletAccountControllerTest extends BaseControllerTest {
 
+    private static final String ETHEREUM_ADDRESS = "0x236cBCDf103a77F6401cF40cAc1F22Ca80B7aaE4";
     @Mock
     private WalletAccountService walletAccountService;
+    @Mock
+    private EtherscanClient etherscanClient;
 
     @Override
     protected Object controller() {
-        return new WalletAccountController(walletAccountService);
+        return new WalletAccountController(walletAccountService, etherscanClient);
     }
 
     @Test
     public void create() throws Exception {
-        CreateWalletRequest request = new CreateWalletRequest("0x236cBCDf103a77F6401cF40cAc1F22Ca80B7aaE4", "femfefiefowejfno43ifnm34ofin3498f3498598");
+        CreateWalletRequest request = new CreateWalletRequest(ETHEREUM_ADDRESS, "femfefiefowejfno43ifnm34ofin3498f3498598");
         WalletAccount walletAccount = new WalletAccount(request.getAddress(), TestData.user())
             .setSecretStorageJson(request.getSecretStorageJson());
         when(walletAccountService.create(request.getAddress(), request.getSecretStorageJson())).thenReturn(walletAccount);
@@ -64,6 +69,16 @@ public class WalletAccountControllerTest extends BaseControllerTest {
             .andExpect(jsonPath("$", hasSize(1)))
             .andExpect(jsonPath("[0].address", is(walletAccount.getAddress())))
             .andExpect(jsonPath("[0].secretStorageJson", is(walletAccount.getSecretStorageJson())));
+    }
+
+    @Test
+    public void getBalance() throws Exception {
+        when(etherscanClient.getBalance(ETHEREUM_ADDRESS)).thenReturn(ONE_ETH);
+
+        mvc.perform(
+            get("/api/wallets/accounts/{address}/balance", ETHEREUM_ADDRESS).contentType(APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("balance", is(ONE_ETH)));
     }
 
     @Test

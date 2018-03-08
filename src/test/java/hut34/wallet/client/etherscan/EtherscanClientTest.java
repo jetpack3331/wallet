@@ -19,6 +19,7 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import java.util.Arrays;
 import java.util.List;
 
+import static hut34.wallet.client.etherscan.TestEtherscan.ONE_ETH;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -29,8 +30,6 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @ActiveProfiles("test")
 @RestClientTest(EtherscanClient.class)
 public class EtherscanClientTest {
-    private static final String ONE_ETH = "1000000000000000000";
-
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 

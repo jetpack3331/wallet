@@ -1,6 +1,8 @@
 package hut34.wallet.controller;
 
+import hut34.wallet.client.etherscan.EtherscanClient;
 import hut34.wallet.controller.dto.CreateWalletRequest;
+import hut34.wallet.controller.dto.WalletAccountBalance;
 import hut34.wallet.controller.dto.WalletAccountDto;
 import hut34.wallet.model.WalletAccount;
 import hut34.wallet.service.WalletAccountService;
@@ -26,9 +28,11 @@ import static hut34.wallet.controller.dto.transformer.Transformers.TO_WALLET_ACC
 public class WalletAccountController {
 
     private final WalletAccountService walletAccountService;
+    private final EtherscanClient etherscanClient;
 
-    public WalletAccountController(WalletAccountService walletAccountService) {
+    public WalletAccountController(WalletAccountService walletAccountService, EtherscanClient etherscanClient) {
         this.walletAccountService = walletAccountService;
+        this.etherscanClient = etherscanClient;
     }
 
     @PostMapping("/api/wallets/accounts")
@@ -41,6 +45,11 @@ public class WalletAccountController {
     public List<WalletAccountDto> listForCurrentUser() {
         return TO_WALLET_ACCOUNT_DTO
             .transform(walletAccountService.listForCurrentUser());
+    }
+
+    @GetMapping("/api/wallets/accounts/{address}/balance")
+    public WalletAccountBalance getBalance(@PathVariable String address) {
+        return new WalletAccountBalance(etherscanClient.getBalance(address));
     }
 
     @GetMapping("/api/wallets/accounts/{address}/download")

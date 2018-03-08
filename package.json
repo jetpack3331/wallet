@@ -6,7 +6,8 @@
     "build": "webpack",
     "lint": "eslint src/main/client/javascript",
     "start": "NODE_ENV=development webpack-dev-server",
-    "test": "jest"
+    "test": "jest",
+    "analyze-bundle": "NODE_ENV=production webpack --profile --json > target/stats.json && webpack-bundle-analyzer target/stats.json target/$npm_package_name-$npm_package_version-SNAPSHOT/client"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",
@@ -38,6 +39,7 @@
     "style-loader": "^0.19.0",
     "url-loader": "^0.6.2",
     "webpack": "^3.5.5",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-server": "^2.5.0",
     "webpack-merge": "^4.1.0",
     "xml2js": "^0.4.17"
@@ -47,7 +49,6 @@
     "async": "^2.5.0",
     "babel-polyfill": "^6.23.0",
     "bn.js": "^4.11.8",
-    "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
     "color": "^2.0.0",
     "ethereumjs-util": "^5.1.5",

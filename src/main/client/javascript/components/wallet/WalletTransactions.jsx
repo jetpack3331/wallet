@@ -68,6 +68,8 @@ class WalletTransactions extends Component {
 
     if (!transactions) {
       transactionsList = <CircularProgress/>;
+    } else if (!transactions.length) {
+      transactionsList = <div className="no-transactions">Looks like there are no transactions yet.</div>;
     } else {
       transactionsList = (
         <Table className="transaction-table">

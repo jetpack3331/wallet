@@ -12,19 +12,28 @@ import DateTime from '../common/DateTime';
 import EtherDisplay from '../EtherDisplay';
 
 const TransactionRow = ({ address, transaction }) => {
-  const inOrOut = from => (from === address ? <ArrowForward className="trans-out"/> : <ArrowBack className="trans-in" />);
-  const targetAddress = addr => (addr === address ? 'me' : addr);
+  const inwards = address === transaction.to;
+  const transTypeIcon = inwards ? <ArrowBack className="trans-in" /> : <ArrowForward className="trans-out"/>;
+
 
   return (
     <TableRow key={transaction.hash}>
-      <TableCell>{inOrOut(transaction.from)}</TableCell>
-      <TableCell>{transaction.hash}</TableCell>
-      <TableCell><Link href={`https://etherscan.io/block/${transaction.blockNumber}`} target="_blank">{transaction.blockNumber}</Link></TableCell>
-      <TableCell><DateTime value={transaction.timeStamp} unix/></TableCell>
-      <TableCell>{targetAddress(transaction.from)}</TableCell>
-      <TableCell>{targetAddress(transaction.to)}</TableCell>
-      <TableCell><EtherDisplay value={transaction.value}/></TableCell>
-      <TableCell><EtherDisplay value={transaction.gas * transaction.gasPrice}/></TableCell>
+      <TableCell>{transTypeIcon}</TableCell>
+      <TableCell>
+        <span className="transaction-date"><DateTime value={transaction.timeStamp} unix/></span>
+      </TableCell>
+      <TableCell>
+        <span className="hash">{transaction.hash}</span>
+        <span className="block"><strong>Block.</strong> <Link href={`https://etherscan.io/block/${transaction.blockNumber}`} className="block-link" target="_blank">{transaction.blockNumber}</Link></span>
+      </TableCell>
+      <TableCell>
+        {inwards && <span className="wallet-id from"><strong>From.</strong> ${transaction.from}</span>}
+        {!inwards && <span className="wallet-id to"><strong>To.</strong> ${transaction.to}</span>}
+      </TableCell>
+      <TableCell>
+        <EtherDisplay className="value" value={transaction.value}/>
+        <span className="fee"><strong>TX Fee</strong> <EtherDisplay value={transaction.gas * transaction.gasPrice}/></span>
+      </TableCell>
     </TableRow>
   );
 };
@@ -61,17 +70,14 @@ class WalletTransactions extends Component {
       transactionsList = <CircularProgress/>;
     } else {
       transactionsList = (
-        <Table>
+        <Table className="transaction-table">
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell>Hash</TableCell>
-              <TableCell>Block</TableCell>
-              <TableCell>Time</TableCell>
-              <TableCell>From</TableCell>
-              <TableCell>To</TableCell>
-              <TableCell>Value</TableCell>
-              <TableCell>Tx Fee</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Hash/Block</TableCell>
+              <TableCell>Wallet Id</TableCell>
+              <TableCell>Value (ETH)</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -85,7 +91,8 @@ class WalletTransactions extends Component {
     }
 
     return (
-      <div>
+      <div className="transaction-container">
+        <h5><strong>Transactions</strong></h5>
         {transactionsList}
       </div>
     );

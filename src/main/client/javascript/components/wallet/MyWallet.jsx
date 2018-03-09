@@ -29,7 +29,7 @@ class MyWallet extends React.Component {
   render() {
     return (
       <Grid container spacing={24}>
-        <Grid item xs={12} sm={7} md={7} lg={7}>
+        <Grid item xs={12} sm={7} md={6} lg={7}>
           <div className="wallet-header">
             <img src={WalletIcon} className="icon-wallet" alt="Wallet icon"/>
             <div className="details">
@@ -38,7 +38,7 @@ class MyWallet extends React.Component {
             </div>
           </div>
         </Grid>
-        <Grid item xs={12} sm={5} md={3} lg={4}>
+        <Grid item xs={12} sm={5} md={3} lg={3}>
           {this.props.walletBalance &&
           <p className="wallet-balance">
             <strong>Wallet Balance</strong>
@@ -49,12 +49,10 @@ class MyWallet extends React.Component {
           </p>
           }
         </Grid>
-        <Grid item xs={12} sm={12} md={2} lg={1}>
+        <Grid item xs={12} sm={12} md={3} lg={2}>
           <div className="wallet-actions">
             <div className="wallet-action">
               <DownloadKeystoreButton walletAccount={this.props.walletAccount}/>
-            </div>
-            <div className="wallet-action">
               <ViewPrivateKeyButton walletAccount={this.props.walletAccount}/>
             </div>
           </div>

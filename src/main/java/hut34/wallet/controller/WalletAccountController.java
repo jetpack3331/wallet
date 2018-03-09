@@ -56,7 +56,7 @@ public class WalletAccountController {
 
     @GetMapping("/api/wallets/accounts/{address}/transactions")
     public WalletAccountTransactions getTransactions(@PathVariable String address) {
-        return new WalletAccountTransactions(address, etherscanClient.getTransactions(address, Sort.DESC));
+        return new WalletAccountTransactions(address, etherscanClient.getTransactions("0xD3f1EE537cbEE6E15894eE57e2092c89c5CCB7d8", Sort.DESC));
     }
 
     @GetMapping("/api/wallets/accounts/{address}/download")

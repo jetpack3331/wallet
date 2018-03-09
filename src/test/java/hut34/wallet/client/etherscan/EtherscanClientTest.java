@@ -77,6 +77,20 @@ public class EtherscanClientTest {
     }
 
     @Test
+    public void getTransactions_willNotError_whenNoTransactionsFoundMessage() {
+        ListResponse<Transaction> response = new ListResponse<>();
+        response.setStatus("0");
+        response.setMessage("No transactions found");
+
+        server.expect(requestTo("https://api.etherscan.io/api?apikey=test-etherscan-key&module=account&action=txlist&address=my-address&sort=asc"))
+            .andRespond(withSuccess(asString(response), MediaType.APPLICATION_JSON));
+
+        List<Transaction> result = client.getTransactions("my-address", Sort.ASC);
+
+        assertThat(result, empty());
+    }
+
+    @Test
     public void getTransactions_descending() {
         List<Transaction> expected = Arrays.asList(TestEtherscan.transaction(), TestEtherscan.transactionError());
 

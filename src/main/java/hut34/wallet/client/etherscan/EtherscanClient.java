@@ -1,5 +1,6 @@
 package hut34.wallet.client.etherscan;
 
+import com.google.common.collect.Sets;
 import hut34.wallet.client.etherscan.model.Response;
 import hut34.wallet.client.etherscan.model.StringResponse;
 import hut34.wallet.client.etherscan.model.Transaction;
@@ -10,10 +11,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class EtherscanClient {
     private static final String OK_STATUS = "1";
+    private static final Set<String> ERRORS_TO_IGNORE = Sets.newHashSet("No transactions found");
 
     private final RestOperations restOperations;
     private final String baseUrl;
@@ -42,7 +45,7 @@ public class EtherscanClient {
     }
 
     private <T> Response<T> validateResponse(Response<T> response) {
-        if (!OK_STATUS.equals(response.getStatus())) {
+        if (!OK_STATUS.equals(response.getStatus()) && !ERRORS_TO_IGNORE.contains(response.getMessage())) {
             throw new EtherscanClientException(String.format("Error from remote server: %s", response.getMessage()));
         }
         return response;

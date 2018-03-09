@@ -13,6 +13,7 @@ import EtherDisplay from '../EtherDisplay';
 
 const TransactionRow = ({ address, transaction }) => {
   const inOrOut = from => (from === address ? <ArrowForward className="trans-out"/> : <ArrowBack className="trans-in" />);
+  const targetAddress = addr => (addr === address ? 'me' : addr);
 
   return (
     <TableRow key={transaction.hash}>
@@ -20,8 +21,8 @@ const TransactionRow = ({ address, transaction }) => {
       <TableCell>{transaction.hash}</TableCell>
       <TableCell><Link href={`https://etherscan.io/block/${transaction.blockNumber}`} target="_blank">{transaction.blockNumber}</Link></TableCell>
       <TableCell><DateTime value={transaction.timeStamp} unix/></TableCell>
-      <TableCell>{transaction.from}</TableCell>
-      <TableCell>{transaction.to}</TableCell>
+      <TableCell>{targetAddress(transaction.from)}</TableCell>
+      <TableCell>{targetAddress(transaction.to)}</TableCell>
       <TableCell><EtherDisplay value={transaction.value}/></TableCell>
       <TableCell><EtherDisplay value={transaction.gas * transaction.gasPrice}/></TableCell>
     </TableRow>

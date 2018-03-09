@@ -34,8 +34,7 @@ export const listWalletAccountsIsLoading = state =>
 export const getWalletBalance = (state, address) =>
   fromWalletBalances.getById(state.walletBalances, address);
 
-export const getWalletTransactions = (state, address) => {
-  return fromWalletTransactions.getById(state.walletTransactions, address);
-};
+export const getWalletTransactions = (state, address) =>
+  fromWalletTransactions.getById(state.walletTransactions, address);
 
 export default rootReducer;

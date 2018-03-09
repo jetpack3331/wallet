@@ -66,7 +66,7 @@ const commonConfig = {
 
     new FaviconsWebpackPlugin({
       // The source icon
-      logo: path.resolve(sourceDir, 'images/favicon/original.png'),
+      logo: path.resolve(sourceDir, 'images/favicon/original.jpg'),
 
       // The prefix for all image files (might be a folder or a name)
       prefix: 'images/favicon-[hash]/',

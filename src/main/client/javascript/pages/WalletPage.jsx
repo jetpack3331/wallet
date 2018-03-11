@@ -59,7 +59,6 @@ class WalletPage extends React.Component {
             </div>
           </div>
         </div>
-        <footer><p className="footer-disclaimer">2018&copy; Hut34 Wallet | The Open Source Crypto Wallet</p></footer>
       </div>
 
     );

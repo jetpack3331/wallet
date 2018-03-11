@@ -71,6 +71,7 @@ class Layout extends Component {
         </AppBar>
         <div className="default-layout">
           {children}
+          <footer><p className="footer-disclaimer">2018&copy; Hut34 Wallet | Making Ethereum wallets easier for AI, bots, and people</p></footer>
         </div>
       </div>
     );

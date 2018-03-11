@@ -16,7 +16,6 @@ const HomePage = () => (
         <Link className="google-login" to="/login/google" target="_self"><img className="google-icon" src={GoogleIcon} alt="G"/> Sign in using Google</Link>
       </div>
     </div>
-    <footer><p className="footer-disclaimer">2018&copy; Hut34 Wallet | The Open Source Crypto Wallet</p></footer>
   </div>
 );
 

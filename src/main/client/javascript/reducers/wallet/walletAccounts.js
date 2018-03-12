@@ -14,6 +14,7 @@ const byId = (state = {}, action) => {
 const listIds = (state = { walletAccounts: [], loading: false }, action) => {
   switch (action.type) {
     case 'CREATE_WALLET_ACCOUNT_SUCCESS':
+    case 'IMPORT_WALLET_ACCOUNT_SUCCESS':
       return {
         ...state,
         walletAccounts: [...state.walletAccounts, action.response.result],

@@ -1,4 +1,4 @@
-import { toLower } from 'lodash/string';
+import { toLower, truncate } from 'lodash/string';
 import React, { Component } from 'react';
 import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from 'material-ui';
 import ArrowBack from 'material-ui-icons/ArrowBack';
@@ -11,25 +11,29 @@ import { walletTransactions, walletTransaction } from '../../model';
 import { getWalletTransactions } from '../../reducers';
 import DateTime from '../common/DateTime';
 import EtherDisplay from '../EtherDisplay';
+import './WalletTransactions.less';
 
 const TransactionRow = ({ address, transaction }) => {
   const inwards = toLower(address) === toLower(transaction.to);
-  const transTypeIcon = inwards ? <ArrowBack className="trans-in" /> : <ArrowForward className="trans-out"/>;
+  const transTypeIcon = inwards ? <span><ArrowBack className="trans-in" /><span className="icon-text">IN</span></span> :
+  <span><ArrowForward className="trans-out"/><span className="icon-text">OUT</span></span>;
 
 
   return (
     <TableRow>
-      <TableCell>{transTypeIcon}</TableCell>
+      <TableCell className="trans-icon">{transTypeIcon}</TableCell>
+      <TableCell>
+        <span className="block">
+          {inwards && <span><strong>From:</strong> {transaction.from}</span>}
+          {!inwards && <span><strong>To:</strong> {transaction.to}</span>}
+        </span>
+        <span className="block">
+          <strong>Block:</strong> <Link href={`https://etherscan.io/block/${transaction.blockNumber}`} className="block-link" target="_blank">{transaction.blockNumber}</Link><span className="separator"> | </span>
+          <strong>Txn: </strong> <Link title={transaction.hash} href={`https://etherscan.io/tx/${transaction.hash}`} className="block-link" target="_blank">{truncate(transaction.hash, { length: 19 })}</Link>
+        </span>
+      </TableCell>
       <TableCell>
         <span className="transaction-date"><DateTime value={transaction.timeStamp} unix/></span>
-      </TableCell>
-      <TableCell>
-        <span className="hash">{transaction.hash}</span>
-        <span className="block"><strong>Block.</strong> <Link href={`https://etherscan.io/block/${transaction.blockNumber}`} className="block-link" target="_blank">{transaction.blockNumber}</Link></span>
-      </TableCell>
-      <TableCell>
-        {inwards && <span className="wallet-id from"><strong>From.</strong> {transaction.from}</span>}
-        {!inwards && <span className="wallet-id to"><strong>To.</strong> {transaction.to}</span>}
       </TableCell>
       <TableCell>
         <EtherDisplay className="value" value={transaction.value}/>
@@ -77,9 +81,8 @@ class WalletTransactions extends Component {
           <TableHead>
             <TableRow>
               <TableCell />
+              <TableCell>Details</TableCell>
               <TableCell>Date</TableCell>
-              <TableCell>Hash/Block</TableCell>
-              <TableCell>Wallet Id</TableCell>
               <TableCell>Value (ETH)</TableCell>
             </TableRow>
           </TableHead>

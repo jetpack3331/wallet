@@ -1,0 +1,77 @@
+.transaction-container {
+    margin-top: 1rem;
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+
+    .transaction-table {
+        td, th {
+            border-bottom: 1px solid #fff;
+            padding: 16px 12px 16px 12px;
+        }
+        .trans-icon {
+            .icon-text {
+                width: 24px;
+                text-align: center;
+                display: block;
+                font-size: 0.75em;
+                margin-top: -10px;
+            }
+        }
+
+        .hash {
+            display: block;
+            font-weight: 400;
+            margin-bottom: 6px;
+            font-size: 0.75rem;
+            line-height: 100%;
+        }
+        .block {
+            display: block;
+            font-size: 0.686rem;
+            line-height: 1rem;
+            margin-right: 12px;
+            a {
+                text-decoration: none;
+                color: #fff;
+                font-weight: 600;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+        .transaction-date {
+            font-size: 0.686rem;
+            line-height: 0.875rem;
+
+            .date-time span {
+                display: block;
+                &:first-of-type {
+                    font-size: 0.75rem;
+                    margin-bottom: 2px;
+                    font-weight: bold;
+                }
+            }
+        }
+        .wallet-id {
+            line-height: 100%;
+            strong {
+                display: block;
+                font-size: 0.686rem;
+                line-height: 0.875rem;
+            }
+        }
+        .value {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .fee {
+            color: rgba(255, 255, 255, 0.75);
+            display: block;
+            font-size: 0.563rem;
+            line-height: 0.563rem;
+        }
+    }
+}
+

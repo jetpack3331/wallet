@@ -15,7 +15,11 @@ const DateTime = ({ value, unix }) => {
 };
 
 DateTime.propTypes = {
-  value: (PropTypes.instanceOf(Date) || PropTypes.string || PropTypes.number).isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
   unix: PropTypes.bool,
 };
 

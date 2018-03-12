@@ -1,3 +1,4 @@
+import { toLower } from 'lodash/string';
 import React, { Component } from 'react';
 import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from 'material-ui';
 import ArrowBack from 'material-ui-icons/ArrowBack';
@@ -12,12 +13,12 @@ import DateTime from '../common/DateTime';
 import EtherDisplay from '../EtherDisplay';
 
 const TransactionRow = ({ address, transaction }) => {
-  const inwards = address === transaction.to;
+  const inwards = toLower(address) === toLower(transaction.to);
   const transTypeIcon = inwards ? <ArrowBack className="trans-in" /> : <ArrowForward className="trans-out"/>;
 
 
   return (
-    <TableRow key={transaction.hash}>
+    <TableRow>
       <TableCell>{transTypeIcon}</TableCell>
       <TableCell>
         <span className="transaction-date"><DateTime value={transaction.timeStamp} unix/></span>
@@ -85,7 +86,7 @@ class WalletTransactions extends Component {
           <TableBody>
             {transactions && transactions.map(trans =>
               (
-                <TransactionRow address={address} transaction={trans}/>
+                <TransactionRow key={trans.hash} address={address} transaction={trans}/>
               ))}
           </TableBody>
         </Table>

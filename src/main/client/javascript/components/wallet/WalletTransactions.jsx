@@ -27,8 +27,8 @@ const TransactionRow = ({ address, transaction }) => {
         <span className="block"><strong>Block.</strong> <Link href={`https://etherscan.io/block/${transaction.blockNumber}`} className="block-link" target="_blank">{transaction.blockNumber}</Link></span>
       </TableCell>
       <TableCell>
-        {inwards && <span className="wallet-id from"><strong>From.</strong> ${transaction.from}</span>}
-        {!inwards && <span className="wallet-id to"><strong>To.</strong> ${transaction.to}</span>}
+        {inwards && <span className="wallet-id from"><strong>From.</strong> {transaction.from}</span>}
+        {!inwards && <span className="wallet-id to"><strong>To.</strong> {transaction.to}</span>}
       </TableCell>
       <TableCell>
         <EtherDisplay className="value" value={transaction.value}/>

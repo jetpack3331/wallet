@@ -1,9 +1,9 @@
+import { formatEther } from 'ethers/utils';
 import * as PropTypes from 'prop-types';
 import React from 'react';
-import { fromTokenBase, getDecimalFromEtherUnit } from '../util/crypto-units';
 
 const EtherDisplay = ({ value, ...rest }) => (
-  <span {...rest}>{ value && `${fromTokenBase(value, getDecimalFromEtherUnit('ether'))}` }</span>
+  <span {...rest}>{ value && `${formatEther(value)}` }</span>
 );
 
 EtherDisplay.propTypes = {

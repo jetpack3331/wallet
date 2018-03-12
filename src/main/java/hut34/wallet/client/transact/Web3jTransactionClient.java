@@ -3,11 +3,13 @@ package hut34.wallet.client.transact;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.Response;
 
 import java.io.IOException;
 
+@Component
 public class Web3jTransactionClient implements TransactionClient {
     private static final Logger LOG = LoggerFactory.getLogger(Web3jTransactionClient.class);
 

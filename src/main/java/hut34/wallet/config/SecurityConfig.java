@@ -1,5 +1,6 @@
 package hut34.wallet.config;
 
+import hut34.wallet.framework.security.SessionExpiryHeaderWriter;
 import hut34.wallet.framework.usermanagement.model.User;
 import hut34.wallet.framework.usermanagement.model.UserAdapterGae;
 import hut34.wallet.framework.usermanagement.service.UserService;
@@ -69,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
             .addFilterBefore(oauthAuthenticationFilter(), BasicAuthenticationFilter.class)
             .headers()
+            .addHeaderWriter(new SessionExpiryHeaderWriter())
             .contentSecurityPolicy("default-src 'self'; script-src 'self' https://cdn.polyfill.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com blob:; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com");
         // @formatter:on
     }

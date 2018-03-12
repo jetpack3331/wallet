@@ -10,6 +10,7 @@ describe('Reducer: Auth', () => {
     expect(state).toEqual({
       user: null,
       isAuthenticated: false,
+      sessionExpiresAt: -1,
       error: null,
     });
   });

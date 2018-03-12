@@ -1,3 +1,4 @@
+import { push } from 'react-router-redux';
 import users from '../services/api/users';
 
 export const setUser = user => ({
@@ -48,3 +49,10 @@ export const logout = () => (dispatch) => {
       throw error;
     });
 };
+
+export const logoutToHome = () => dispatch =>
+  dispatch(logout())
+    .then(dispatch(push('/')));
+
+export const setSessionExpiry = value => dispatch =>
+  dispatch({ type: 'SET_SESSION_EXPIRY', value });

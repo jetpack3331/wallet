@@ -26,6 +26,9 @@ export const getLoggedInUser = state =>
 export const getIsAuthenticated = state =>
   fromAuth.getIsAuthenticated(state.auth);
 
+export const getSessionExpiresAt = state =>
+  fromAuth.getSessionExpiresAt(state.auth);
+
 export const getFirstWalletAccount = state =>
   fromWalletAccounts.getFirst(state.walletAccounts);
 export const listWalletAccountsIsLoading = state =>

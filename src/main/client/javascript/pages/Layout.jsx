@@ -7,6 +7,7 @@ import { push } from 'react-router-redux';
 import './Layout.less';
 import { getLoggedInUser } from '../reducers';
 import { logout } from '../actions/auth';
+import SessionExpiryNotification from '../components/SessionExpiryNotification';
 
 const logoImage = require('../../images/logo-hut34-wallet.png');
 
@@ -73,6 +74,7 @@ class Layout extends Component {
           {children}
           <footer><p className="footer-disclaimer">2018&copy; Hut34 Wallet | Making Ethereum wallets easier for AI, bots, and people</p></footer>
         </div>
+        <SessionExpiryNotification/>
       </div>
     );
   }

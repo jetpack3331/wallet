@@ -9,3 +9,6 @@ oauth:
 
 etherscan:
     apiKey: test-etherscan-key
+
+web3j:
+    clientUrl: https://client-url

@@ -17,7 +17,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
  * a standalone controller using {@link MockMvc} then extend {@link BaseControllerTest}.
  */
 @RunWith(SpringRunner.class)
-@ActiveProfiles("test")
+@ActiveProfiles("junit")
 @SpringBootTest
 public abstract class BaseControllerIntegrationTest {
 

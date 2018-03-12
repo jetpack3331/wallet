@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles("test")
+@ActiveProfiles("junit")
 @ContextConfiguration(classes = TestApplicationContext.class)
 @SpringBootTest
 public abstract class BaseIntegrationTest {

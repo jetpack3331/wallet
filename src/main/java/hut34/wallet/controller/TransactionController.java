@@ -6,9 +6,12 @@ import hut34.wallet.client.transact.TransactionClient;
 import hut34.wallet.controller.dto.SimpleRequest;
 import hut34.wallet.controller.dto.SimpleResponse;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigInteger;
 
 @RestController
 public class TransactionController {
@@ -25,6 +28,12 @@ public class TransactionController {
     public SimpleResponse<String> submitSignedTransaction(@RequestBody SimpleRequest<String> transaction) {
         String transactionHash = transactionClient.sendSignedTransaction(transaction.getValue());
         return new SimpleResponse<>(transactionHash);
+    }
+
+    @GetMapping("/api/accounts/{address}/nonce")
+    public SimpleResponse<BigInteger> getNextNonce(@PathVariable String address) {
+        BigInteger nextNonce = transactionClient.getNextNonce(address);
+        return new SimpleResponse<>(nextNonce);
     }
 
     @GetMapping("/api/gas")

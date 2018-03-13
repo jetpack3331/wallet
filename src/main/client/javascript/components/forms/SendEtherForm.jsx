@@ -24,9 +24,7 @@ class SendEtherForm extends React.Component {
 
   minSendEther = '0.0001';
 
-  validate = (message, condition) => {
-    return condition ? message : undefined;
-  };
+  validate = (message, condition) => (condition ? message : undefined);
 
   notBelowMinEther = (value) => {
     const minSend = parseEther(this.minSendEther);

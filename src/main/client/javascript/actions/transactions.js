@@ -10,7 +10,6 @@ export const signAndSendTransaction = (request, walletAddress, gasLimit, priceFi
     const gasPrices = getGasPrices(state);
 
     const transaction = {
-      nonce: 2,
       gasPrice: bigNumberify(gasPrices[priceField]),
       to: request.to,
       value: parseEther(request.amount),
@@ -18,7 +17,12 @@ export const signAndSendTransaction = (request, walletAddress, gasLimit, priceFi
     };
 
     dispatch({ type: 'SEND_TRANSACTION_INPROGRESS' });
-    Wallet.fromEncryptedWallet(secretStorageJson, request.password)
+    transactions.fetchNextNonce(walletAddress)
+      .then((response) => {
+        transaction.nonce = response.result;
+        console.log('Nonce fetched. Encrypting wallet ...');
+        return Wallet.fromEncryptedWallet(secretStorageJson, request.password);
+      })
       .then((wallet) => {
         console.log('Wallet unlocked. Signing transaction ...', transaction);
         return wallet.sign(transaction);
@@ -29,6 +33,7 @@ export const signAndSendTransaction = (request, walletAddress, gasLimit, priceFi
       })
       .then((response) => {
         dispatch({ type: 'SEND_TRANSACTION_SUCCESS', response });
+        console.log('Transaction success', response);
         return null;
       })
       .catch((error) => {

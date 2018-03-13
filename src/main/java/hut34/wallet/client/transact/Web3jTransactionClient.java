@@ -5,9 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.Response;
 
 import java.io.IOException;
+import java.math.BigInteger;
 
 @Component
 public class Web3jTransactionClient implements TransactionClient {
@@ -23,6 +25,12 @@ public class Web3jTransactionClient implements TransactionClient {
     public String sendSignedTransaction(String signedPayload) {
         return execute(() -> web3j.ethSendRawTransaction(signedPayload).send())
             .getTransactionHash();
+    }
+
+    @Override
+    public BigInteger getNextNonce(String address) {
+        return execute(() -> web3j.ethGetTransactionCount(address, DefaultBlockParameterName.LATEST).send())
+            .getTransactionCount();
     }
 
 

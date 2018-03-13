@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.springframework.http.MediaType;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -59,6 +60,16 @@ public class TransactionControllerTest extends BaseControllerTest {
             .andExpect(jsonPath("averagePrice", is("1000000000")))
             .andExpect(jsonPath("safeLowPrice", is("2000000000")))
             .andExpect(jsonPath("fastPrice", is("3000000000")));
+    }
+
+    @Test
+    public void getNextNonce() throws Exception {
+        when(transactionClient.getNextNonce("address")).thenReturn(new BigInteger("99"));
+
+        mvc.perform(
+            get("/api/accounts/{address}/nonce", "address").contentType(APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("result", is(99)));
     }
 
 }

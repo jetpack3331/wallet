@@ -7,9 +7,11 @@ import org.mockito.Mock;
 import org.web3j.protocol.Web3jService;
 import org.web3j.protocol.core.Request;
 import org.web3j.protocol.core.Response;
+import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
 
 import java.io.IOException;
+import java.math.BigInteger;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -66,6 +68,17 @@ public class Web3jTransactionClientTest extends BaseTest {
 
         client.sendSignedTransaction("signedPayload");
     }
-    
+
+    @Test
+    public void getNextNonce() throws IOException {
+        EthGetTransactionCount response = new EthGetTransactionCount();
+        response.setResult("0x03");
+        when(web3jService.send(any(Request.class), eq(EthGetTransactionCount.class))).thenReturn(response);
+
+        BigInteger result = client.getNextNonce("address");
+
+        assertThat(result.toString(), is("3"));
+    }
+
 
 }

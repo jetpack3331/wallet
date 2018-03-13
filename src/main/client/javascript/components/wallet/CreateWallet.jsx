@@ -8,7 +8,7 @@ import CreateWalletForm from '../../components/forms/CreateWalletForm';
 import ImportWalletForm from '../../components/forms/ImportWalletForm';
 import './CreateWallet.less';
 
-const CreateNewWalletFragment = ({ onCreateWalletAccount }) => (
+const CreateNewWalletFragment = ({ onCreateWalletAccount, onSwitchMode }) => (
   <Fragment>
     <p><strong>Choose a password to create one now!</strong></p>
     <p className="important-message">
@@ -20,18 +20,21 @@ const CreateNewWalletFragment = ({ onCreateWalletAccount }) => (
     <CreateWalletForm
       onSubmit={onCreateWalletAccount}
     />
+    <Button className="btn-margin" variant="flat" onClick={onSwitchMode}>Or import existing</Button>
   </Fragment>
 );
 
 CreateNewWalletFragment.propTypes = {
   onCreateWalletAccount: PropTypes.func.isRequired,
+  onSwitchMode: PropTypes.func.isRequired,
 };
 
-const ImportWalletFragment = ({ onImportWalletAccount }) => (
+const ImportWalletFragment = ({ onImportWalletAccount, onCancel }) => (
   <Fragment>
     <p>
       <strong>
-        Your existing private key and password will be converted into an encrypted keystore
+        Your existing private key will be encrypted using the password you supply.<br/>
+        The password can be different from the one used for the keystore you are importing from.
       </strong>
     </p>
     <p className="important-message">
@@ -43,12 +46,14 @@ const ImportWalletFragment = ({ onImportWalletAccount }) => (
     </p>
     <ImportWalletForm
       onSubmit={onImportWalletAccount}
+      onCancel={onCancel}
     />
   </Fragment>
 );
 
 ImportWalletFragment.propTypes = {
   onImportWalletAccount: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 
@@ -72,16 +77,18 @@ class CreateWallet extends React.Component {
         <div className="main-icon"><img className="icon no-wallet" src={NoWalletIcon} alt="No Wallet"/></div>
         <h1 className="display-1"><strong>No Wallet</strong></h1>
         {this.state.createMode === 'create' &&
-        <CreateNewWalletFragment onCreateWalletAccount={this.props.createWalletAccount}/>
+        <CreateNewWalletFragment
+          onCreateWalletAccount={this.props.createWalletAccount}
+          onSwitchMode={this.switchMode}
+        />
         }
         {this.state.createMode === 'import' &&
-        <ImportWalletFragment onImportWalletAccount={this.props.importPrivateKeyWalletAccount}/>
+        <ImportWalletFragment
+          onImportWalletAccount={this.props.importPrivateKeyWalletAccount}
+          onCancel={this.switchMode}
+        />
         }
-        <Button variant="flat" onClick={this.switchMode}>
-          Or&nbsp;
-          {this.state.createMode === 'create' && 'import existing'}
-          {this.state.createMode === 'import' && 'create new'}
-        </Button>
+
       </div>
     );
   }

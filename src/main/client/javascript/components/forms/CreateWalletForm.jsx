@@ -44,7 +44,7 @@ const CreateWalletForm = props => (
     <div className="actions">
       {!props.submitting &&
       <Button
-        className="btn-primary btn-margin"
+        className="btn-primary"
         variant="raised"
         type="submit"
       >

@@ -30,7 +30,7 @@ const ImportPrivateKeyWalletForm = props => (
         <Field
           name="password"
           component={TextField}
-          label="Password"
+          label="Set a password"
           type="password"
           validate={[
             required(),
@@ -57,9 +57,15 @@ const ImportPrivateKeyWalletForm = props => (
       </div>
     </div>
     <div className="actions">
+      <Button
+        variant="flat"
+        onClick={props.onCancel}
+      >
+        Cancel
+      </Button>
       {!props.submitting &&
       <Button
-        className="btn-primary btn-margin"
+        className="btn-primary"
         variant="raised"
         type="submit"
       >
@@ -73,6 +79,7 @@ const ImportPrivateKeyWalletForm = props => (
 
 ImportPrivateKeyWalletForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
   error: PropTypes.string,
   submitting: PropTypes.bool.isRequired,
 };

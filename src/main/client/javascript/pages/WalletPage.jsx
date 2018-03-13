@@ -1,13 +1,14 @@
-import { CircularProgress, Snackbar } from 'material-ui';
+import { CircularProgress, IconButton, Snackbar } from 'material-ui';
+import CloseIcon from 'material-ui-icons/Close';
 import * as PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { acknowledgeSentTransaction, fetchMyWalletAccounts } from '../actions/wallets';
+import CreateWallet from '../components/wallet/CreateWallet';
 import MyWallet from '../components/wallet/MyWallet';
 import * as model from '../model';
 import { getFirstWalletAccount, getLastSentTransactionId, listWalletAccountsIsLoading } from '../reducers';
-import CreateWallet from '../components/wallet/CreateWallet';
 import './WalletContainer.less';
 
 
@@ -31,12 +32,15 @@ class WalletPage extends React.Component {
 
   render() {
     const { lastSentTransactionId, handleCloseSnackbar, walletAccount } = this.props;
+
+    const handleClose = () => handleCloseSnackbar(walletAccount.address);
+
     return (
       <div className="wallet-container">
         {!!walletAccount &&
           <Snackbar
             open={!!lastSentTransactionId}
-            onClose={() => handleCloseSnackbar(walletAccount.address)}
+            onClose={handleClose}
             SnackbarContentProps={{
               'aria-describedby': 'message-id',
             }}
@@ -44,6 +48,16 @@ class WalletPage extends React.Component {
               <span id="message-id">Your transaction has been submitted.
               You will be able to track progress shortly by <Link target="_blank" href={`https://etherscan.io/address/${walletAccount.address}`}>clicking here</Link>.
               </span>}
+            action={[
+              <IconButton
+                key="close"
+                aria-label="Close"
+                color="inherit"
+                onClick={handleClose}
+              >
+                <CloseIcon />
+              </IconButton>,
+            ]}
           />
         }
         <div className="container">

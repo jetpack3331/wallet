@@ -5,7 +5,7 @@ import * as PropTypes from 'prop-types';
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
-import { required } from 'redux-form-validators';
+import { numericality, required } from 'redux-form-validators';
 import EtherDisplay from '../EtherDisplay';
 
 class SendEtherForm extends React.Component {
@@ -70,7 +70,12 @@ class SendEtherForm extends React.Component {
               label="Amount (ETH)"
               placeholder={`${this.minSendEther} to ${maxSendEther}`}
               type="text"
-              validate={[required(), this.notBelowMinEther, this.notExceedingMaxEther]}
+              validate={[
+                required(),
+                numericality(),
+                this.notBelowMinEther,
+                this.notExceedingMaxEther,
+              ]}
               disabled={submitting}
               fullWidth
             />

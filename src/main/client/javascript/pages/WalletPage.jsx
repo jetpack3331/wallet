@@ -7,7 +7,7 @@ import MyWallet from '../components/wallet/MyWallet';
 import { walletAccount } from '../model';
 import { getFirstWalletAccount, listWalletAccountsIsLoading } from '../reducers';
 import CreateWallet from '../components/wallet/CreateWallet';
-import './WalletPage.less';
+import './WalletContainer.less';
 
 
 class WalletPage extends React.Component {
@@ -27,7 +27,7 @@ class WalletPage extends React.Component {
 
   render() {
     return (
-      <div className="wallet-page">
+      <div className="wallet-container">
         <div className="container">
           <div className="widgets">
             {this.props.walletAccountsLoading && <CircularProgress/>}

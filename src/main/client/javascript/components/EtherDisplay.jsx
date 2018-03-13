@@ -1,4 +1,4 @@
-import { formatEther } from 'ethers/utils';
+import { formatEther, BigNumber } from 'ethers/utils';
 import * as PropTypes from 'prop-types';
 import React from 'react';
 
@@ -7,7 +7,7 @@ const EtherDisplay = ({ value, ...rest }) => (
 );
 
 EtherDisplay.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(BigNumber)]),
 };
 
 EtherDisplay.defaultProps = {

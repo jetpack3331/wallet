@@ -54,7 +54,7 @@ public class GasInfo {
         this.fast = fast;
     }
 
-    // For some unknown reason the gas api returns with units of 10 gwei https://github.com/ethgasstation/ethgasstation-backend/issues/5
+    // For some unknown reason the gas api returns with units of 1/10 gwei https://github.com/ethgasstation/ethgasstation-backend/issues/5
     private String toWei(BigDecimal source) {
         return Nulls.ifNotNull(source, s -> s.scaleByPowerOfTen(8).setScale(0, RoundingMode.FLOOR).toString());
     }

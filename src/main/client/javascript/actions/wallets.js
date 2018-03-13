@@ -1,5 +1,6 @@
 import { Wallet } from 'ethers';
 import { normalize } from 'normalizr';
+import { SubmissionError } from 'redux-form';
 import schemas from '../schemas';
 import wallets from '../services/api/wallets';
 import { asyncAction } from './actions';
@@ -56,5 +57,8 @@ export const importPrivateKeyWalletAccount = request => (dispatch) => {
   dispatch({ type: 'IMPORT_WALLET_ACCOUNT_INPROGRESS' });
   const key = request.privateKey.substr(0, 2) === '0x' ? request.privateKey : `0x${request.privateKey}`;
   const wallet = new Wallet(key);
-  return createWalletKeystore(dispatch, 'IMPORT_WALLET_ACCOUNT', wallet, request.password);
+  return createWalletKeystore(dispatch, 'IMPORT_WALLET_ACCOUNT', wallet, request.password)
+    .catch((error) => {
+      throw new SubmissionError({ _error: error.message });
+    });
 };

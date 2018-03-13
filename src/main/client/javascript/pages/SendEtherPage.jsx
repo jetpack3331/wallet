@@ -83,7 +83,7 @@ class SendEtherPage extends React.Component {
                   <SendEtherForm
                     onSubmit={this.props.signAndSendTransaction}
                     onCancel={() => this.props.cancelSend()}
-                    transactionFee={gasPrices.fastPrice * 21000}
+                    transactionFee={gasPrices.averagePrice * 21000}
                     balance={walletBalance.balance}
                   />
                 }
@@ -105,7 +105,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, { params }) => ({
-  signAndSendTransaction: data => dispatch(signAndSendTransaction(data, params.walletAddress, 21000, 'fastPrice')),
+  signAndSendTransaction: data => dispatch(signAndSendTransaction(data, params.walletAddress, 21000, 'averagePrice')),
   fetchMyWalletAccounts: () => dispatch(fetchMyWalletAccounts()),
   fetchWalletBalance: () => dispatch(fetchWalletBalance(params.walletAddress)),
   fetchGasPrices: () => dispatch(fetchGasPrices()),

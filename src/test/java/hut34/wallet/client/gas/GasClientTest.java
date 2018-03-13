@@ -36,6 +36,7 @@ public class GasClientTest {
         assertThat(gasInfo.getAveragePrice(), is("2100000000"));
         assertThat(gasInfo.getSafeLowPrice(), is("2000000000"));
         assertThat(gasInfo.getFastPrice(), is("6000000000"));
+        assertThat(gasInfo.getFastestPrice(), is("20000000000"));
     }
 
 }

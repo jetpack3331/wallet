@@ -17,6 +17,8 @@ public class GasInfo {
     private BigDecimal safeLow;
     @JsonProperty(access = WRITE_ONLY)
     private BigDecimal fast;
+    @JsonProperty(access = WRITE_ONLY)
+    private BigDecimal fastest;
 
     public BigDecimal getAverage() {
         return average;
@@ -52,6 +54,18 @@ public class GasInfo {
 
     public void setFast(BigDecimal fast) {
         this.fast = fast;
+    }
+
+    public BigDecimal getFastest() {
+        return fastest;
+    }
+
+    public void setFastest(BigDecimal fastest) {
+        this.fastest = fastest;
+    }
+
+    public String getFastestPrice() {
+        return toWei(fastest);
     }
 
     // For some unknown reason the gas api returns with units of 1/10 gwei https://github.com/ethgasstation/ethgasstation-backend/issues/5

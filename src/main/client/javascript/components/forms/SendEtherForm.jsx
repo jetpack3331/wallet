@@ -2,7 +2,7 @@ import { bigNumberify, formatEther, parseEther } from 'ethers/utils';
 import { isNil } from 'lodash';
 import { Button, CircularProgress } from 'material-ui';
 import * as PropTypes from 'prop-types';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import { numericality, required } from 'redux-form-validators';
@@ -43,78 +43,102 @@ class SendEtherForm extends React.Component {
       handleSubmit, submitting, onCancel, error, balance, transactionFee,
     } = this.props;
 
+    const minSend = parseEther(this.minSendEther);
     const maxSend = bigNumberify(balance).sub(transactionFee);
     const maxSendEther = formatEther(maxSend);
 
     return (
-      <form className="form-wide" onSubmit={handleSubmit} autoComplete="off">
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <div className="fields">
-          <div className="field">
-            <Field
-              autoFocus
-              name="to"
-              component={TextField}
-              label="Send to address"
-              type="text"
-              validate={[required()]}
-              disabled={submitting}
-              multiline
-              fullWidth
-            />
-          </div>
-          <div className="field">
-            <Field
-              name="amount"
-              component={TextField}
-              label="Amount (ETH)"
-              placeholder={`${this.minSendEther} to ${maxSendEther}`}
-              type="text"
-              validate={[
-                required(),
-                numericality(),
-                this.notBelowMinEther,
-                this.notExceedingMaxEther,
-              ]}
-              disabled={submitting}
-              fullWidth
-            />
-          </div>
-          <div className="field">
-            <Field
-              name="password"
-              component={TextField}
-              label="Keystore password"
-              type="password"
-              validate={[required()]}
-              disabled={submitting}
-              fullWidth
-            />
+      <Fragment>
+        {maxSend.lt(minSend) &&
+        <div>
+          <p>
+            Your current balance is not high enough to cover the
+            transaction fee of <EtherDisplay value={transactionFee}/> ETH
+            and allow for the minimum transfer of {this.minSendEther} ETH.
+          </p>
+          <div className="actions">
+            <Button
+              className="btn-primary"
+              variant="raised"
+              type="button"
+              onClick={onCancel}
+            >
+              Return to wallet
+            </Button>
           </div>
         </div>
-        <div className="form-info">
-          Transaction fee: <EtherDisplay value={transactionFee}/> ETH
-        </div>
-        <div className="actions">
-          <Button
-            variant="flat"
-            type="button"
-            onClick={onCancel}
-          >
-            Cancel
-          </Button>
-          {!submitting &&
-          <Button
-            className="btn-primary"
-            variant="raised"
-            type="submit"
-          >
-            Send
-          </Button>
-          }
-          {submitting && <CircularProgress/>}
-        </div>
-      </form>
+        }
+        {maxSend.gte(minSend) &&
+        <form className="form-wide" onSubmit={handleSubmit} autoComplete="off">
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          <div className="fields">
+            <div className="field">
+              <Field
+                autoFocus
+                name="to"
+                component={TextField}
+                label="Send to address"
+                type="text"
+                validate={[required()]}
+                disabled={submitting}
+                multiline
+                fullWidth
+              />
+            </div>
+            <div className="field">
+              <Field
+                name="amount"
+                component={TextField}
+                label="Amount (ETH)"
+                placeholder={`${this.minSendEther} to ${maxSendEther}`}
+                type="text"
+                validate={[
+                  required(),
+                  numericality(),
+                  this.notBelowMinEther,
+                  this.notExceedingMaxEther,
+                ]}
+                disabled={submitting}
+                fullWidth
+              />
+            </div>
+            <div className="field">
+              <Field
+                name="password"
+                component={TextField}
+                label="Keystore password"
+                type="password"
+                validate={[required()]}
+                disabled={submitting}
+                fullWidth
+              />
+            </div>
+          </div>
+          <div className="form-info">
+            Transaction fee: <EtherDisplay value={transactionFee}/> ETH
+          </div>
+          <div className="actions">
+            <Button
+              variant="flat"
+              type="button"
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
+            {!submitting &&
+            <Button
+              className="btn-primary"
+              variant="raised"
+              type="submit"
+            >
+              Send
+            </Button>
+            }
+            {submitting && <CircularProgress/>}
+          </div>
+        </form>
+        }
+      </Fragment>
     );
   }
 }

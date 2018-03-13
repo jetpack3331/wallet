@@ -1,5 +1,7 @@
 import { Wallet } from 'ethers';
 import { bigNumberify, parseEther } from 'ethers/utils/index';
+import { push } from 'react-router-redux';
+import Alert from 'react-s-alert';
 import { SubmissionError } from 'redux-form';
 import { getGasPrices, getWalletAccount } from '../reducers';
 import transactions from '../services/api/transactions';
@@ -21,7 +23,7 @@ export const signAndSendTransaction = (request, walletAddress, gasLimit, priceFi
     const encryptWallet = Wallet.fromEncryptedWallet(secretStorageJson, request.password);
 
     dispatch({ type: 'SEND_TRANSACTION_INPROGRESS' });
-    return Promise.all([fetchNonce, encryptWallet])
+    Promise.all([fetchNonce, encryptWallet])
       .then((responses) => {
         const nonce = responses[0];
         const wallet = responses[1];
@@ -36,6 +38,11 @@ export const signAndSendTransaction = (request, walletAddress, gasLimit, priceFi
       .then((response) => {
         dispatch({ type: 'SEND_TRANSACTION_SUCCESS', response });
         console.log('Transaction success', response);
+        return null;
+      })
+      .then(() => {
+        dispatch(push('/'));
+        Alert.success('Transaction sent.');
         return null;
       })
       .catch((error) => {

@@ -4,15 +4,30 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import { confirmation, format, length, required } from 'redux-form-validators';
-import './CreateWalletForm.less';
+import './ImportWalletForm.less';
 
-const CreateWalletForm = props => (
-  <form className="create-wallet-form" onSubmit={props.handleSubmit}>
+const ImportPrivateKeyWalletForm = props => (
+  <form className="import-private-key-wallet-form" onSubmit={props.handleSubmit}>
     {props.error && <p style={{ color: 'red' }}>{props.error}</p>}
     <div className="fields">
       <div className="field">
         <Field
           autoFocus
+          name="privateKey"
+          component={TextField}
+          label="Private key"
+          multiline
+          type="text"
+          validate={[
+            required(),
+            format({ with: /^(0x|0X)?[a-fA-F0-9]{64}$/, msg: 'must be private key in hexadecimal format'}),
+          ]}
+          disabled={props.submitting}
+          fullWidth
+        />
+      </div>
+      <div className="field">
+        <Field
           name="password"
           component={TextField}
           label="Password"
@@ -48,7 +63,7 @@ const CreateWalletForm = props => (
         variant="raised"
         type="submit"
       >
-        Create Wallet
+        Import Wallet
       </Button>
       }
       {props.submitting && <CircularProgress/>}
@@ -56,14 +71,14 @@ const CreateWalletForm = props => (
   </form>
 );
 
-CreateWalletForm.propTypes = {
+ImportPrivateKeyWalletForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.string,
   submitting: PropTypes.bool.isRequired,
 };
 
-CreateWalletForm.defaultProps = {
+ImportPrivateKeyWalletForm.defaultProps = {
   error: undefined,
 };
 
-export default reduxForm({ form: 'createWallet' })(CreateWalletForm);
+export default reduxForm({ form: 'importPrivateKeyWallet' })(ImportPrivateKeyWalletForm);

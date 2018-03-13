@@ -20,7 +20,7 @@ const ImportPrivateKeyWalletForm = props => (
           type="text"
           validate={[
             required(),
-            format({ with: /^(0x|0X)?[a-fA-F0-9]{64}$/, msg: 'must be private key in hexadecimal format'}),
+            format({ with: /^(0x|0X)?[a-fA-F0-9]{64}$/, msg: 'must be private key in hexadecimal format' }),
           ]}
           disabled={props.submitting}
           fullWidth

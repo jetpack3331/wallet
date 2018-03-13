@@ -63,18 +63,20 @@ class MyWallet extends React.Component {
           </div>
         </Grid>
         <Grid item xs={12}>
-          {walletBalance && !!walletBalance.balance &&
-            <div className="wallet-actions">
-              <Button
-                className="btn-primary"
-                variant="raised"
-                onClick={this.props.navigateSendEther}
-              >
-                <ArrowForward/>
-                Send Ether
-              </Button>
-            </div>
-          }
+          <div className="transactions-header">
+            <h5><strong>Transactions</strong></h5>
+            {walletBalance && walletBalance.balance && walletBalance.balance > 0 &&
+            <Button
+              className="btn-secondary"
+              variant="raised"
+              size="small"
+              onClick={this.props.navigateSendEther}
+            >
+              <ArrowForward className="btn-icon-left"/>
+              Send Ether
+            </Button>
+            }
+          </div>
           <WalletTransactions address={walletAccount.address}/>
         </Grid>
       </Grid>

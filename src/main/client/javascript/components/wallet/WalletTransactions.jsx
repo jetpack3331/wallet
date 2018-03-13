@@ -98,7 +98,6 @@ class WalletTransactions extends Component {
 
     return (
       <div className="transaction-container">
-        <h5><strong>Transactions</strong></h5>
         {transactionsList}
       </div>
     );

@@ -105,7 +105,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, { params }) => ({
-  signAndSendTransaction: data => dispatch(signAndSendTransaction(data, params.walletAddress, 21000, 'averagePrice')),
+  signAndSendTransaction: data =>
+    dispatch(signAndSendTransaction(data, params.walletAddress, 21000, 'averagePrice'))
+      .then(() => dispatch(push('/'))),
   fetchMyWalletAccounts: () => dispatch(fetchMyWalletAccounts()),
   fetchWalletBalance: () => dispatch(fetchWalletBalance(params.walletAddress)),
   fetchGasPrices: () => dispatch(fetchGasPrices()),

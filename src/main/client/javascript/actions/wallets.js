@@ -5,6 +5,8 @@ import schemas from '../schemas';
 import wallets from '../services/api/wallets';
 import { asyncAction } from './actions';
 
+export const acknowledgeSentTransaction = address => ({ type: 'WALLET_TRANSACTION_SENT_ACK', address });
+
 export const fetchMyWalletAccounts = () => asyncAction(
   'WALLET_ACCOUNTS_FETCH',
   wallets.fetchMyWalletAccounts(), {

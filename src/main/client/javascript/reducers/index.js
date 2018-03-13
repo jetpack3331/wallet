@@ -43,6 +43,8 @@ export const getWalletBalance = (state, address) =>
 
 export const getWalletTransactions = (state, address) =>
   fromWalletTransactions.getById(state.walletTransactions, address);
+export const getLastSentTransactionId = (state, address) =>
+  fromWalletTransactions.getLastSentTransactionId(state.walletTransactions, address);
 
 export const getGasPrices = state => fromGasPrices.get(state.gasPrices);
 

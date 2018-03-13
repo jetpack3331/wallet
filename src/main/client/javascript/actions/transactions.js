@@ -34,7 +34,7 @@ export const signAndSendTransaction = (request, walletAddress, gasLimit, priceFi
         return transactions.sendSignedTransaction(signedTransaction);
       })
       .then((response) => {
-        dispatch({ type: 'SEND_TRANSACTION_SUCCESS', response });
+        dispatch({ type: 'SEND_TRANSACTION_SUCCESS', address: walletAddress, response });
         console.log('Transaction success', response);
         return response;
       })

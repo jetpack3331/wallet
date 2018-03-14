@@ -1,12 +1,12 @@
-import { Button, CircularProgress, Snackbar } from 'material-ui';
-import * as PropTypes from 'prop-types';
 import React from 'react';
+import * as PropTypes from 'prop-types';
+import { Button, CircularProgress, Snackbar } from 'material-ui';
 import { connect } from 'react-redux';
 import { acknowledgeSentTransaction, fetchMyWalletAccounts } from '../actions/wallets';
-import CreateWallet from '../components/wallet/CreateWallet';
 import MyWallet from '../components/wallet/MyWallet';
 import * as model from '../model';
-import { getFirstWalletAccount, getLastSentTransactionId, listWalletAccountsIsLoading } from '../reducers';
+import { getLastSentTransactionId, getWalletAccount, listWalletAccountsIsLoading } from '../reducers';
+import CreateWallet from '../components/wallet/CreateWallet';
 import './WalletContainer.less';
 
 
@@ -86,16 +86,15 @@ class WalletPage extends React.Component {
           </div>
         </div>
       </div>
-
     );
   }
 }
 
-const mapStateToProps = state => ({
-  walletAccount: getFirstWalletAccount(state),
+const mapStateToProps = (state, props) => ({
+  walletAccount: getWalletAccount(state, props.params.walletAddress),
   walletAccountsLoading: listWalletAccountsIsLoading(state),
-  lastSentTransactionId: getFirstWalletAccount(state) &&
-  getLastSentTransactionId(state, getFirstWalletAccount(state).address),
+  lastSentTransactionId: getWalletAccount(state, props.params.walletAddress) &&
+  getLastSentTransactionId(state, props.params.walletAddress),
 });
 
 const mapDispatchToProps = {

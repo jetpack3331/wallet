@@ -1,18 +1,16 @@
-.transactions-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-
-    h5 {
-        margin: 0;
-    }
-}
-
 .transaction-container {
     display: block;
     width: 100%;
     overflow-x: auto;
     -ms-overflow-style: -ms-autohiding-scrollbar;
+
+    h5 {
+        margin: 0;
+    }
+
+    .no-transactions {
+        margin-top: 1rem;
+    }
 
     .transaction-table {
         td, th {

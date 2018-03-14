@@ -107,11 +107,11 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch, { params }) => ({
   signAndSendTransaction: data =>
     dispatch(signAndSendTransaction(data, params.walletAddress, 21000, 'averagePrice'))
-      .then(() => dispatch(push('/'))),
+      .then(() => dispatch(push(`/addresses/${params.walletAddress}`))),
   fetchMyWalletAccounts: () => dispatch(fetchMyWalletAccounts()),
   fetchWalletBalance: () => dispatch(fetchWalletBalance(params.walletAddress)),
   fetchGasPrices: () => dispatch(fetchGasPrices()),
-  cancelSend: () => dispatch(push('/')),
+  cancelSend: () => dispatch(push(`/addresses/${params.walletAddress}`)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SendEtherPage);

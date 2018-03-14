@@ -61,6 +61,12 @@ class CreateWallet extends React.Component {
   static propTypes = {
     createWalletAccount: PropTypes.func.isRequired,
     importPrivateKeyWalletAccount: PropTypes.func.isRequired,
+    onAddressCreated: PropTypes.func,
+  };
+
+  static defaultProps = {
+    onAddressCreated: () => {
+    },
   };
 
   state = {
@@ -71,6 +77,16 @@ class CreateWallet extends React.Component {
     this.setState({ createMode: this.state.createMode === 'create' ? 'import' : 'create' });
   };
 
+  createWalletAccount = request => (
+    this.props.createWalletAccount(request)
+      .then(() => this.props.onAddressCreated())
+  );
+
+  importPrivateKeyWalletAccount = request => (
+    this.props.importPrivateKeyWalletAccount(request)
+      .then(() => this.props.onAddressCreated())
+  );
+
   render() {
     return (
       <div className="row no-wallet">
@@ -78,17 +94,16 @@ class CreateWallet extends React.Component {
         <h1 className="display-1"><strong>No Wallet</strong></h1>
         {this.state.createMode === 'create' &&
         <CreateNewWalletFragment
-          onCreateWalletAccount={this.props.createWalletAccount}
+          onCreateWalletAccount={this.createWalletAccount}
           onSwitchMode={this.switchMode}
         />
         }
         {this.state.createMode === 'import' &&
         <ImportWalletFragment
-          onImportWalletAccount={this.props.importPrivateKeyWalletAccount}
+          onImportWalletAccount={this.importPrivateKeyWalletAccount}
           onCancel={this.switchMode}
         />
         }
-
       </div>
     );
   }

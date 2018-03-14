@@ -1,0 +1,28 @@
+.wallet-account-list-item {
+
+    border: 2px solid white;
+    border-radius: 4px;
+
+    a {
+        display: block;
+        text-decoration: none;
+        padding: 20px;
+        color: #ffffff;
+    }
+
+    .account-name {
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    & + .wallet-account-list-item {
+        margin-top: 1.5rem;
+    }
+}

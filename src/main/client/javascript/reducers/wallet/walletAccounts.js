@@ -40,7 +40,7 @@ export const getAll = createSelector(
   state => state.byId,
   (walletAccounts, walletAccountsById) => walletAccounts.map(id => walletAccountsById[id]),
 );
-
+export const getAllAddresses = state => state.listIds.walletAccounts;
 export const getById = (state, id) => state.byId[id];
 export const getFirst = state => (state.listIds.walletAccounts.length &&
   getById(state, state.listIds.walletAccounts[0])) || null;

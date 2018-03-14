@@ -33,16 +33,25 @@ export const getSessionExpiresAt = state =>
 
 export const getWalletAccount = (state, address) =>
   fromWalletAccounts.getById(state.walletAccounts, address);
-export const getFirstWalletAccount = state =>
-  fromWalletAccounts.getFirst(state.walletAccounts);
+
+export const getAllWalletAccounts = state =>
+  fromWalletAccounts.getAll(state.walletAccounts);
+
 export const listWalletAccountsIsLoading = state =>
   fromWalletAccounts.listWalletAccountsIsLoading(state.walletAccounts);
+
+export const getAllWalletAddresses = state =>
+  fromWalletAccounts.getAllAddresses(state.walletAccounts);
 
 export const getWalletBalance = (state, address) =>
   fromWalletBalances.getById(state.walletBalances, address);
 
+export const getTotalBalance = state =>
+  fromWalletBalances.getTotalBalance(state.walletBalances, getAllWalletAddresses(state));
+
 export const getWalletTransactions = (state, address) =>
   fromWalletTransactions.getById(state.walletTransactions, address);
+
 export const getLastSentTransactionId = (state, address) =>
   fromWalletTransactions.getLastSentTransactionId(state.walletTransactions, address);
 

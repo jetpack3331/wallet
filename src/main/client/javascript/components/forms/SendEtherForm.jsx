@@ -1,4 +1,4 @@
-import { bigNumberify, formatEther, parseEther } from 'ethers/utils';
+import { bigNumberify, formatEther, parseEther, getAddress } from 'ethers/utils';
 import { isNil } from 'lodash';
 import { Button, CircularProgress } from 'material-ui';
 import * as PropTypes from 'prop-types';
@@ -37,6 +37,17 @@ class SendEtherForm extends React.Component {
     const maxSend = bigNumberify(this.props.balance).sub(bigNumberify(this.props.transactionFee));
     const wei = value && parseEther(value);
     return this.validate(`cannot be above ${formatEther(maxSend)}`, !!wei && wei.gt(maxSend));
+  };
+
+  ethereumAddress = (value) => {
+    try {
+      if (value) {
+        getAddress(value.toLowerCase());
+      }
+      return undefined;
+    } catch (err) {
+      return 'must be a valid Ethereum address';
+    }
   };
 
   render() {
@@ -80,7 +91,7 @@ class SendEtherForm extends React.Component {
                 component={TextField}
                 label="Send to address"
                 type="text"
-                validate={[required()]}
+                validate={[required(), this.ethereumAddress]}
                 disabled={submitting}
                 multiline
                 fullWidth

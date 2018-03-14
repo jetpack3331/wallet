@@ -118,21 +118,23 @@ class SendEtherForm extends React.Component {
             Transaction fee: <EtherDisplay value={transactionFee}/> ETH
           </div>
           <div className="actions">
-            <Button
-              variant="flat"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
             {!submitting &&
-            <Button
-              className="btn-primary"
-              variant="raised"
-              type="submit"
-            >
-              Send
-            </Button>
+            <Fragment>
+              <Button
+                variant="flat"
+                type="button"
+                onClick={onCancel}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="btn-primary"
+                variant="raised"
+                type="submit"
+              >
+                Send
+              </Button>
+            </Fragment>
             }
             {submitting && <CircularProgress/>}
           </div>

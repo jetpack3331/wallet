@@ -1,9 +1,7 @@
-import { CircularProgress, IconButton, Snackbar } from 'material-ui';
-import CloseIcon from 'material-ui-icons/Close';
+import { Button, CircularProgress, Snackbar } from 'material-ui';
 import * as PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { acknowledgeSentTransaction, fetchMyWalletAccounts } from '../actions/wallets';
 import CreateWallet from '../components/wallet/CreateWallet';
 import MyWallet from '../components/wallet/MyWallet';
@@ -16,7 +14,7 @@ class WalletPage extends React.Component {
   static propTypes = {
     fetchMyWalletAccounts: PropTypes.func.isRequired,
     walletAccountsLoading: PropTypes.bool.isRequired,
-    handleCloseSnackbar: PropTypes.bool.isRequired,
+    handleCloseSnackbar: PropTypes.func.isRequired,
     lastSentTransactionId: PropTypes.string,
     walletAccount: model.walletAccount,
   };
@@ -38,27 +36,41 @@ class WalletPage extends React.Component {
     return (
       <div className="wallet-container">
         {!!walletAccount &&
-          <Snackbar
-            open={!!lastSentTransactionId}
-            onClose={handleClose}
-            SnackbarContentProps={{
-              'aria-describedby': 'message-id',
-            }}
-            message={
-              <span id="message-id">Your transaction has been submitted.
-              You will be able to track progress shortly by <Link target="_blank" href={`https://etherscan.io/address/${walletAccount.address}`}>clicking here</Link>.
-              </span>}
-            action={[
-              <IconButton
-                key="close"
-                aria-label="Close"
-                color="inherit"
-                onClick={handleClose}
-              >
-                <CloseIcon />
-              </IconButton>,
-            ]}
-          />
+        <Snackbar
+          open={!!lastSentTransactionId}
+          onClose={handleClose}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={
+            <span id="message-id">
+              Your transaction has been submitted and will appear in your wallet once processed.
+              Please wait for it to be complete before sending another transaction.
+            </span>}
+          action={[
+            <Button
+              key="track"
+              aria-label="Track on Etherscan"
+              variant="flat"
+              size="small"
+              color="secondary"
+              target="_blank"
+              href={`https://etherscan.io/address/${walletAccount.address}`}
+            >
+              Track on Etherscan
+            </Button>,
+            <Button
+              key="close"
+              aria-label="Close"
+              variant="flat"
+              size="small"
+              color="secondary"
+              onClick={handleClose}
+            >
+              Close
+            </Button>,
+          ]}
+        />
         }
         <div className="container">
           <div className="widgets">
@@ -83,7 +95,7 @@ const mapStateToProps = state => ({
   walletAccount: getFirstWalletAccount(state),
   walletAccountsLoading: listWalletAccountsIsLoading(state),
   lastSentTransactionId: getFirstWalletAccount(state) &&
-    getLastSentTransactionId(state, getFirstWalletAccount(state).address),
+  getLastSentTransactionId(state, getFirstWalletAccount(state).address),
 });
 
 const mapDispatchToProps = {

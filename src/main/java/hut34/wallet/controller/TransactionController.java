@@ -5,6 +5,8 @@ import hut34.wallet.client.gas.GasInfo;
 import hut34.wallet.client.transact.TransactionClient;
 import hut34.wallet.controller.dto.SimpleRequest;
 import hut34.wallet.controller.dto.SimpleResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import java.math.BigInteger;
 
 @RestController
 public class TransactionController {
+    private static final Logger LOG = LoggerFactory.getLogger(IndexController.class);
 
     private final TransactionClient transactionClient;
     private final GasClient gasClient;
@@ -26,7 +29,9 @@ public class TransactionController {
 
     @PostMapping("/api/transactions")
     public SimpleResponse<String> submitSignedTransaction(@RequestBody SimpleRequest<String> transaction) {
+        LOG.info("Sending signed transaction");
         String transactionHash = transactionClient.sendSignedTransaction(transaction.getValue());
+        LOG.info("Sent transaction with hash {}", transactionHash);
         return new SimpleResponse<>(transactionHash);
     }
 

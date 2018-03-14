@@ -7,6 +7,7 @@ import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import { numericality, required } from 'redux-form-validators';
 import EtherDisplay from '../EtherDisplay';
+import FormError from './FormError';
 
 class SendEtherForm extends React.Component {
   static propTypes = {
@@ -70,7 +71,7 @@ class SendEtherForm extends React.Component {
         }
         {maxSend.gte(minSend) &&
         <form className="form-wide" onSubmit={handleSubmit} autoComplete="off">
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          <FormError value={error}/>
           <div className="fields">
             <div className="field">
               <Field

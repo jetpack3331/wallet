@@ -5,10 +5,11 @@ import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import { confirmation, format, length, required } from 'redux-form-validators';
 import './ImportWalletForm.less';
+import FormError from './FormError';
 
 const ImportPrivateKeyWalletForm = props => (
   <form className="import-private-key-wallet-form" onSubmit={props.handleSubmit}>
-    {props.error && <p style={{ color: 'red' }}>{props.error}</p>}
+    <FormError value={props.error}/>
     <div className="fields">
       <div className="field">
         <Field

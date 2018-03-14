@@ -72,7 +72,7 @@ class WalletTransactions extends Component {
     let transactionsList;
 
     if (!transactions) {
-      transactionsList = <CircularProgress/>;
+      transactionsList = <CircularProgress className="progress-margin-vertical" />;
     } else if (!transactions.length) {
       transactionsList = <div className="no-transactions">Looks like there are no transactions yet.</div>;
     } else {

@@ -4,10 +4,11 @@ import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import { required } from 'redux-form-validators';
 import './ViewPrivateKeyForm.less';
+import FormError from './FormError';
 
 const ViewPrivateKeyForm = ({ handleSubmit, submitting, error }) => (
   <form onSubmit={handleSubmit}>
-    {error && <p style={{ color: 'red' }}>{error}</p>}
+    <FormError value={error}/>
     <p><span className="warning">WARNING</span> Anyone with access to your private key can send transactions from this address.</p>
     <p>If you are sure you wish to continue please enter the keystore password</p>
     <Field

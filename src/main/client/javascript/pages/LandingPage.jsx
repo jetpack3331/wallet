@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getIsAuthenticated } from '../reducers';
 import HomePage from './HomePage';
-import MyAccountsPage from './MyAccountsPage';
+import MyWalletPage from './MyWalletPage';
 
 const LandingPage = ({ isAuthenticated }) => (
-  isAuthenticated ? <MyAccountsPage/> : <HomePage/>
+  isAuthenticated ? <MyWalletPage/> : <HomePage/>
 );
 
 LandingPage.propTypes = {

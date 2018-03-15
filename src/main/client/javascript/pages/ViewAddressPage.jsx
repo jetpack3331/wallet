@@ -3,14 +3,14 @@ import * as PropTypes from 'prop-types';
 import { Button, CircularProgress, Snackbar } from 'material-ui';
 import { connect } from 'react-redux';
 import { acknowledgeSentTransaction, fetchMyWalletAccounts } from '../actions/wallets';
-import MyWallet from '../components/wallet/MyWallet';
+import ViewAddress from '../components/wallet/ViewAddress';
 import * as model from '../model';
 import { getLastSentTransactionId, getWalletAccount, listWalletAccountsIsLoading } from '../reducers';
 import CreateWallet from '../components/wallet/CreateWallet';
 import './WalletContainer.less';
 
 
-class WalletPage extends React.Component {
+class ViewAddressPage extends React.Component {
   static propTypes = {
     fetchMyWalletAccounts: PropTypes.func.isRequired,
     walletAccountsLoading: PropTypes.bool.isRequired,
@@ -44,7 +44,7 @@ class WalletPage extends React.Component {
           }}
           message={
             <span id="message-id">
-              Your transaction has been submitted and will appear in your wallet once processed.
+              Your transaction has been submitted and will appear once processed.
               Please wait for it to be complete before sending another transaction.
             </span>}
           action={[
@@ -77,7 +77,7 @@ class WalletPage extends React.Component {
             {this.props.walletAccountsLoading && <CircularProgress/>}
 
             {!this.props.walletAccountsLoading && walletAccount &&
-            <MyWallet walletAccount={walletAccount}/>
+            <ViewAddress walletAccount={walletAccount}/>
             }
 
             {!this.props.walletAccountsLoading && !walletAccount &&
@@ -102,4 +102,4 @@ const mapDispatchToProps = {
   handleCloseSnackbar: address => acknowledgeSentTransaction(address),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(WalletPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ViewAddressPage);

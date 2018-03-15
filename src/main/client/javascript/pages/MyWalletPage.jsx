@@ -6,11 +6,11 @@ import { fetchMyWalletAccounts } from '../actions/wallets';
 import * as model from '../model';
 import { getAllWalletAccounts, listWalletAccountsIsLoading } from '../reducers';
 import CreateWallet from '../components/wallet/CreateWallet';
-import MyAccounts from '../components/wallet/MyAccounts';
-import './MyAccountsPage.less';
+import MyWallet from '../components/wallet/MyWallet';
+import './MyWalletPage.less';
 
 
-class MyAccountsPage extends React.Component {
+class MyWalletPage extends React.Component {
   static propTypes = {
     fetchMyWalletAccounts: PropTypes.func.isRequired,
     walletAccountsLoading: PropTypes.bool.isRequired,
@@ -27,12 +27,12 @@ class MyAccountsPage extends React.Component {
 
   render() {
     return (
-      <div className="my-accounts-page">
+      <div className="my-wallet-page wallet-container">
         <div className="container">
           {this.props.walletAccountsLoading && <CircularProgress/>}
 
           {!this.props.walletAccountsLoading && this.props.walletAccounts &&
-          <MyAccounts walletAccounts={this.props.walletAccounts}/>
+          <MyWallet walletAccounts={this.props.walletAccounts}/>
           }
 
           {!this.props.walletAccountsLoading && !this.props.walletAccounts &&
@@ -53,4 +53,4 @@ const mapDispatchToProps = {
   fetchMyWalletAccounts,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyAccountsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MyWalletPage);

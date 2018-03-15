@@ -6,7 +6,7 @@ import Layout from '../pages/Layout';
 import NotFoundPage from '../pages/NotFoundPage';
 import SendEtherPage from '../pages/SendEtherPage';
 import LandingPage from '../pages/LandingPage';
-import WalletPage from '../pages/WalletPage';
+import ViewAddressPage from '../pages/ViewAddressPage';
 import AddAddressPage from '../pages/AddAddressPage';
 
 /**
@@ -17,7 +17,7 @@ const getRoutes = () => (
     <Route path="/" component={Layout} onEnter={initSession}>
       <IndexRoute component={LandingPage}/>
       <Route path="addAddress" component={AddAddressPage}/>
-      <Route path="addresses/:walletAddress" component={WalletPage}/>
+      <Route path="addresses/:walletAddress" component={ViewAddressPage}/>
       <Route path="addresses/:walletAddress/send" component={SendEtherPage}/>
       <Route path="*" component={NotFoundPage}/>
     </Route>

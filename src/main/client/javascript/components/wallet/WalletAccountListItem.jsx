@@ -35,17 +35,15 @@ class WalletAccountListItem extends React.Component {
               <p>{walletAccount.address}</p>
             </Grid>
             <Grid item xs={6}>
-              <div className="flex-right">
-                <p className="account-balance">
-                  <strong>Balance</strong>
-                  <span className="value">
-                    {accountBalance &&
-                    <EtherDisplay className="label" value={accountBalance.balance}/>
-                    }
-                    <span className="currency">ETH</span>
-                  </span>
-                </p>
-              </div>
+              <p className="wallet-balance address-balance">
+                <strong>Balance</strong>
+                <span className="value">
+                  {accountBalance &&
+                  <EtherDisplay className="label" value={accountBalance.balance}/>
+                  }
+                  <span className="currency">ETH</span>
+                </span>
+              </p>
             </Grid>
           </Grid>
         </Link>

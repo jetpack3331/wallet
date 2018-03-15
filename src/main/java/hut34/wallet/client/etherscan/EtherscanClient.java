@@ -35,6 +35,16 @@ public class EtherscanClient {
         return response.getResult();
     }
 
+    public String getTokenBalance(String contractAddress, String address) {
+        StringResponse response = restOperations
+            .getForObject(baseUrl + "module={module}&action={action}&contractaddress={contractaddress}&address={address}", StringResponse.class,
+                "account", "tokenbalance", contractAddress, address);
+
+        validateResponse(response);
+
+        return response.getResult();
+    }
+
     public List<Transaction> getTransactions(String address, Sort sort) {
         TransactionListResponse response = restOperations
             .getForObject(baseUrl + "module={module}&action={action}&address={address}&sort={sort}", TransactionListResponse.class, "account", "txlist", address, sort.paramValue());

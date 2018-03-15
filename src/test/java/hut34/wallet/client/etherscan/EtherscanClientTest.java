@@ -65,6 +65,16 @@ public class EtherscanClientTest {
     }
 
     @Test
+    public void getTokenBalance() {
+        server.expect(requestTo("https://api.etherscan.io/api?apikey=test-etherscan-key&module=account&action=tokenbalance&contractaddress=contract-address&address=my-address"))
+            .andRespond(withSuccess(stringResponseSuccess("9700000000000000000"), MediaType.APPLICATION_JSON));
+
+        String balance = client.getTokenBalance("contract-address", "my-address");
+
+        assertThat(balance, is("9700000000000000000"));
+    }
+
+    @Test
     public void getTransactions() {
         List<Transaction> expected = Arrays.asList(TestEtherscan.transaction(), TestEtherscan.transactionError());
 

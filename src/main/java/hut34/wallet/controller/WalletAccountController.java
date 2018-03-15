@@ -5,6 +5,7 @@ import hut34.wallet.client.etherscan.Sort;
 import hut34.wallet.controller.dto.CreateWalletRequest;
 import hut34.wallet.controller.dto.WalletAccountBalance;
 import hut34.wallet.controller.dto.WalletAccountDto;
+import hut34.wallet.controller.dto.WalletAccountTokenBalance;
 import hut34.wallet.controller.dto.WalletAccountTransactions;
 import hut34.wallet.model.WalletAccount;
 import hut34.wallet.service.WalletAccountService;
@@ -53,6 +54,13 @@ public class WalletAccountController {
     public WalletAccountBalance getBalance(@PathVariable String address) {
         return new WalletAccountBalance(address, etherscanClient.getBalance(address));
     }
+
+    @GetMapping("/api/wallets/accounts/{address}/token/{contractAddress}/balance")
+    public WalletAccountTokenBalance getTokenBalance(@PathVariable String contractAddress, @PathVariable String address) {
+        return new WalletAccountTokenBalance(contractAddress, address, etherscanClient.getTokenBalance(contractAddress, address));
+    }
+
+
 
     @GetMapping("/api/wallets/accounts/{address}/transactions")
     public WalletAccountTransactions getTransactions(@PathVariable String address) {

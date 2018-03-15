@@ -86,6 +86,18 @@ public class WalletAccountControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void getTokenBalance() throws Exception {
+        when(etherscanClient.getTokenBalance("contract-address", ETHEREUM_ADDRESS)).thenReturn("9700000000000000000");
+
+        mvc.perform(
+            get("/api/wallets/accounts/{address}/token/{contractAddress}/balance", ETHEREUM_ADDRESS, "contract-address").contentType(APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("contractAddress", is("contract-address")))
+            .andExpect(jsonPath("address", is(ETHEREUM_ADDRESS)))
+            .andExpect(jsonPath("balance", is("9700000000000000000")));
+    }
+
+    @Test
     public void getTransactions() throws Exception {
         Transaction transaction = TestEtherscan.transaction();
         when(etherscanClient.getTransactions(ETHEREUM_ADDRESS, Sort.DESC)).thenReturn(Collections.singletonList(transaction));

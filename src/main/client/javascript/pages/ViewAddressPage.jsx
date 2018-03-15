@@ -34,7 +34,7 @@ class ViewAddressPage extends React.Component {
     const handleClose = () => handleCloseSnackbar(walletAccount.address);
 
     return (
-      <div className="wallet-container">
+      <div className="wallet-container view-address-container">
         {!!walletAccount &&
         <Snackbar
           open={!!lastSentTransactionId}

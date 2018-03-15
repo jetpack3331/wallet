@@ -1,20 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Button, Grid } from 'material-ui';
 import ArrowForward from 'material-ui-icons/ArrowForward';
 import ChevronLeft from 'material-ui-icons/ChevronLeft';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { Link } from 'react-router';
+import { push } from 'react-router-redux';
 import WalletIcon from '../../../images/icon-wallet.png';
 import { fetchWalletBalance } from '../../actions/wallets';
 import * as model from '../../model';
 import { getWalletBalance } from '../../reducers';
-import EtherDisplay from '../EtherDisplay';
+import CurrencyDisplay from '../common/CurrencyDisplay';
 import DownloadKeystoreButton from './DownloadKeystoreButton';
+import './ViewAddress.less';
 import ViewPrivateKeyButton from './ViewPrivateKeyButton';
 import WalletTransactions from './WalletTransactions';
-import './ViewAddress.less';
 
 class ViewAddress extends React.Component {
   static propTypes = {
@@ -56,8 +56,7 @@ class ViewAddress extends React.Component {
           <p className="wallet-balance">
             <strong>Wallet Balance</strong>
             <span className="value">
-              <EtherDisplay className="label" value={walletBalance.balance}/>
-              <span className="currency">ETH</span>
+              <CurrencyDisplay value={walletBalance.balance} code="ETH" strong/>
             </span>
           </p>
           }

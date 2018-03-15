@@ -10,6 +10,12 @@ export const walletBalance = shape({
   balance: string,
 });
 
+export const walletTokenBalance = shape({
+  contractAddress: string,
+  address: string,
+  balance: string,
+});
+
 export const walletTransaction = shape({
   blockNumber: string,
   blockHash: string,
@@ -35,3 +41,5 @@ export const walletTransactions = shape({
   address: string,
   transactions: arrayOf(walletTransaction),
 });
+
+export const tokenBalanceId = (contractAddress, address) => `${contractAddress}-${address}`;

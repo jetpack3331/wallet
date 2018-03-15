@@ -1,18 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Grid } from 'material-ui';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import * as model from '../../model';
 import { fetchWalletBalance } from '../../actions/wallets';
-import { getWalletBalance } from '../../reducers';
-import EtherDisplay from '../EtherDisplay';
+import * as model from '../../model';
+import { getTokens, getWalletBalance } from '../../reducers';
+import CurrencyDisplay from '../common/CurrencyDisplay';
+import TokenBalance from '../common/TokenBalance';
 import './WalletAccountListItem.less';
 
 class WalletAccountListItem extends React.Component {
   static propTypes = {
     walletAccount: model.walletAccount.isRequired,
     fetchAccountBalance: PropTypes.func.isRequired,
+    tokens: PropTypes.arrayOf(model.token).isRequired,
     accountBalance: PropTypes.object,
   };
 
@@ -25,7 +27,7 @@ class WalletAccountListItem extends React.Component {
   }
 
   render() {
-    const { walletAccount, accountBalance } = this.props;
+    const { walletAccount, accountBalance, tokens } = this.props;
     return (
       <div className="wallet-account-list-item" key={walletAccount.address}>
         <Link to={`/addresses/${walletAccount.address}`}>
@@ -35,15 +37,24 @@ class WalletAccountListItem extends React.Component {
               <p>{walletAccount.address}</p>
             </Grid>
             <Grid item xs={6}>
-              <p className="wallet-balance address-balance">
-                <strong>Balance</strong>
-                <span className="value">
-                  {accountBalance &&
-                  <EtherDisplay className="label" value={accountBalance.balance}/>
-                  }
-                  <span className="currency">ETH</span>
-                </span>
-              </p>
+              <div className="address-balances">
+                <div className="currency-balance address-balance">
+                  <div className="balance-title">Balance</div>
+                  <div className="value">
+                    {accountBalance &&
+                    <CurrencyDisplay value={accountBalance.balance} code="ETH" strong/>
+                    }
+                  </div>
+                </div>
+                <div>
+                  {tokens.map(tok =>
+                    (<TokenBalance
+                      key={model.tokenBalanceId(tok.address, walletAccount.address)}
+                      walletAddress={walletAccount.address}
+                      token={tok}
+                    />))}
+                </div>
+              </div>
             </Grid>
           </Grid>
         </Link>
@@ -54,6 +65,7 @@ class WalletAccountListItem extends React.Component {
 
 const mapStateToProps = (state, props) => ({
   accountBalance: getWalletBalance(state, props.walletAccount.address),
+  tokens: getTokens(state),
 });
 
 const mapDispatchToProps = {

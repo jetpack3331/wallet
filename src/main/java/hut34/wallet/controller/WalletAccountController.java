@@ -55,7 +55,7 @@ public class WalletAccountController {
         return new WalletAccountBalance(address, etherscanClient.getBalance(address));
     }
 
-    @GetMapping("/api/wallets/accounts/{address}/token/{contractAddress}/balance")
+    @GetMapping("/api/wallets/accounts/{address}/tokens/{contractAddress}/balance")
     public WalletAccountTokenBalance getTokenBalance(@PathVariable String contractAddress, @PathVariable String address) {
         return new WalletAccountTokenBalance(contractAddress, address, etherscanClient.getTokenBalance(contractAddress, address));
     }

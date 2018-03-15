@@ -6,7 +6,7 @@ import React, { Fragment } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import { numericality, required } from 'redux-form-validators';
-import EtherDisplay from '../EtherDisplay';
+import CurrencyDisplay from '../common/CurrencyDisplay';
 import FormError from './FormError';
 
 class SendEtherForm extends React.Component {
@@ -65,8 +65,8 @@ class SendEtherForm extends React.Component {
         <div>
           <p>
             Your current balance is not high enough to cover the
-            transaction fee of <EtherDisplay value={transactionFee}/> ETH
-            and allow for the minimum transfer of {this.minSendEther} ETH.
+            transaction fee of <CurrencyDisplay value={transactionFee} code="ETH" strong/> and
+            allow for the minimum transfer of <CurrencyDisplay value={minSend} code="ETH" strong/>.
           </p>
           <div className="actions">
             <Button
@@ -127,7 +127,7 @@ class SendEtherForm extends React.Component {
             </div>
           </div>
           <div className="form-info">
-            Transaction fee: <EtherDisplay value={transactionFee}/> ETH
+            Transaction fee: <CurrencyDisplay value={transactionFee} code="ETH" strong/>
           </div>
           <div className="actions">
             {!submitting &&

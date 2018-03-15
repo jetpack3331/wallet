@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { Grid } from 'material-ui';
+import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import WalletIcon from '../../../images/icon-wallet.png';
-import * as model from '../../model';
 import { fetchWalletBalance } from '../../actions/wallets';
+import * as model from '../../model';
 import { getTotalBalance } from '../../reducers';
-import EtherDisplay from '../EtherDisplay';
-import WalletAccountListItem from './WalletAccountListItem';
+import CurrencyDisplay from '../common/CurrencyDisplay';
 import './MyWallet.less';
+import WalletAccountListItem from './WalletAccountListItem';
 
 const MyWalletHeader = ({ totalBalance }) => (
   <Fragment>
@@ -25,8 +25,7 @@ const MyWalletHeader = ({ totalBalance }) => (
       <p className="wallet-balance">
         <strong>Total Balance</strong>
         <span className="value">
-          <EtherDisplay className="label" value={totalBalance}/>
-          <span className="currency">ETH</span>
+          <CurrencyDisplay value={totalBalance} code="ETH" strong/>
         </span>
       </p>
       }

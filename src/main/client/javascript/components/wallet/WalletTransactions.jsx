@@ -1,16 +1,16 @@
 import { toLower, truncate } from 'lodash/string';
-import React, { Component } from 'react';
 import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from 'material-ui';
 import ArrowBack from 'material-ui-icons/ArrowBack';
 import ArrowForward from 'material-ui-icons/ArrowForward';
 import * as PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchWalletTransactions } from '../../actions/wallets';
-import { walletTransactions, walletTransaction } from '../../model';
+import { walletTransaction, walletTransactions } from '../../model';
 import { getWalletTransactions } from '../../reducers';
+import CurrencyDisplay from '../common/CurrencyDisplay';
 import DateTime from '../common/DateTime';
-import EtherDisplay from '../EtherDisplay';
 import './WalletTransactions.less';
 
 const TransactionRow = ({ address, transaction }) => {
@@ -36,8 +36,8 @@ const TransactionRow = ({ address, transaction }) => {
         <span className="transaction-date"><DateTime value={transaction.timeStamp} unix/></span>
       </TableCell>
       <TableCell>
-        <EtherDisplay className="value" value={transaction.value}/>
-        <span className="fee"><strong>TX Fee</strong> <EtherDisplay value={transaction.gas * transaction.gasPrice}/></span>
+        <CurrencyDisplay className="value" value={transaction.value}/>
+        <span className="fee"><strong>TX Fee</strong> <CurrencyDisplay value={transaction.gas * transaction.gasPrice}/></span>
       </TableCell>
     </TableRow>
   );

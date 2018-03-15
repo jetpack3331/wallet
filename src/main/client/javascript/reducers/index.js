@@ -3,8 +3,10 @@ import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
 import auth, * as fromAuth from './auth';
 import gasPrices, * as fromGasPrices from './gasPrices';
+import tokens, * as fromTokens from './tokens';
 import walletAccounts, * as fromWalletAccounts from './wallet/walletAccounts';
 import walletBalances, * as fromWalletBalances from './wallet/walletBalances';
+import walletTokenBalances, * as fromWalletTokenBalances from './wallet/walletTokenBalances';
 import walletTransactions, * as fromWalletTransactions from './wallet/walletTransactions';
 import users from './users';
 
@@ -17,9 +19,11 @@ const rootReducer = combineReducers({
   auth,
   users,
   walletAccounts,
-  walletBalances,
   walletTransactions,
+  walletBalances,
+  walletTokenBalances,
   gasPrices,
+  tokens,
 });
 
 export const getLoggedInUser = state =>
@@ -56,5 +60,12 @@ export const getLastSentTransactionId = (state, address) =>
   fromWalletTransactions.getLastSentTransactionId(state.walletTransactions, address);
 
 export const getGasPrices = state => fromGasPrices.get(state.gasPrices);
+export const getTokens = state => fromTokens.getAll(state.tokens);
+
+export const getBalanceByContractAddressAndAddress = (state, contractAddress, address) =>
+  fromWalletTokenBalances.getByContractAddressAndAddress(
+    state.walletTokenBalances,
+    contractAddress, address,
+  );
 
 export default rootReducer;

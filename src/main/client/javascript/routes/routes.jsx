@@ -1,5 +1,6 @@
 import React from 'react';
 import { IndexRoute, Route, Router } from 'react-router';
+import EtherTransactionsPage from '../pages/EtherTransactionsPage';
 import { history } from '../store';
 import { initSession } from './hooks';
 import Layout from '../pages/Layout';
@@ -18,6 +19,7 @@ const getRoutes = () => (
       <IndexRoute component={LandingPage}/>
       <Route path="addAddress" component={AddAddressPage}/>
       <Route path="addresses/:walletAddress" component={ViewAddressPage}/>
+      <Route path="addresses/:walletAddress/transactions/eth" component={EtherTransactionsPage}/>
       <Route path="addresses/:walletAddress/send" component={SendEtherPage}/>
       <Route path="*" component={NotFoundPage}/>
     </Route>

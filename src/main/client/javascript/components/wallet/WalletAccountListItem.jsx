@@ -33,7 +33,7 @@ class WalletAccountListItem extends React.Component {
         <Link to={`/addresses/${walletAccount.address}`}>
           <Grid container spacing={24}>
             <Grid item xs={6}>
-              <h2 className="title account-name"><strong>Ethereum</strong></h2>
+              <h2 className="title account-name"><strong>Address</strong></h2>
               <p>{walletAccount.address}</p>
             </Grid>
             <Grid item xs={6}>

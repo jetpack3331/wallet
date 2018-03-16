@@ -31,11 +31,11 @@ class MyWalletPage extends React.Component {
         <div className="container">
           {this.props.walletAccountsLoading && <CircularProgress/>}
 
-          {!this.props.walletAccountsLoading && this.props.walletAccounts &&
+          {!this.props.walletAccountsLoading && this.props.walletAccounts.length &&
           <MyWallet walletAccounts={this.props.walletAccounts}/>
           }
 
-          {!this.props.walletAccountsLoading && !this.props.walletAccounts &&
+          {!this.props.walletAccountsLoading && !this.props.walletAccounts.length &&
           <CreateWallet/>
           }
         </div>

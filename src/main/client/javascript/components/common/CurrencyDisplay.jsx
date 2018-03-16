@@ -1,17 +1,20 @@
 import { formatUnits, BigNumber } from 'ethers/utils';
+import { isNil } from 'lodash';
+import { CircularProgress } from 'material-ui';
 import * as PropTypes from 'prop-types';
 import React from 'react';
 import './CurrencyDisplay.less';
 
 const CurrencyDisplay = ({
-  value, decimals, code, strong, ...rest
+  value, decimals, code, strong, noSpinner, ...rest
 }) => {
   const { className = '', ...others } = rest;
   const codeSuffix = !!code && <span className="currency-code">{code}</span>;
 
   return (
     <span className={`${className} currency-display ${strong ? 'currency-strong' : ''}`} {...others}>
-      {value && <span>{formatUnits(value, decimals)}{codeSuffix}</span>}
+      {!isNil(value) && <span>{formatUnits(value, decimals)}{codeSuffix}</span>}
+      {!noSpinner && isNil(value) && <CircularProgress className="currency-loading" size={20}/>}
     </span>
   );
 };
@@ -21,12 +24,14 @@ CurrencyDisplay.propTypes = {
   decimals: PropTypes.number,
   code: PropTypes.string,
   strong: PropTypes.bool,
+  noSpinner: PropTypes.bool,
 };
 
 CurrencyDisplay.defaultProps = {
   value: undefined,
   decimals: 18,
   strong: false,
+  noSpinner: false,
   code: undefined,
 };
 

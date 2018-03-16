@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import { fetchWalletBalance } from '../../actions/wallets';
 import * as model from '../../model';
 import { getTokens, getWalletBalance } from '../../reducers';
-import CurrencyDisplay from '../common/CurrencyDisplay';
+import CurrencyBalance from '../common/CurrencyBalance';
 import TokenBalance from '../common/TokenBalance';
 import './WalletAccountListItem.less';
 
@@ -38,14 +38,11 @@ class WalletAccountListItem extends React.Component {
             </Grid>
             <Grid item xs={6}>
               <div className="address-balances">
-                <div className="currency-balance address-balance">
-                  <div className="balance-title">Balance</div>
-                  <div className="value">
-                    {accountBalance &&
-                    <CurrencyDisplay value={accountBalance.balance} code="ETH" strong/>
-                    }
-                  </div>
-                </div>
+                <CurrencyBalance
+                  title="Balance"
+                  value={accountBalance && accountBalance.balance}
+                  code="ETH"
+                />
                 <div>
                   {tokens.map(tok =>
                     (<TokenBalance

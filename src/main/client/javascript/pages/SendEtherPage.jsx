@@ -6,7 +6,7 @@ import { push } from 'react-router-redux';
 import { fetchGasPrices } from '../actions/gasPrices';
 import { signAndSendTransaction } from '../actions/transactions';
 import { fetchMyWalletAccounts, fetchWalletBalance } from '../actions/wallets';
-import CurrencyDisplay from '../components/common/CurrencyDisplay';
+import CurrencyBalance from '../components/common/CurrencyBalance';
 import SendEtherForm from '../components/forms/SendEtherForm';
 import * as model from '../model';
 import { getGasPrices, getWalletAccount, getWalletBalance, listWalletAccountsIsLoading } from '../reducers';
@@ -63,15 +63,11 @@ class SendEtherPage extends React.Component {
                 </div>
               </Grid>
               <Grid item xs={12} sm={5} md={5} lg={5}>
-                <div className="wallet-balance">
-                  <strong>Current Balance</strong>
-                  {!walletBalance && <CircularProgress/>}
-                  {!!walletBalance &&
-                    <span className="value">
-                      <CurrencyDisplay className="label" value={walletBalance.balance} code="ETH" strong/>
-                    </span>
-                  }
-                </div>
+                <CurrencyBalance
+                  title="Current Balance"
+                  value={walletBalance && walletBalance.balance}
+                  code="ETH"
+                />
               </Grid>
               <Grid className="form-container" item xs={12}>
                 {formDataLoading && <CircularProgress/>}

@@ -10,7 +10,7 @@ import WalletIcon from '../../../images/icon-wallet.png';
 import { fetchWalletBalance } from '../../actions/wallets';
 import * as model from '../../model';
 import { getWalletBalance } from '../../reducers';
-import CurrencyDisplay from '../common/CurrencyDisplay';
+import CurrencyBalance from '../common/CurrencyBalance';
 import DownloadKeystoreButton from './DownloadKeystoreButton';
 import './ViewAddress.less';
 import ViewPrivateKeyButton from './ViewPrivateKeyButton';
@@ -52,14 +52,11 @@ class ViewAddress extends React.Component {
           </div>
         </Grid>
         <Grid item xs={12} sm={5} md={3} lg={3}>
-          {walletBalance &&
-          <p className="wallet-balance">
-            <strong>Wallet Balance</strong>
-            <span className="value">
-              <CurrencyDisplay value={walletBalance.balance} code="ETH" strong/>
-            </span>
-          </p>
-          }
+          <CurrencyBalance
+            title="Wallet Balance"
+            value={walletBalance && walletBalance.balance}
+            code="ETH"
+          />
         </Grid>
         <Grid item xs={12} sm={12} md={3} lg={2}>
           <div className="wallet-actions">

@@ -6,7 +6,7 @@ import WalletIcon from '../../../images/icon-wallet.png';
 import { fetchWalletBalance } from '../../actions/wallets';
 import * as model from '../../model';
 import { getTotalBalance } from '../../reducers';
-import CurrencyDisplay from '../common/CurrencyDisplay';
+import CurrencyBalance from '../common/CurrencyBalance';
 import './MyWallet.less';
 import WalletAccountListItem from './WalletAccountListItem';
 
@@ -21,14 +21,11 @@ const MyWalletHeader = ({ totalBalance }) => (
       </div>
     </Grid>
     <Grid item xs={12} sm={5} md={6} lg={5}>
-      {totalBalance &&
-      <p className="wallet-balance">
-        <strong>Total Balance</strong>
-        <span className="value">
-          <CurrencyDisplay value={totalBalance} code="ETH" strong/>
-        </span>
-      </p>
-      }
+      <CurrencyBalance
+        title="Total Balance"
+        value={totalBalance}
+        code="ETH"
+      />
     </Grid>
   </Fragment>
 );

@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { fetchTokenBalance } from '../../actions/wallets';
 import * as model from '../../model';
 import { getBalanceByContractAddressAndAddress } from '../../reducers';
-import CurrencyDisplay from './CurrencyDisplay';
-import './TokenBalance.less';
+import CurrencyBalance from './CurrencyBalance';
 
 class TokenBalance extends React.Component {
   static propTypes = {
@@ -29,17 +28,13 @@ class TokenBalance extends React.Component {
   render() {
     const { token, balance } = this.props;
     return (
-      <div className="token-balance currency-balance">
-        <div className="balance-title">{token.name}</div>
-        <div className="value">
-          <CurrencyDisplay
-            value={balance && balance.balance}
-            decimals={token.decimals}
-            code={token.symbol}
-            strong
-          />
-        </div>
-      </div>
+      <CurrencyBalance
+        className="token-balance"
+        value={balance && balance.balance}
+        title={token.name}
+        decimals={token.decimals}
+        code={token.symbol}
+      />
     );
   }
 }

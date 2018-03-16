@@ -5,12 +5,12 @@ import './CurrencyBalance.less';
 import CurrencyDisplay from './CurrencyDisplay';
 
 const CurrencyBalance = ({
-  title, value, decimals, code, className,
+  title, value, decimals, code, strong, className,
 }) => (
   <div className={`${className} currency-balance`}>
     <div className="balance-title">{title}</div>
     <div className="value">
-      <CurrencyDisplay value={value} code={code} decimals={decimals} strong/>
+      <CurrencyDisplay value={value} code={code} decimals={decimals} strong={strong}/>
     </div>
   </div>
 );
@@ -21,6 +21,7 @@ CurrencyBalance.propTypes = {
   decimals: PropTypes.number,
   code: PropTypes.string,
   className: PropTypes.string,
+  strong: PropTypes.bool,
 };
 
 CurrencyBalance.defaultProps = {
@@ -28,6 +29,7 @@ CurrencyBalance.defaultProps = {
   decimals: 18,
   code: undefined,
   className: '',
+  strong: true,
 };
 
 export default CurrencyBalance;

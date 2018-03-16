@@ -5,6 +5,7 @@ import { fetchTokenBalance } from '../../actions/wallets';
 import * as model from '../../model';
 import { getBalanceByContractAddressAndAddress } from '../../reducers';
 import CurrencyBalance from './CurrencyBalance';
+import './TokenBalance.less';
 
 class TokenBalance extends React.Component {
   static propTypes = {
@@ -31,9 +32,9 @@ class TokenBalance extends React.Component {
       <CurrencyBalance
         className="token-balance"
         value={balance && balance.balance}
-        title={token.name}
+        title={token.symbol}
         decimals={token.decimals}
-        code={token.symbol}
+        strong={false}
       />
     );
   }

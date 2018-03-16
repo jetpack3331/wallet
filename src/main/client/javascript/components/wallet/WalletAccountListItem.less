@@ -36,13 +36,9 @@
     }
 
     .currency-balance {
-        .value {
-            font-size: 1.25rem;
-        }
-
-        &.token-balance {
+        &:not(.token-balance) {
             .value {
-                font-size: 1rem;
+                font-size: 1.25rem;
             }
         }
     }

@@ -7,8 +7,8 @@ import { fetchWalletBalance } from '../../actions/wallets';
 import * as model from '../../model';
 import { getTokens, getWalletBalance } from '../../reducers';
 import CurrencyBalance from '../common/CurrencyBalance';
-import TokenBalance from '../common/TokenBalance';
 import './WalletAccountListItem.less';
+import TokenBalance from '../common/TokenBalance';
 
 class WalletAccountListItem extends React.Component {
   static propTypes = {
@@ -37,22 +37,25 @@ class WalletAccountListItem extends React.Component {
               <p>{walletAccount.address}</p>
             </Grid>
             <Grid item xs={6}>
-              <div className="address-balances">
-                <CurrencyBalance
-                  title="Balance"
-                  value={accountBalance && accountBalance.balance}
-                  code="ETH"
-                />
-                <div>
-                  {tokens.map(tok =>
-                    (<TokenBalance
-                      key={model.tokenBalanceId(tok.address, walletAccount.address)}
-                      walletAddress={walletAccount.address}
-                      token={tok}
-                    />))}
-                </div>
-              </div>
+              <CurrencyBalance
+                title="Balance"
+                value={accountBalance && accountBalance.balance}
+                code="ETH"
+              />
             </Grid>
+            {tokens.map(tok => (
+              <Grid
+                key={model.tokenBalanceId(tok.address, walletAccount.address)}
+                item
+                xs={6}
+                sm={4}
+                md={2}
+              >
+                <TokenBalance
+                  walletAddress={walletAccount.address}
+                  token={tok}
+                />
+              </Grid>))}
           </Grid>
         </Link>
       </div>

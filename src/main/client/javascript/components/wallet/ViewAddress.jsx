@@ -53,7 +53,7 @@ class ViewAddress extends React.Component {
         </Grid>
         <Grid item xs={12} sm={5} md={3} lg={3}>
           <CurrencyBalance
-            title="Wallet Balance"
+            title="Balance"
             value={walletBalance && walletBalance.balance}
             code="ETH"
           />

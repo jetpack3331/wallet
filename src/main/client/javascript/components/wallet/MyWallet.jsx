@@ -22,7 +22,7 @@ const MyWalletHeader = ({ totalBalance }) => (
     </Grid>
     <Grid item xs={12} sm={5} md={6} lg={5}>
       <CurrencyBalance
-        title="Total Balance"
+        title="Wallet Balance"
         value={totalBalance}
         code="ETH"
       />

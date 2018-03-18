@@ -8,6 +8,7 @@ import hut34.wallet.controller.dto.WalletAccountDto;
 import hut34.wallet.controller.dto.WalletAccountTokenBalance;
 import hut34.wallet.controller.dto.WalletAccountTransactions;
 import hut34.wallet.model.WalletAccount;
+import hut34.wallet.model.WalletAccountType;
 import hut34.wallet.service.WalletAccountService;
 import hut34.wallet.util.NotFoundException;
 import org.springframework.util.FileCopyUtils;
@@ -40,8 +41,18 @@ public class WalletAccountController {
 
     @PostMapping("/api/wallets/accounts")
     public WalletAccountDto create(@RequestBody CreateWalletRequest request) {
-        WalletAccount walletAccount = walletAccountService.create(request.getAddress(), request.getSecretStorageJson());
-        return TO_WALLET_ACCOUNT_DTO.apply(walletAccount);
+
+        if (request.getType() == WalletAccountType.PRIVATE) {
+            WalletAccount walletAccount = walletAccountService.createPrivate(request.getAddress(), request.getSecretStorageJson());
+            return TO_WALLET_ACCOUNT_DTO.apply(walletAccount);
+        }
+
+        if (request.getType() == WalletAccountType.MANAGED) {
+            WalletAccount walletAccount = walletAccountService.createManaged();
+            return TO_WALLET_ACCOUNT_DTO.apply(walletAccount);
+        }
+
+        throw new IllegalArgumentException("Unsupported wallet type");
     }
 
     @GetMapping("/api/wallets/accounts/mine")
@@ -59,7 +70,6 @@ public class WalletAccountController {
     public WalletAccountTokenBalance getTokenBalance(@PathVariable String contractAddress, @PathVariable String address) {
         return new WalletAccountTokenBalance(contractAddress, address, etherscanClient.getTokenBalance(contractAddress, address));
     }
-
 
 
     @GetMapping("/api/wallets/accounts/{address}/transactions")

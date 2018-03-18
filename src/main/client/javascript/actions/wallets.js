@@ -42,6 +42,7 @@ const createWalletKeystore = (dispatch, action, wallet, password) => {
     .then((secretStorageJson) => {
       console.log('Encryption complete. Saving wallet');
       return wallets.createWalletAccount({
+        type: 'PRIVATE',
         address: wallet.address,
         secretStorageJson,
       });
@@ -55,6 +56,13 @@ const createWalletKeystore = (dispatch, action, wallet, password) => {
       throw error;
     });
 };
+
+export const createManagedWalletAccount = () => asyncAction(
+  'CREATE_WALLET_ACCOUNT',
+  wallets.createWalletAccount({ type: 'MANAGED' }), {
+    responseTransformer: walletAccount => normalize(walletAccount, schemas.walletAccount),
+  },
+);
 
 export const createWalletAccount = request => (dispatch) => {
   dispatch({ type: 'CREATE_WALLET_ACCOUNT_INPROGRESS' });

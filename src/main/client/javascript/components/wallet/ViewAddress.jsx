@@ -61,8 +61,12 @@ class ViewAddress extends React.Component {
         <Grid item xs={12} sm={12} md={3} lg={2}>
           <div className="wallet-actions">
             <div className="wallet-action">
+              {walletAccount.type !== 'MANAGED' &&
               <DownloadKeystoreButton walletAccount={walletAccount}/>
+              }
+              {walletAccount.type !== 'MANAGED' &&
               <ViewPrivateKeyButton walletAccount={walletAccount}/>
+              }
             </div>
           </div>
         </Grid>

@@ -7,6 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import static hut34.wallet.model.WalletAccountType.*;
 import static hut34.wallet.testinfra.matcher.Matchers.hasFieldWithUserRef;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -21,7 +22,7 @@ public class WalletAccountTest {
     @Test
     public void constructor() {
         User owner = TestData.user();
-        WalletAccount walletAccount = new WalletAccount("123", owner);
+        WalletAccount walletAccount = new WalletAccount(PRIVATE, "123", owner);
 
         assertThat(walletAccount.getAddress(), is("123"));
         assertThat(walletAccount, hasFieldWithUserRef("owner", owner));
@@ -32,7 +33,7 @@ public class WalletAccountTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("address required");
 
-        new WalletAccount("  ", User.byEmail("email", "password"));
+        new WalletAccount(PRIVATE, "  ", User.byEmail("email", "password"));
     }
 
     @Test
@@ -40,7 +41,7 @@ public class WalletAccountTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("owner required");
 
-        new WalletAccount("123", null);
+        new WalletAccount(PRIVATE, "123", null);
     }
 
 }

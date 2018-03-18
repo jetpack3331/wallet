@@ -3,6 +3,7 @@ package hut34.wallet.service;
 import hut34.wallet.framework.usermanagement.model.User;
 import hut34.wallet.framework.usermanagement.model.UserAdapterGae;
 import hut34.wallet.model.WalletAccount;
+import hut34.wallet.model.WalletAccountType;
 import hut34.wallet.repository.WalletAccountRepository;
 import hut34.wallet.testinfra.BaseTest;
 import hut34.wallet.testinfra.TestData;
@@ -26,7 +27,9 @@ import static hut34.wallet.testinfra.TestData.user;
 import static hut34.wallet.testinfra.matcher.Matchers.hasFieldWithUserRef;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -44,6 +47,8 @@ public class WalletAccountServiceTest extends BaseTest {
     private WalletAccountRepository walletAccountRepository;
     @Mock
     private UserAdapterGae userAdapter;
+    @Mock
+    private SecretStorage secretStorage;
 
     private User user;
 
@@ -54,12 +59,12 @@ public class WalletAccountServiceTest extends BaseTest {
     }
 
     @Test
-    public void create() {
+    public void createPrivate_willCreatePrivateAddress() {
         String address = "address";
         when(walletAccountRepository.findById(address)).thenReturn(Optional.empty());
         when(userAdapter.getCurrentUserRequired()).thenReturn(user);
 
-        WalletAccount result = walletAccountService.create(address, "encryptedPrivateKey");
+        WalletAccount result = walletAccountService.createPrivate(address, "encryptedPrivateKey");
 
         assertThat(result.getAddress(), is(address));
         assertThat(result.getSecretStorageJson(), is("encryptedPrivateKey"));
@@ -69,13 +74,30 @@ public class WalletAccountServiceTest extends BaseTest {
     }
 
     @Test
-    public void create_willError_whenWalletAlreadyExists() {
+    public void createPrivate_willError_whenWalletAlreadyExists() {
         String address = "address";
         when(walletAccountRepository.findById(address)).thenReturn(Optional.of(TestData.walletAccount(address)));
 
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Wallet account already exists for address");
-        walletAccountService.create(address, "encryptedPrivateKey");
+        walletAccountService.createPrivate(address, "encryptedPrivateKey");
+    }
+
+    // This test is pretty slow due to the wallet creation/encryption
+    @Test
+    public void createManaged_willCreateManagedAddress() {
+        when(secretStorage.loadOrSetPassword()).thenReturn("password");
+        when(walletAccountRepository.findById(anyString())).thenReturn(Optional.empty());
+        when(userAdapter.getCurrentUserRequired()).thenReturn(user);
+
+        WalletAccount result = walletAccountService.createManaged();
+
+        assertThat(result.getType(), is(WalletAccountType.MANAGED));
+        assertThat(result.getAddress(), notNullValue());
+        assertThat(result.getSecretStorageJson(), notNullValue());
+        assertThat(result, hasFieldWithUserRef("owner", user));
+
+        verify(walletAccountRepository).save(result);
     }
 
     @Test

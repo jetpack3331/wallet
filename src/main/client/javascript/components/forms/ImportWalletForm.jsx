@@ -70,7 +70,7 @@ const ImportPrivateKeyWalletForm = props => (
         variant="raised"
         type="submit"
       >
-        Import Wallet
+        Import Address
       </Button>
       }
       {props.submitting && <CircularProgress/>}

@@ -43,13 +43,19 @@ const CreateWalletForm = props => (
       </div>
     </div>
     <div className="actions">
+      <Button
+        variant="flat"
+        onClick={props.onCancel}
+      >
+        Cancel
+      </Button>
       {!props.submitting &&
       <Button
         className="btn-primary"
         variant="raised"
         type="submit"
       >
-        Create Wallet
+        Create Address
       </Button>
       }
       {props.submitting && <CircularProgress/>}
@@ -59,6 +65,7 @@ const CreateWalletForm = props => (
 
 CreateWalletForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
   error: PropTypes.string,
   submitting: PropTypes.bool.isRequired,
 };

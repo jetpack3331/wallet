@@ -12,6 +12,8 @@ import org.springframework.contrib.gae.objectify.Refs;
 
 import java.util.Objects;
 
+import static hut34.wallet.model.WalletAccountType.PRIVATE;
+
 @Entity
 public class WalletAccount extends BaseEntity {
     public static class Fields {
@@ -22,17 +24,20 @@ public class WalletAccount extends BaseEntity {
     private String address;
     @Index
     private Ref<User> owner;
+    @Index
+    private WalletAccountType type;
     private String secretStorageJson;
 
     private WalletAccount() {
-
+        this.type = PRIVATE;
     }
 
-    public WalletAccount(String address, User owner) {
+    public WalletAccount(WalletAccountType type, String address, User owner) {
         // TODO: see how to integrate JSR validation annotations
+        Assert.notNull(type, "type required");
         Assert.notBlank(address, "address required");
         Assert.notNull(owner, "owner required");
-
+        this.type = type;
         this.address = address;
         this.owner = Refs.ref(owner);
     }
@@ -47,6 +52,15 @@ public class WalletAccount extends BaseEntity {
 
     public WalletAccount setSecretStorageJson(String secretStorageJson) {
         this.secretStorageJson = secretStorageJson;
+        return this;
+    }
+
+    public WalletAccountType getType() {
+        return type;
+    }
+
+    public WalletAccount setType(WalletAccountType type) {
+        this.type = type;
         return this;
     }
 

@@ -7,6 +7,7 @@ import hut34.wallet.testinfra.rules.LocalServicesRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static hut34.wallet.model.WalletAccountType.PRIVATE;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -17,11 +18,12 @@ public class ToWalletAccountDtoTest {
 
     @Test
     public void apply() {
-        WalletAccount entity = TestData.setCreatedUpdated(new WalletAccount("someAddress", TestData.user()))
+        WalletAccount entity = TestData.setCreatedUpdated(new WalletAccount(PRIVATE, "someAddress", TestData.user()))
             .setSecretStorageJson("nfefe8fehfekfn3f9834fn34ofi4nf43kljnblk4949489484848484");
 
         WalletAccountDto dto = Transformers.TO_WALLET_ACCOUNT_DTO.apply(entity);
 
+        assertThat(dto.getType(), is(entity.getType()));
         assertThat(dto.getAddress(), is(entity.getAddress()));
         assertThat(dto.getSecretStorageJson(), is(entity.getSecretStorageJson()));
         assertThat(dto.getCreated(), is(entity.getCreated()));

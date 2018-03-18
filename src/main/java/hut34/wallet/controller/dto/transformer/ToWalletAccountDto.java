@@ -10,6 +10,7 @@ public class ToWalletAccountDto implements Transformer<WalletAccount, WalletAcco
     @Override
     public WalletAccountDto apply(WalletAccount walletAccount) {
         WalletAccountDto dto = BaseDto.fromEntity(new WalletAccountDto(), walletAccount);
+        dto.setType(walletAccount.getType());
         dto.setAddress(walletAccount.getAddress());
         dto.setSecretStorageJson(walletAccount.getSecretStorageJson());
         return dto;

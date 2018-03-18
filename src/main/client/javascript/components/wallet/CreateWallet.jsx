@@ -3,12 +3,13 @@ import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'material-ui';
 import NoWalletIcon from '../../../images/icon-no-wallet.png';
-import { createWalletAccount, importPrivateKeyWalletAccount } from '../../actions/wallets';
+import { createManagedWalletAccount, createWalletAccount, importPrivateKeyWalletAccount } from '../../actions/wallets';
 import CreateWalletForm from '../../components/forms/CreateWalletForm';
 import ImportWalletForm from '../../components/forms/ImportWalletForm';
 import './CreateWallet.less';
+import CreateManagedWalletForm from '../forms/CreateManagedWalletForm';
 
-const CreateNewWalletFragment = ({ onCreateWalletAccount, onSwitchMode }) => (
+const CreateNewWalletFragment = ({ onCreateWalletAccount, onCancel }) => (
   <Fragment>
     <p><strong>Choose a password to create one now!</strong></p>
     <p className="important-message">
@@ -19,12 +20,34 @@ const CreateNewWalletFragment = ({ onCreateWalletAccount, onSwitchMode }) => (
     </p>
     <CreateWalletForm
       onSubmit={onCreateWalletAccount}
+      onCancel={onCancel}
     />
-    <Button className="btn-margin" variant="flat" onClick={onSwitchMode}>Or import existing</Button>
   </Fragment>
 );
 
 CreateNewWalletFragment.propTypes = {
+  onCreateWalletAccount: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+};
+
+const CreateManagedWalletFragment = ({ onCreateWalletAccount, onSwitchMode }) => (
+  <Fragment>
+    <p><strong>One click to create an address!</strong></p>
+    <p className="important-message">
+      <strong>Important: </strong> This will create an address managed by HUT34 Wallet.<br/>
+      Your private key will be encrypted and the password stored in your Google Drive.<br/>
+      We only have access to this file when you are logged into HUT34 Wallet.<br/>
+      You can export your private key and/or keystore at any time.
+    </p>
+    <CreateManagedWalletForm
+      onSubmit={onCreateWalletAccount}
+    />
+    <Button className="btn-margin" variant="flat" onClick={() => onSwitchMode('password')}>Use password</Button>
+    <Button className="btn-margin" variant="flat" onClick={() => onSwitchMode('import')}>Import existing</Button>
+  </Fragment>
+);
+
+CreateManagedWalletFragment.propTypes = {
   onCreateWalletAccount: PropTypes.func.isRequired,
   onSwitchMode: PropTypes.func.isRequired,
 };
@@ -60,6 +83,7 @@ ImportWalletFragment.propTypes = {
 class CreateWallet extends React.Component {
   static propTypes = {
     createWalletAccount: PropTypes.func.isRequired,
+    createManagedWalletAccount: PropTypes.func.isRequired,
     importPrivateKeyWalletAccount: PropTypes.func.isRequired,
     onAddressCreated: PropTypes.func,
   };
@@ -73,12 +97,17 @@ class CreateWallet extends React.Component {
     createMode: 'create',
   };
 
-  switchMode = () => {
-    this.setState({ createMode: this.state.createMode === 'create' ? 'import' : 'create' });
+  switchMode = (mode) => {
+    this.setState({ createMode: mode });
   };
 
   createWalletAccount = request => (
     this.props.createWalletAccount(request)
+      .then(() => this.props.onAddressCreated())
+  );
+
+  createManagedWalletAccount = request => (
+    this.props.createManagedWalletAccount(request)
       .then(() => this.props.onAddressCreated())
   );
 
@@ -91,17 +120,23 @@ class CreateWallet extends React.Component {
     return (
       <div className="row no-wallet">
         <div className="main-icon"><img className="icon no-wallet" src={NoWalletIcon} alt="No Wallet"/></div>
-        <h1 className="display-1"><strong>No Wallet</strong></h1>
+        <h1 className="display-1"><strong>Add Address</strong></h1>
         {this.state.createMode === 'create' &&
+        <CreateManagedWalletFragment
+          onCreateWalletAccount={this.createManagedWalletAccount}
+          onSwitchMode={this.switchMode}
+        />
+        }
+        {this.state.createMode === 'password' &&
         <CreateNewWalletFragment
           onCreateWalletAccount={this.createWalletAccount}
-          onSwitchMode={this.switchMode}
+          onCancel={() => this.switchMode('create')}
         />
         }
         {this.state.createMode === 'import' &&
         <ImportWalletFragment
           onImportWalletAccount={this.importPrivateKeyWalletAccount}
-          onCancel={this.switchMode}
+          onCancel={() => this.switchMode('create')}
         />
         }
       </div>
@@ -110,6 +145,7 @@ class CreateWallet extends React.Component {
 }
 
 const mapDispatchToProps = {
+  createManagedWalletAccount,
   createWalletAccount,
   importPrivateKeyWalletAccount,
 };

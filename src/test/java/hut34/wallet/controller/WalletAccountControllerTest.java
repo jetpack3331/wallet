@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static hut34.wallet.client.etherscan.TestEtherscan.ONE_ETH;
+import static hut34.wallet.model.WalletAccountType.PRIVATE;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -46,10 +47,10 @@ public class WalletAccountControllerTest extends BaseControllerTest {
 
     @Test
     public void create() throws Exception {
-        CreateWalletRequest request = new CreateWalletRequest(ETHEREUM_ADDRESS, "femfefiefowejfno43ifnm34ofin3498f3498598");
-        WalletAccount walletAccount = new WalletAccount(request.getAddress(), TestData.user())
+        CreateWalletRequest request = new CreateWalletRequest(PRIVATE, ETHEREUM_ADDRESS, "femfefiefowejfno43ifnm34ofin3498f3498598");
+        WalletAccount walletAccount = new WalletAccount(PRIVATE, request.getAddress(), TestData.user())
             .setSecretStorageJson(request.getSecretStorageJson());
-        when(walletAccountService.create(request.getAddress(), request.getSecretStorageJson())).thenReturn(walletAccount);
+        when(walletAccountService.createPrivate(request.getAddress(), request.getSecretStorageJson())).thenReturn(walletAccount);
 
         mvc.perform(
             post("/api/wallets/accounts")

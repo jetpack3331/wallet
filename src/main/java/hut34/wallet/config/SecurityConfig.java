@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .addFilterBefore(oauthAuthenticationFilter(), BasicAuthenticationFilter.class)
             .headers()
             .addHeaderWriter(new SessionExpiryHeaderWriter())
-            .contentSecurityPolicy("default-src 'self'; script-src 'self' https://cdn.polyfill.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com blob:; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com");
+            .contentSecurityPolicy("default-src 'self'; connect-src 'self' https://mainnet.infura.io https://api.etherscan.io; script-src 'self' https://cdn.polyfill.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com blob:; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com");
         // @formatter:on
     }
 

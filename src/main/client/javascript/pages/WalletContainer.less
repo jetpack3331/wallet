@@ -26,9 +26,19 @@
             margin-bottom: 0;
         }
     }
+    .header-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        .wallet-actions {
+            margin-left: 1rem;
+        }
+    }
     .wallet-actions {
-        min-height: 42px;
-        text-align: right;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
         .btn-primary {
             width: auto;
         }
@@ -115,7 +125,6 @@
             }
         }
         .wallet-actions {
-            text-align: right;
             .wallet-action {
                 & + .btn-primary {
                     margin-top: 0;
@@ -154,7 +163,8 @@
             }
         }
         .wallet-actions {
-            text-align: left;
+            margin-top: .5rem;
+            justify-content: flex-start;
         }
     }
 }

@@ -80,6 +80,7 @@ class SendEtherPage extends React.Component {
                     onCancel={() => this.props.cancelSend()}
                     transactionFee={gasPrices.averagePrice * 21000}
                     balance={walletBalance.balance}
+                    showPassword={walletAccount.type === 'PRIVATE'}
                   />
                 }
               </Grid>

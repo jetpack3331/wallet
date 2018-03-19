@@ -1,16 +1,19 @@
 package hut34.wallet.framework.controller.advice;
 
+import hut34.wallet.util.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.contrib.gae.objectify.repository.EntityNotFoundException;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import hut34.wallet.util.NotFoundException;
 
 @ControllerAdvice
 public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
@@ -35,6 +38,11 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<ResponseError> handleAllOthers(RuntimeException e) {
         LOG.error("Uncaught exception", e);
         return buildResponseError(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        LOG.debug("Validation error. {}: {}", ex.getClass(), ex.getMessage());
+        return super.handleMethodArgumentNotValid(ex, headers, status, request);
     }
 
     private ResponseEntity<ResponseError> buildResponseError(Exception e, HttpStatus statusCode) {

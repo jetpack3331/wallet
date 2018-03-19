@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static hut34.wallet.client.etherscan.TestEtherscan.ONE_ETH;
+import static hut34.wallet.model.WalletAccountType.MANAGED;
 import static hut34.wallet.model.WalletAccountType.PRIVATE;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -46,7 +47,7 @@ public class WalletAccountControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void create() throws Exception {
+    public void createPrivate() throws Exception {
         CreateWalletRequest request = new CreateWalletRequest(PRIVATE, ETHEREUM_ADDRESS, "femfefiefowejfno43ifnm34ofin3498f3498598");
         WalletAccount walletAccount = new WalletAccount(PRIVATE, request.getAddress(), TestData.user())
             .setSecretStorageJson(request.getSecretStorageJson());
@@ -60,6 +61,36 @@ public class WalletAccountControllerTest extends BaseControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("address", is(request.getAddress())))
             .andExpect(jsonPath("secretStorageJson", is(request.getSecretStorageJson())));
+    }
+
+    @Test
+    public void createPrivate_willFailValidationIfRequestIncomplete() throws Exception {
+        CreateWalletRequest request = new CreateWalletRequest(PRIVATE, ETHEREUM_ADDRESS, null);
+
+        mvc.perform(
+            post("/api/wallets/accounts")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asString(request)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void createManaged() throws Exception {
+        CreateWalletRequest request = new CreateWalletRequest(MANAGED);
+        WalletAccount walletAccount = TestData.walletAccount("0xADDRESS")
+            .setType(MANAGED)
+            .setSecretStorageJson("secret-json");
+        when(walletAccountService.createManaged()).thenReturn(walletAccount);
+
+        mvc.perform(
+            post("/api/wallets/accounts")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asString(request)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("address", is("0xADDRESS")))
+            .andExpect(jsonPath("secretStorageJson", is("secret-json")));
     }
 
     @Test

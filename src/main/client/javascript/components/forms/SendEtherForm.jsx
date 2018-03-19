@@ -13,6 +13,7 @@ class SendEtherForm extends React.Component {
   static propTypes = {
     transactionFee: PropTypes.number.isRequired,
     balance: PropTypes.string.isRequired,
+    showPassword: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     error: PropTypes.string,
@@ -52,7 +53,7 @@ class SendEtherForm extends React.Component {
 
   render() {
     const {
-      handleSubmit, submitting, onCancel, error, balance, transactionFee,
+      handleSubmit, submitting, onCancel, error, balance, transactionFee, showPassword,
     } = this.props;
 
     const minSend = parseEther(this.minSendEther);
@@ -114,17 +115,19 @@ class SendEtherForm extends React.Component {
                 fullWidth
               />
             </div>
-            <div className="field">
-              <Field
-                name="password"
-                component={TextField}
-                label="Keystore password"
-                type="password"
-                validate={[required()]}
-                disabled={submitting}
-                fullWidth
-              />
-            </div>
+            {showPassword &&
+              <div className="field">
+                <Field
+                  name="password"
+                  component={TextField}
+                  label="Keystore password"
+                  type="password"
+                  validate={[required()]}
+                  disabled={submitting}
+                  fullWidth
+                />
+              </div>
+            }
           </div>
           <div className="form-info">
             Transaction fee: <CurrencyDisplay value={transactionFee} code="ETH" strong/>

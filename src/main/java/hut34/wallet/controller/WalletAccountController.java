@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;
@@ -40,7 +41,7 @@ public class WalletAccountController {
     }
 
     @PostMapping("/api/wallets/accounts")
-    public WalletAccountDto create(@RequestBody CreateWalletRequest request) {
+    public WalletAccountDto create(@Valid @RequestBody CreateWalletRequest request) {
 
         if (request.getType() == WalletAccountType.PRIVATE) {
             WalletAccount walletAccount = walletAccountService.createPrivate(request.getAddress(), request.getSecretStorageJson());

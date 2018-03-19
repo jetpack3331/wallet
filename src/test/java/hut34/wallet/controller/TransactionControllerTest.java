@@ -3,14 +3,19 @@ package hut34.wallet.controller;
 import hut34.wallet.client.gas.GasClient;
 import hut34.wallet.client.gas.GasInfo;
 import hut34.wallet.client.transact.TransactionClient;
+import hut34.wallet.controller.dto.CreateTransactionRequest;
+import hut34.wallet.service.ManagedAccountService;
 import hut34.wallet.testinfra.BaseControllerTest;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.http.MediaType;
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.Keys;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -26,10 +31,12 @@ public class TransactionControllerTest extends BaseControllerTest {
     private TransactionClient transactionClient;
     @Mock
     private GasClient gasClient;
+    @Mock
+    private ManagedAccountService managedAccountService;
 
     @Override
     protected Object controller() {
-        return new TransactionController(transactionClient, gasClient);
+        return new TransactionController(transactionClient, gasClient, managedAccountService);
     }
 
     @Test
@@ -43,6 +50,56 @@ public class TransactionControllerTest extends BaseControllerTest {
                 .content("{\"value\": \"signedTransaction\"}"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("result", is("transactionHash")));
+    }
+
+    @Test
+    public void signTransaction() throws Exception {
+        when(managedAccountService.loadCredentials("0xFROM")).thenReturn(Credentials.create(Keys.createEcKeyPair()));
+        CreateTransactionRequest txnRequest = validTransactionRequest();
+
+        mvc.perform(
+            post("/api/transactions/sign")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asString(txnRequest)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("result", any(String.class)));
+    }
+
+    @Test
+    public void signTransaction_willFailValidationIfFromAddressMissing() throws Exception {
+        CreateTransactionRequest request = validTransactionRequest().setFrom(null);
+        expectBadRequest("/api/transactions/sign", request);
+    }
+
+    @Test
+    public void signTransaction_willFailValidationIfToAddressMissing() throws Exception {
+        CreateTransactionRequest request = validTransactionRequest().setTo(null);
+        expectBadRequest("/api/transactions/sign", request);
+    }
+
+    @Test
+    public void signTransaction_willFailValidationIfNonceMissing() throws Exception {
+        CreateTransactionRequest request = validTransactionRequest().setNonce(null);
+        expectBadRequest("/api/transactions/sign", request);
+    }
+
+    @Test
+    public void signTransaction_willFailValidationIfGasLimitMissing() throws Exception {
+        CreateTransactionRequest request = validTransactionRequest().setGasLimit(null);
+        expectBadRequest("/api/transactions/sign", request);
+    }
+
+    @Test
+    public void signTransaction_willFailValidationIfGasPriceMissing() throws Exception {
+        CreateTransactionRequest request = validTransactionRequest().setGasPrice(null);
+        expectBadRequest("/api/transactions/sign", request);
+    }
+
+    @Test
+    public void signTransaction_willFailValidationIfValueMissing() throws Exception {
+        CreateTransactionRequest request = validTransactionRequest().setValue(null);
+        expectBadRequest("/api/transactions/sign", request);
     }
 
     @Test
@@ -72,4 +129,22 @@ public class TransactionControllerTest extends BaseControllerTest {
             .andExpect(jsonPath("result", is(99)));
     }
 
+    private void expectBadRequest(String url, Object content) throws Exception {
+        mvc.perform(
+            post(url)
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asString(content)))
+            .andExpect(status().isBadRequest());
+    }
+
+    private CreateTransactionRequest validTransactionRequest() {
+        return new CreateTransactionRequest()
+            .setFrom("0xFROM")
+            .setTo("0xTO")
+            .setNonce("1")
+            .setGasLimit("21000")
+            .setGasPrice("2000000000")
+            .setValue("100000000000000");
+    }
 }

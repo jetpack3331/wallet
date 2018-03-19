@@ -1,6 +1,8 @@
 package hut34.wallet.controller.dto;
 
-public class IndexMeta {
+import hut34.wallet.util.ValueObject;
+
+public class IndexMeta extends ValueObject {
 
     private String url;
     private String title;

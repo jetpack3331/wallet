@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import KeysIcon from '../../../images/icons/icon-keys.png';
 import { fetchWalletBalance } from '../../actions/wallets';
 import * as model from '../../model';
 import { getTokens, getWalletBalance } from '../../reducers';
 import CurrencyBalance from '../common/CurrencyBalance';
-import './WalletAccountListItem.less';
 import TokenBalance from '../common/TokenBalance';
+import './WalletAccountListItem.less';
 
 class WalletAccountListItem extends React.Component {
   static propTypes = {
@@ -32,9 +33,12 @@ class WalletAccountListItem extends React.Component {
       <div className="wallet-account-list-item" key={walletAccount.address}>
         <Link to={`/addresses/${walletAccount.address}`}>
           <Grid container spacing={24}>
-            <Grid item xs={6}>
-              <h2 className="title account-name"><strong>Address</strong></h2>
-              <p className="account-address">{walletAccount.address}</p>
+            <Grid item className="item-main" xs={6}>
+              <img src={KeysIcon} className="icon-wallet" alt="Address icon"/>
+              <div>
+                <h2 className="title account-name"><strong>Address</strong></h2>
+                <p className="account-address">{walletAccount.address}</p>
+              </div>
             </Grid>
             <Grid item xs={6}>
               <CurrencyBalance

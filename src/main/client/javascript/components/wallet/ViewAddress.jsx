@@ -2,7 +2,7 @@ import { Button, Grid } from 'material-ui';
 import ChevronLeft from 'material-ui-icons/ChevronLeft';
 import SendIcon from 'material-ui-icons/Send';
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { push } from 'react-router-redux';
@@ -48,7 +48,7 @@ class ViewAddress extends React.Component {
           </Grid>
           <Grid item xs={12} sm={7} md={8}>
             <div className="wallet-header">
-              <img src={KeysIcon} className="icon-wallet" alt="Wallet icon"/>
+              <img src={KeysIcon} className="icon-wallet" alt="Address icon"/>
               <div className="details">
                 <h1 className="display-1 inline-title"><strong>My Address</strong></h1>
                 <p className="wallet-address" title="Wallet Address">{walletAccount.address}</p>

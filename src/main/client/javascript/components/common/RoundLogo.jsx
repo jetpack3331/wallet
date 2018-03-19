@@ -8,7 +8,7 @@ const RoundLogo = ({ src, alt, className }) => (
 );
 
 RoundLogo.propTypes = {
-  src: PropTypes.oneOfType([PropTypes.string, PropTypes.obj]).isRequired,
+  src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   alt: PropTypes.string,
   className: PropTypes.string,
 };

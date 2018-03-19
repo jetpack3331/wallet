@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { fetchTokenBalance } from '../../actions/wallets';
 import * as model from '../../model';
 import { getBalanceByContractAddressAndAddress } from '../../reducers';
 import CurrencyBalance from './CurrencyBalance';
 import './TokenBalance.less';
+import TokenDetails from './TokenDetails';
 
 class TokenBalance extends React.Component {
   static propTypes = {
@@ -13,10 +14,12 @@ class TokenBalance extends React.Component {
     fetchTokenBalance: PropTypes.func.isRequired,
     token: model.token.isRequired,
     balance: model.walletTokenBalance,
+    detailed: PropTypes.bool,
   };
 
   static defaultProps = {
     balance: undefined,
+    detailed: false,
   };
 
 
@@ -27,15 +30,20 @@ class TokenBalance extends React.Component {
 
 
   render() {
-    const { token, balance } = this.props;
+    const { token, balance, detailed } = this.props;
     return (
-      <CurrencyBalance
-        className="token-balance"
-        value={balance && balance.balance}
-        title={token.symbol}
-        decimals={token.decimals}
-        strong={false}
-      />
+      <Fragment>
+        {detailed && <TokenDetails token={token} balance={balance && balance.balance}/>}
+        {!detailed &&
+        <CurrencyBalance
+          className="token-balance"
+          value={balance && balance.balance}
+          title={token.symbol}
+          decimals={token.decimals}
+          strong={false}
+        />
+        }
+      </Fragment>
     );
   }
 }

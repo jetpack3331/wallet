@@ -39,8 +39,8 @@ class ViewAddress extends React.Component {
     const { walletBalance, walletAccount, tokens } = this.props;
 
     return (
-      <Fragment>
-        <Grid className="view-address" container spacing={0}>
+      <div className="view-address">
+        <Grid container spacing={0}>
           <Grid item xs={12}>
             <div className="top-actions">
               <Link to="/" className="back-link"><ChevronLeft/><span>Back to wallet</span></Link>
@@ -70,7 +70,7 @@ class ViewAddress extends React.Component {
         </Grid>
 
         <Grid className="wallet-section" container spacing={0}>
-          <Grid item xs={12} sm={7} lg={8}>
+          <Grid item xs={12} sm={6} lg={8}>
             <div className="section-main">
               <div className="icon-wrapper">
                 <RoundLogo className="icon" src={EthereumLogo}/>
@@ -81,14 +81,12 @@ class ViewAddress extends React.Component {
               </div>
             </div>
           </Grid>
-          <Grid item xs={12} sm={3} lg={3}>
+          <Grid className="section-actions" item xs={12} sm={6} lg={4}>
             <CurrencyBalance
               title="Balance"
               value={walletBalance && walletBalance.balance}
               code="ETH"
             />
-          </Grid>
-          <Grid className="section-actions" item xs={12} sm={2} lg={1}>
             <Button
               className="btn-secondary"
               variant="raised"
@@ -101,14 +99,15 @@ class ViewAddress extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid container spacing={0}>
+        <h2 className="tokens-title">Tokens</h2>
+        <Grid className="tokens" container spacing={0}>
           {tokens.map(tok => (
-            <Grid item sm={6} md={4}>
-              <TokenBalance token={tok} walletAddress={walletAccount.address} />
+            <Grid className="token" item xs={6} sm={6} md={3}>
+              <TokenBalance token={tok} walletAddress={walletAccount.address} detailed />
             </Grid>))}
         </Grid>
 
-      </Fragment>
+      </div>
     );
   }
 }

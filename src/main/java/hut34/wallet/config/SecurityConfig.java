@@ -37,6 +37,7 @@ import static org.springframework.http.HttpMethod.GET;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private OAuth2ClientContext oauth2ClientContext;
 
     @Autowired
@@ -47,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http
             .csrf()
-                .ignoringAntMatchers("/api/**", "/task/**", "/cron/**", "/_ah/**")
+                .ignoringAntMatchers("/system/**", "/task/**", "/cron/**", "/_ah/**")
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         .and()
             .exceptionHandling()

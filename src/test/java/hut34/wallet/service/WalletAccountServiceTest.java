@@ -28,6 +28,7 @@ import static hut34.wallet.testinfra.matcher.Matchers.hasFieldWithUserRef;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -60,7 +61,7 @@ public class WalletAccountServiceTest extends BaseTest {
 
     @Test
     public void createPrivate_willCreatePrivateAddress() {
-        String address = "address";
+        String address = "0xADDRESS";
         when(walletAccountRepository.findById(address)).thenReturn(Optional.empty());
         when(userAdapter.getCurrentUserRequired()).thenReturn(user);
 
@@ -74,8 +75,19 @@ public class WalletAccountServiceTest extends BaseTest {
     }
 
     @Test
+    public void createPrivate_willPrependAddressWith0x() {
+        String address = "ADDRESS";
+        when(walletAccountRepository.findById(anyString())).thenReturn(Optional.empty());
+        when(userAdapter.getCurrentUserRequired()).thenReturn(user);
+
+        WalletAccount result = walletAccountService.createPrivate(address, "encryptedPrivateKey");
+
+        assertThat(result.getAddress(), is("0xADDRESS"));
+    }
+
+    @Test
     public void createPrivate_willError_whenWalletAlreadyExists() {
-        String address = "address";
+        String address = "0xADDRESS";
         when(walletAccountRepository.findById(address)).thenReturn(Optional.of(TestData.walletAccount(address)));
 
         thrown.expect(IllegalArgumentException.class);
@@ -93,7 +105,7 @@ public class WalletAccountServiceTest extends BaseTest {
         WalletAccount result = walletAccountService.createManaged();
 
         assertThat(result.getType(), is(WalletAccountType.MANAGED));
-        assertThat(result.getAddress(), notNullValue());
+        assertThat(result.getAddress(), startsWith("0x"));
         assertThat(result.getSecretStorageJson(), notNullValue());
         assertThat(result, hasFieldWithUserRef("owner", user));
 

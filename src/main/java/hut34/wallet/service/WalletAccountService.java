@@ -9,6 +9,7 @@ import hut34.wallet.model.WalletAccount;
 import hut34.wallet.model.WalletAccountType;
 import hut34.wallet.repository.WalletAccountRepository;
 import hut34.wallet.util.Assert;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -67,10 +68,11 @@ public class WalletAccountService {
     }
 
     private WalletAccount create(WalletAccountType type, String address, String secretStorageJson) {
-        Assert.isAbsent(walletAccountRepository.findById(address), "Wallet account already exists for address");
+        String hexAddress = hexifyAddress(address);
+        Assert.isAbsent(walletAccountRepository.findById(hexAddress), "Wallet account already exists for address");
 
-        LOG.info("Creating new {} WalletAccount for address {}", type, address);
-        WalletAccount walletAccount = new WalletAccount(type, address, userAdapter.getCurrentUserRequired())
+        LOG.info("Creating new {} WalletAccount for address {}", type, hexAddress);
+        WalletAccount walletAccount = new WalletAccount(type, hexAddress, userAdapter.getCurrentUserRequired())
             .setSecretStorageJson(secretStorageJson);
 
         return walletAccountRepository.save(walletAccount);
@@ -90,6 +92,10 @@ public class WalletAccountService {
     private boolean currentUserAuthorisedToView(Key<User> objectOwner) {
         Optional<Key<User>> currentUserKey = UserAdapterGae.currentUserKey();
         return currentUserKey.isPresent() && currentUserKey.get().equals(objectOwner);
+    }
+
+    private String hexifyAddress(String address) {
+        return StringUtils.prependIfMissingIgnoreCase(address, "0x", "0x", "0X");
     }
 
     private String getWalletAsJson(WalletFile walletFile) {

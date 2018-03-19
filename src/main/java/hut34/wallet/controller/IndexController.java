@@ -30,7 +30,7 @@ public class IndexController {
     }
 
     @GetMapping(
-        value = "/{path:(?!static)}**",
+        value = "/{path:(?!static)}*/**",
         produces = MediaType.TEXT_HTML_VALUE,
         headers = {"!X-Appengine-Cron"})
     public String indexPage(HttpServletRequest request, Model model) {

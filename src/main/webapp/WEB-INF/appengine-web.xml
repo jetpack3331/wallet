@@ -18,14 +18,11 @@
             F4              512mb   2.4ghz  $0.20
             F4_1G           1024mb  2.4ghz  $0.30
 
-
             https://cloud.google.com/appengine/docs/standard/#instance_classes
             F = autoscaled
             B = manual scaling
-
-        <instance-class>F2</instance-class>
     -->
-
+    <instance-class>F4</instance-class>
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/classes/logging.properties"/>
     </system-properties>

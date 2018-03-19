@@ -29,7 +29,6 @@ class EtherBalance extends React.Component {
     const { walletBalance, title } = this.props;
     return (
       <CurrencyBalance
-        className="token-balance"
         value={walletBalance && walletBalance.balance}
         title={title}
         code="ETH"

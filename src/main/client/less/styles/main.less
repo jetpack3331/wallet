@@ -6,9 +6,17 @@ html, body {
 }
 
 body {
-  *:focus {
-      outline: none;
-  }
+    *:focus {
+        outline: none;
+    }
+    a {
+        text-decoration: none;
+        color: #ffffff;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 .inline-btn-group {
@@ -118,7 +126,6 @@ body {
     }
 }
 
-
 .container {
     max-width: 1300px; /*1178px;*/
     margin: auto;
@@ -154,6 +161,7 @@ button.btn-secondary, a.btn-secondary {
     box-shadow: none;
     border-radius: 3px;
     text-transform: none;
+    padding: 0 5px;
 
     &:hover {
         background: #ff7652;
@@ -175,7 +183,6 @@ button.btn-margin {
     color: fade(#ffffff, 60%);
     text-align: center;
 }
-
 
 // Extra small devices (portrait phones, less than 576px)
 @media screen and (max-width: 575px) {

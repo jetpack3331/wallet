@@ -8,7 +8,6 @@ import RoundLogo from './RoundLogo';
 import './TokenDetails.less';
 
 const TokenDetails = ({ token, balance }) => {
-
   const icon = (token.logo && token.logo.src) || TokenIcon;
   return (
     <div className="token-details">
@@ -23,7 +22,7 @@ const TokenDetails = ({ token, balance }) => {
         strong
       />
     </div>
-  )
+  );
 };
 
 TokenDetails.propTypes = {

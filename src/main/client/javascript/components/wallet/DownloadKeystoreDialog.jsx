@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from 'material-ui';
 import FileDownload from 'material-ui-icons/FileDownload';
 
-const DownloadKeystoreDialog = ({ open, onClose, walletAccount }) => (
+const DownloadKeystoreDialog = ({ open, onClose, walletAddress }) => (
   <Dialog
     open={open}
     onClose={onClose}
@@ -26,7 +26,7 @@ const DownloadKeystoreDialog = ({ open, onClose, walletAccount }) => (
       <Button
         variant="flat"
         size="small"
-        href={`/api/wallets/accounts/${walletAccount.address}/download`}
+        href={`/api/wallets/accounts/${walletAddress}/download`}
         onTouchTap={onClose}
         fullWidth
       >
@@ -40,7 +40,7 @@ const DownloadKeystoreDialog = ({ open, onClose, walletAccount }) => (
 DownloadKeystoreDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  walletAccount: PropTypes.object.isRequired,
+  walletAddress: PropTypes.string.isRequired,
 };
 
 export default DownloadKeystoreDialog;

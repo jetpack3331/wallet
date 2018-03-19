@@ -31,7 +31,7 @@ class DownloadKeystoreButton extends Component {
           Keystore
         </Button>
         <DownloadKeystoreDialog
-          walletAccount={this.props.walletAccount}
+          walletAddress={this.props.walletAddress}
           open={this.state.dialogOpen}
           onClose={this.closeDialog}
         />
@@ -41,7 +41,7 @@ class DownloadKeystoreButton extends Component {
 }
 
 DownloadKeystoreButton.propTypes = {
-  walletAccount: PropTypes.object.isRequired,
+  walletAddress: PropTypes.string.isRequired,
 };
 
 export default DownloadKeystoreButton;

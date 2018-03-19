@@ -102,7 +102,7 @@ class ViewAddress extends React.Component {
         <h2 className="tokens-title">Tokens</h2>
         <Grid className="tokens" container spacing={0}>
           {tokens.map(tok => (
-            <Grid className="token" item xs={6} sm={6} md={3}>
+            <Grid key={tok.address} className="token" item xs={6} sm={6} md={3}>
               <TokenBalance token={tok} walletAddress={walletAccount.address} detailed />
             </Grid>))}
         </Grid>

@@ -33,14 +33,16 @@ class WalletAccountListItem extends React.Component {
       <div className="wallet-account-list-item" key={walletAccount.address}>
         <Link to={`/addresses/${walletAccount.address}`}>
           <Grid container spacing={24}>
-            <Grid item className="item-main" xs={6}>
-              <img src={KeysIcon} className="icon-wallet" alt="Address icon"/>
-              <div>
-                <h2 className="title account-name"><strong>Address</strong></h2>
-                <p className="account-address">{walletAccount.address}</p>
+            <Grid item xs={12} sm={6}>
+              <div className="item-main">
+                <img src={KeysIcon} className="icon-wallet" alt="Address icon"/>
+                <div>
+                  <h2 className="title account-name"><strong>Address</strong></h2>
+                  <p className="account-address">{walletAccount.address}</p>
+                </div>
               </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <CurrencyBalance
                 title="Balance"
                 value={accountBalance && accountBalance.balance}

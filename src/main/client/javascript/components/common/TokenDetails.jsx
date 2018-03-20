@@ -11,7 +11,9 @@ import CurrencyDisplay from './CurrencyDisplay';
 import RoundLogo from './RoundLogo';
 import './TokenDetails.less';
 
-const TokenDetails = ({ token, balance, navigateSendToken }) => {
+const TokenDetails = ({
+  token, balance, navigateSendToken, hasEtherBalance,
+}) => {
   const icon = (token.logo && token.logo.src) || TokenIcon;
   const nonZeroBalance = balance && bigNumberify(balance).gt(0);
 
@@ -19,7 +21,7 @@ const TokenDetails = ({ token, balance, navigateSendToken }) => {
     <div className="token-details">
       <div className="logo-action">
         <RoundLogo src={icon} alt={token.name}/>
-        {nonZeroBalance &&
+        {hasEtherBalance && nonZeroBalance &&
         <Button
           className="btn-secondary"
           variant="raised"
@@ -45,12 +47,14 @@ const TokenDetails = ({ token, balance, navigateSendToken }) => {
 TokenDetails.propTypes = {
   token: model.token.isRequired,
   navigateSendToken: PropTypes.func.isRequired,
+  hasEtherBalance: PropTypes.bool,
   balance: PropTypes.oneOfType([PropTypes.string,
     PropTypes.number, PropTypes.instanceOf(BigNumber)]),
 };
 
 TokenDetails.defaultProps = {
   balance: undefined,
+  hasEtherBalance: false,
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

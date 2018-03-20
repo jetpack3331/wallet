@@ -1,3 +1,4 @@
+import { bigNumberify } from 'ethers/utils/index';
 import { Button, Grid } from 'material-ui';
 import SendIcon from 'material-ui-icons/Send';
 import PropTypes from 'prop-types';
@@ -37,6 +38,7 @@ class AddressWithBalance extends React.Component {
     const { walletBalance, walletAccount, linkToTransactions } = this.props;
     const { address: walletAddress } = walletAccount;
     const privateWallet = walletAccount.type !== 'MANAGED';
+    const nonZeroBalance = walletBalance && bigNumberify(walletBalance.balance).gt(0);
 
     return (
       <div className="address-with-balance">
@@ -84,6 +86,7 @@ class AddressWithBalance extends React.Component {
               value={walletBalance && walletBalance.balance}
               code="ETH"
             />
+            {nonZeroBalance &&
             <Button
               className="btn-secondary"
               variant="raised"
@@ -93,6 +96,7 @@ class AddressWithBalance extends React.Component {
               <SendIcon className="icon-small btn-icon-left"/>
               Send
             </Button>
+            }
           </Grid>
         </Grid>
       </div>

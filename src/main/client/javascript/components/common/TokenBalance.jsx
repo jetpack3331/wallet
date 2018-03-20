@@ -12,6 +12,7 @@ class TokenBalance extends React.Component {
   static propTypes = {
     walletAddress: PropTypes.string.isRequired,
     fetchTokenBalance: PropTypes.func.isRequired,
+    hasEtherBalance: PropTypes.bool,
     token: model.token.isRequired,
     balance: model.walletTokenBalance,
     detailed: PropTypes.bool,
@@ -20,6 +21,7 @@ class TokenBalance extends React.Component {
   static defaultProps = {
     balance: undefined,
     detailed: false,
+    hasEtherBalance: false,
   };
 
 
@@ -31,7 +33,7 @@ class TokenBalance extends React.Component {
 
   render() {
     const {
-      token, balance, detailed, walletAddress,
+      token, balance, detailed, walletAddress, hasEtherBalance,
     } = this.props;
     return (
       <Fragment>
@@ -39,6 +41,7 @@ class TokenBalance extends React.Component {
           <TokenDetails
             walletAddress={walletAddress}
             token={token}
+            hasEtherBalance={hasEtherBalance}
             balance={balance && balance.balance}
           />
         }

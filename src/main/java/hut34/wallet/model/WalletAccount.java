@@ -12,8 +12,6 @@ import org.springframework.contrib.gae.objectify.Refs;
 
 import java.util.Objects;
 
-import static hut34.wallet.model.WalletAccountType.PRIVATE;
-
 @Entity
 public class WalletAccount extends BaseEntity {
     public static class Fields {
@@ -29,7 +27,6 @@ public class WalletAccount extends BaseEntity {
     private String secretStorageJson;
 
     private WalletAccount() {
-        this.type = PRIVATE;
     }
 
     public WalletAccount(WalletAccountType type, String address, User owner) {

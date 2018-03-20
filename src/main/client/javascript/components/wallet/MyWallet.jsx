@@ -33,7 +33,7 @@ const MyWalletHeader = ({ totalBalance }) => (
           <div className="wallet-action">
             <Button
               component={Link}
-              to="/addAddress"
+              to="/addresses/add"
               className="btn-primary"
               size="small"
             >

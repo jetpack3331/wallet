@@ -17,7 +17,7 @@ const getRoutes = () => (
   <Router history={history}>
     <Route path="/" component={Layout} onEnter={initSession}>
       <IndexRoute component={LandingPage}/>
-      <Route path="addAddress" component={AddAddressPage}/>
+      <Route path="addresses/add" component={AddAddressPage}/>
       <Route path="addresses/:walletAddress" component={ViewAddressPage}/>
       <Route path="addresses/:walletAddress/transactions/eth" component={EtherTransactionsPage}/>
       <Route path="addresses/:walletAddress/send" component={SendEtherPage}/>

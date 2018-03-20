@@ -90,7 +90,7 @@ class AddressWithBalance extends React.Component {
               size="small"
               onClick={this.props.navigateSendEther}
             >
-              <SendIcon className="btn-icon-left"/>
+              <SendIcon className="icon-small btn-icon-left"/>
               Send
             </Button>
           </Grid>

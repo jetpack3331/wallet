@@ -30,10 +30,18 @@ class TokenBalance extends React.Component {
 
 
   render() {
-    const { token, balance, detailed } = this.props;
+    const {
+      token, balance, detailed, walletAddress,
+    } = this.props;
     return (
       <Fragment>
-        {detailed && <TokenDetails token={token} balance={balance && balance.balance}/>}
+        {detailed &&
+          <TokenDetails
+            walletAddress={walletAddress}
+            token={token}
+            balance={balance && balance.balance}
+          />
+        }
         {!detailed &&
         <CurrencyBalance
           className="token-balance"

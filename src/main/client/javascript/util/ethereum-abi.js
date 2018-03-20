@@ -1,3 +1,5 @@
+import { Interface } from 'ethers/contracts';
+
 /**
  * Ethereum ABI for ERC20
  *
@@ -276,3 +278,5 @@ export const abi = [
     type: 'event',
   },
 ];
+
+export const iface = new Interface(abi);

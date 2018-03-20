@@ -55,7 +55,7 @@ class SendCryptoForm extends React.Component {
 
   atLeastOneUnit = (value) => {
     const wei = (!isNil(value) || null) && this.parse(value);
-    return this.validate(`cannot be below minimal unit of ${this.props.token.symbol}`, !isNil(wei) && wei.lt(this.parse('1')));
+    return this.validate(`cannot be below minimal unit of ${this.props.token.symbol}`, !isNil(wei) && wei.lt('1'));
   };
 
   notBelowMin = (value) => {
@@ -88,7 +88,7 @@ class SendCryptoForm extends React.Component {
       handleSubmit, submitting, onCancel, error, transactionFee, token, showPassword,
     } = this.props;
 
-    const minSend = this.parse(this.props.minSend);
+    const minSend = this.parse(this.props.minSend || '1');
     const maxSend = this.maxSend();
     const maxSendEther = this.format(maxSend);
 

@@ -4,11 +4,11 @@ import { reducer as form } from 'redux-form';
 import auth, * as fromAuth from './auth';
 import gasPrices, * as fromGasPrices from './gasPrices';
 import tokens, * as fromTokens from './tokens';
+import users from './users';
 import walletAccounts, * as fromWalletAccounts from './wallet/walletAccounts';
 import walletBalances, * as fromWalletBalances from './wallet/walletBalances';
 import walletTokenBalances, * as fromWalletTokenBalances from './wallet/walletTokenBalances';
 import walletTransactions, * as fromWalletTransactions from './wallet/walletTransactions';
-import users from './users';
 
 /**
  * Root reducer for the app.
@@ -61,11 +61,17 @@ export const getLastSentTransactionId = (state, address) =>
 
 export const getGasPrices = state => fromGasPrices.get(state.gasPrices);
 export const getTokens = state => fromTokens.getAll(state.tokens);
+export const getToken = (state, symbol) => fromTokens.get(state.tokens, symbol);
 
 export const getBalanceByContractAddressAndAddress = (state, contractAddress, address) =>
   fromWalletTokenBalances.getByContractAddressAndAddress(
     state.walletTokenBalances,
     contractAddress, address,
   );
+export const getBalanceByTokenSymbolAndAddress = (state, tokenSymbol, address) => {
+  const tok = getToken(state, tokenSymbol);
+  return tok && fromWalletTokenBalances
+    .getByContractAddressAndAddress(state.walletTokenBalances, tok.address, address);
+};
 
 export default rootReducer;

@@ -1,6 +1,7 @@
 import { Wallet } from 'ethers';
 import { normalize } from 'normalizr';
 import { SubmissionError } from 'redux-form';
+import { getToken } from '../reducers';
 import schemas from '../schemas';
 import wallets from '../services/api/wallets';
 import { asyncAction } from './actions';
@@ -27,6 +28,18 @@ export const fetchTokenBalance = (contractAddress, address) => asyncAction(
     responseTransformer: balance => normalize(balance, schemas.walletTokenBalance),
   },
 );
+
+export const fetchTokenBalanceBySymbol = (address, tokenSymbol) =>
+  (dispatch, getState) => {
+    const state = getState();
+    const token = getToken(state, tokenSymbol);
+
+    if (!token) {
+      throw new SubmissionError({ _error: `No such token: ${tokenSymbol}` });
+    }
+    return dispatch(fetchTokenBalance(token.address, address));
+  };
+
 
 export const fetchWalletTransactions = address => asyncAction(
   'WALLET_TRANSACTIONS_FETCH',

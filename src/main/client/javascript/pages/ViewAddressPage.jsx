@@ -44,8 +44,9 @@ class ViewAddressPage extends React.Component {
           }}
           message={
             <span id="message-id">
-              Your transaction has been submitted and will appear once processed.
-              Please wait for it to be complete before sending another transaction.
+              Your transaction has been submitted and updates will appear once it has
+              been processed. Please wait for it to be complete before sending another
+              transaction.
             </span>}
           action={[
             <Button

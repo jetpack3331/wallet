@@ -58,9 +58,7 @@ class AddressWithBalance extends React.Component {
                 {privateWallet &&
                 <DownloadKeystoreButton walletAddress={walletAddress}/>
                 }
-                {privateWallet &&
                 <ViewPrivateKeyButton walletAccount={walletAccount}/>
-                }
               </div>
             </div>
           </Grid>

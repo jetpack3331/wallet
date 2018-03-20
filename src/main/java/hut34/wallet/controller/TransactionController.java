@@ -6,7 +6,9 @@ import hut34.wallet.client.transact.TransactionClient;
 import hut34.wallet.controller.dto.CreateTransactionRequest;
 import hut34.wallet.controller.dto.SimpleRequest;
 import hut34.wallet.controller.dto.SimpleResponse;
+import hut34.wallet.model.WalletAccount;
 import hut34.wallet.service.ManagedAccountService;
+import hut34.wallet.service.WalletAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +31,16 @@ public class TransactionController {
     private final TransactionClient transactionClient;
     private final GasClient gasClient;
     private final ManagedAccountService managedAccountService;
+    private final WalletAccountService walletAccountService;
 
-    public TransactionController(TransactionClient transactionClient, GasClient gasClient, ManagedAccountService managedAccountService) {
+    public TransactionController(TransactionClient transactionClient,
+                                 GasClient gasClient,
+                                 ManagedAccountService managedAccountService,
+                                 WalletAccountService walletAccountService) {
         this.transactionClient = transactionClient;
         this.gasClient = gasClient;
         this.managedAccountService = managedAccountService;
+        this.walletAccountService = walletAccountService;
     }
 
     @PostMapping("/api/transactions")
@@ -49,13 +56,14 @@ public class TransactionController {
         LOG.info("Creating signed transaction");
 
         RawTransaction rawTransaction = RawTransaction.createEtherTransaction(
-                new BigInteger(txnRequest.getNonce()),
+            new BigInteger(txnRequest.getNonce()),
             new BigInteger(txnRequest.getGasPrice()),
             new BigInteger(txnRequest.getGasLimit()),
             txnRequest.getTo(),
             new BigInteger(txnRequest.getValue()));
 
-        Credentials credentials = managedAccountService.loadCredentials(txnRequest.getFrom());
+        WalletAccount walletAccount = walletAccountService.getOrThrow(txnRequest.getFrom());
+        Credentials credentials = managedAccountService.loadCredentials(walletAccount);
 
         byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction, credentials);
         String hexValue = Numeric.toHexString(signedMessage);

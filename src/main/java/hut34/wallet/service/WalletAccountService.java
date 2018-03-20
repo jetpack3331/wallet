@@ -9,6 +9,7 @@ import hut34.wallet.model.WalletAccount;
 import hut34.wallet.model.WalletAccountType;
 import hut34.wallet.repository.WalletAccountRepository;
 import hut34.wallet.util.Assert;
+import hut34.wallet.util.NotFoundException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,6 +88,11 @@ public class WalletAccountService {
     public Optional<WalletAccount> get(String address) {
         return walletAccountRepository.findById(address)
             .filter(walletAccount -> currentUserAuthorisedToView(walletAccount.getOwnerKey()));
+    }
+
+    public WalletAccount getOrThrow(String address) {
+        Optional<WalletAccount> optional = get(address);
+        return optional.orElseThrow(NotFoundException::new);
     }
 
     private boolean currentUserAuthorisedToView(Key<User> objectOwner) {

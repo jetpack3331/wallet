@@ -6,17 +6,19 @@ import hut34.wallet.client.etherscan.TestEtherscan;
 import hut34.wallet.client.etherscan.model.Transaction;
 import hut34.wallet.controller.dto.CreateWalletRequest;
 import hut34.wallet.model.WalletAccount;
+import hut34.wallet.service.ManagedAccountService;
 import hut34.wallet.service.WalletAccountService;
 import hut34.wallet.testinfra.BaseControllerTest;
 import hut34.wallet.testinfra.TestData;
+import hut34.wallet.util.NotFoundException;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.http.MediaType;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.web3j.crypto.Credentials;
 
 import java.time.OffsetDateTime;
 import java.util.Collections;
-import java.util.Optional;
 
 import static hut34.wallet.client.etherscan.TestEtherscan.ONE_ETH;
 import static hut34.wallet.model.WalletAccountType.MANAGED;
@@ -40,10 +42,12 @@ public class WalletAccountControllerTest extends BaseControllerTest {
     private WalletAccountService walletAccountService;
     @Mock
     private EtherscanClient etherscanClient;
+    @Mock
+    private ManagedAccountService managedAccountService;
 
     @Override
     protected Object controller() {
-        return new WalletAccountController(walletAccountService, etherscanClient);
+        return new WalletAccountController(walletAccountService, etherscanClient, managedAccountService);
     }
 
     @Test
@@ -144,7 +148,7 @@ public class WalletAccountControllerTest extends BaseControllerTest {
 
     @Test
     public void download_willReturn404_whenWalletNotFound() throws Exception {
-        when(walletAccountService.get("WalletAddress")).thenReturn(Optional.empty());
+        when(walletAccountService.getOrThrow("WalletAddress")).thenThrow(new NotFoundException());
 
         mvc.perform(
             get("/api/wallets/accounts/WalletAddress/download"))
@@ -157,7 +161,7 @@ public class WalletAccountControllerTest extends BaseControllerTest {
     public void download_willDownloadSecretStorageJson() throws Exception {
         WalletAccount walletAccount = TestData.walletAccount();
         ReflectionTestUtils.setField(walletAccount, "created", OffsetDateTime.parse("2018-03-07T09:28:10.445Z"));
-        when(walletAccountService.get("0xASDFMEWIFREVNERIGVNERTIGRTNBRT")).thenReturn(Optional.of(walletAccount));
+        when(walletAccountService.getOrThrow("0xASDFMEWIFREVNERIGVNERTIGRTNBRT")).thenReturn(walletAccount);
         String expectedFilename = "UTC--2018-03-07T09-28-10.445Z--0xASDFMEWIFREVNERIGVNERTIGRTNBRT";
 
         mvc.perform(
@@ -166,5 +170,18 @@ public class WalletAccountControllerTest extends BaseControllerTest {
             .andExpect(header().string("Content-Type", "application/json"))
             .andExpect(header().string("Content-Disposition", String.format("attachment; filename=%s;", expectedFilename)))
             .andExpect(content().string(walletAccount.getSecretStorageJson()));
+    }
+
+    @Test
+    public void getPrivateKey_willReturnPrivateKey() throws Exception {
+        WalletAccount walletAccount = TestData.walletAccount();
+        when(walletAccountService.getOrThrow("0xASDFMEWIFREVNERIGVNERTIGRTNBRT")).thenReturn(walletAccount);
+        Credentials credentials = Credentials.create("0x43dab4a0984eb98c3f921b728955315e914d21fcc93f77007fd5fd523e038554");
+        when(managedAccountService.loadCredentials(walletAccount)).thenReturn(credentials);
+
+        mvc.perform(
+            get("/api/wallets/accounts/0xASDFMEWIFREVNERIGVNERTIGRTNBRT/privateKey"))
+            .andExpect(status().isOk())
+            .andExpect(content().string("{\"result\":\"0x43dab4a0984eb98c3f921b728955315e914d21fcc93f77007fd5fd523e038554\"}"));
     }
 }

@@ -14,7 +14,6 @@ import org.web3j.crypto.Credentials;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -23,9 +22,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ManagedAccountServiceTest extends BaseTest {
-
-    @Mock
-    private WalletAccountService walletAccountService;
 
     @Mock
     private SecretStorage secretStorage;
@@ -38,10 +34,9 @@ public class ManagedAccountServiceTest extends BaseTest {
         WalletAccount walletAccount = TestData.walletAccount("0xADDRESS");
         walletAccount.setType(WalletAccountType.MANAGED);
         walletAccount.setSecretStorageJson(loadFile("managed-wallet.json"));
-        when(walletAccountService.get("0xADDRESS")).thenReturn(Optional.of(walletAccount));
         when(secretStorage.loadOrSetPassword()).thenReturn("password");
 
-        Credentials credentials = managedAccountService.loadCredentials("0xADDRESS");
+        Credentials credentials = managedAccountService.loadCredentials(walletAccount);
 
         assertThat(credentials, notNullValue());
         assertThat(credentials.getAddress(), is("0x34e6886b372dcb60a74808738ad7548f61bd84bc"));

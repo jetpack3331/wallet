@@ -8,10 +8,15 @@ import Visibility from 'material-ui-icons/Visibility';
 import VisibilityOff from 'material-ui-icons/VisibilityOff';
 import ViewPrivateKeyForm from '../forms/ViewPrivateKeyForm';
 import ViewPrivateKeyPanel from './ViewPrivateKeyPanel';
+import wallets from '../../services/api/wallets';
 
 const loadKey = (walletAccount, password) =>
   Wallet.fromEncryptedWallet(walletAccount.secretStorageJson, password)
     .then(wallet => wallet.privateKey);
+
+const loadManagedKey = walletAccount =>
+  wallets.fetchPrivateKey(walletAccount.address)
+    .then(wallet => wallet.result);
 
 const initialState = {
   privateKey: undefined,
@@ -26,6 +31,18 @@ class ViewPrivateKeyDialog extends React.Component {
 
   submitForm = (values) => {
     this.setState({ submitting: true });
+
+    if (this.props.walletAccount.type === 'MANAGED') {
+      return loadManagedKey(this.props.walletAccount)
+        .then((privateKey) => {
+          this.setState({ privateKey, submitting: false });
+        })
+        .catch(() => {
+          this.setState({ submitting: false });
+          throw new SubmissionError({ _error: 'Unable to load private key. Please try again.' });
+        });
+    }
+
     return loadKey(this.props.walletAccount, values.password)
       .then((privateKey) => {
         this.setState({ privateKey, submitting: false });
@@ -72,7 +89,7 @@ class ViewPrivateKeyDialog extends React.Component {
         {!this.state.privateKey &&
         <Fragment>
           <DialogContent>
-            <ViewPrivateKeyForm onSubmit={this.submitForm}/>
+            <ViewPrivateKeyForm onSubmit={this.submitForm} showPassword={this.props.walletAccount.type === 'PRIVATE'}/>
           </DialogContent>
           <DialogActions>
             <Button variant="flat" onTouchTap={this.props.onClose}>

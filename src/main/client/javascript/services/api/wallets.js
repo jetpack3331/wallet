@@ -20,10 +20,14 @@ const fetchTokenBalance = (contractAddress, address) => {
 
 const fetchWalletTransactions = address => requestJSON(`/wallets/accounts/${address}/transactions`, 'GET');
 
+const fetchPrivateKey = address =>
+  requestJSON(`/wallets/accounts/${address}/privateKey`, 'GET');
+
 export default {
   createWalletAccount,
   fetchMyWalletAccounts,
   fetchWalletBalance,
   fetchTokenBalance,
   fetchWalletTransactions,
+  fetchPrivateKey,
 };

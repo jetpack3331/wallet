@@ -4,8 +4,11 @@ import hut34.wallet.client.gas.GasClient;
 import hut34.wallet.client.gas.GasInfo;
 import hut34.wallet.client.transact.TransactionClient;
 import hut34.wallet.controller.dto.CreateTransactionRequest;
+import hut34.wallet.model.WalletAccount;
 import hut34.wallet.service.ManagedAccountService;
+import hut34.wallet.service.WalletAccountService;
 import hut34.wallet.testinfra.BaseControllerTest;
+import hut34.wallet.testinfra.TestData;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.http.MediaType;
@@ -32,11 +35,13 @@ public class TransactionControllerTest extends BaseControllerTest {
     @Mock
     private GasClient gasClient;
     @Mock
+    private WalletAccountService walletAccountService;
+    @Mock
     private ManagedAccountService managedAccountService;
 
     @Override
     protected Object controller() {
-        return new TransactionController(transactionClient, gasClient, managedAccountService);
+        return new TransactionController(transactionClient, gasClient, managedAccountService, walletAccountService);
     }
 
     @Test
@@ -54,7 +59,9 @@ public class TransactionControllerTest extends BaseControllerTest {
 
     @Test
     public void signTransaction() throws Exception {
-        when(managedAccountService.loadCredentials("0xFROM")).thenReturn(Credentials.create(Keys.createEcKeyPair()));
+        WalletAccount walletAccount = TestData.walletAccount("0xFROM");
+        when(walletAccountService.getOrThrow("0xFROM")).thenReturn(walletAccount);
+        when(managedAccountService.loadCredentials(walletAccount)).thenReturn(Credentials.create(Keys.createEcKeyPair()));
         CreateTransactionRequest txnRequest = validTransactionRequest();
 
         mvc.perform(

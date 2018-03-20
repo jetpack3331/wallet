@@ -147,20 +147,19 @@ class SendCryptoForm extends React.Component {
                 fullWidth
               />
             </div>
+            {showPassword &&
             <div className="field">
-              {showPassword &&
-              <div className="field">
-                <Field
-                  name="password"
-                  component={TextField}
-                  label="Keystore password"
-                  type="password"
-                  validate={[required()]}
-                  disabled={submitting}
-                  fullWidth
-                />
-              </div>
-              }
+              <Field
+                name="password"
+                component={TextField}
+                label="Keystore password"
+                type="password"
+                validate={[required()]}
+                disabled={submitting}
+                fullWidth
+              />
+            </div>
+            }
           </div>
           {!!transactionFee &&
           <div className="form-info">

@@ -4,7 +4,7 @@
  * https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI
  * https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
  */
-export default [
+export const abi = [
   {
     constant: true,
     inputs: [],

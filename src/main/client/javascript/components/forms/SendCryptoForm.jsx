@@ -10,6 +10,8 @@ import * as model from '../../model';
 import CurrencyDisplay from '../common/CurrencyDisplay';
 import FormError from './FormError';
 
+const ONE = bigNumberify(1);
+
 class SendCryptoForm extends React.Component {
   static propTypes = {
     balance: PropTypes.string.isRequired,
@@ -40,6 +42,7 @@ class SendCryptoForm extends React.Component {
   parse = value => parseUnits(value, this.props.token.decimals);
   format = value => formatUnits(value, this.props.token.decimals);
   maxSend = () => bigNumberify(this.props.balance).sub(this.props.transactionFee || '0');
+  minSend = () => (this.props.minSend ? this.parse(this.props.minSend) : ONE);
 
   bigNumber = (value) => {
     const { decimals } = this.props.token;
@@ -55,7 +58,7 @@ class SendCryptoForm extends React.Component {
 
   atLeastOneUnit = (value) => {
     const wei = (!isNil(value) || null) && this.parse(value);
-    return this.validate(`cannot be below minimal unit of ${this.props.token.symbol}`, !isNil(wei) && wei.lt('1'));
+    return this.validate(`cannot be below minimal unit of ${this.props.token.symbol}`, !isNil(wei) && wei.lt(ONE));
   };
 
   notBelowMin = (value) => {
@@ -88,7 +91,7 @@ class SendCryptoForm extends React.Component {
       handleSubmit, submitting, onCancel, error, transactionFee, token, showPassword,
     } = this.props;
 
-    const minSend = this.parse(this.props.minSend || '1');
+    const minSend = this.minSend();
     const maxSend = this.maxSend();
     const maxSendEther = this.format(maxSend);
 
@@ -97,10 +100,19 @@ class SendCryptoForm extends React.Component {
         {maxSend.lt(minSend) &&
         <div>
           <p>
-            Your current balance is not high enough to cover the transaction fee
+            <span>Your current balance is not high enough to</span>
+            {transactionFee &&
+            <span> cover the transaction fee
             of <CurrencyDisplay value={transactionFee} code="ETH" strong/> and
-            allow for the minimum transfer of
-            <CurrencyDisplay value={minSend} code={token.symbol} decimals={token.decimals} strong/>.
+            </span>
+            }
+            <span> allow for the minimum transfer of <CurrencyDisplay
+              value={minSend}
+              code={token.symbol}
+              decimals={token.decimals}
+              strong
+            />.
+            </span>
           </p>
           <div className="actions">
             <Button

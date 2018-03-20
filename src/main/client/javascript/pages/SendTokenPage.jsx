@@ -67,6 +67,7 @@ class SendTokenPage extends React.Component {
                   title="Current Balance"
                   value={tokenBalance && tokenBalance.balance}
                   code={token.symbol}
+                  decimals={token.decimals}
                 />
               </Grid>
               <Grid className="form-container" item xs={12}>

@@ -7,7 +7,7 @@ import { fetchGasPrices } from '../actions/gasPrices';
 import { signAndSendTransaction } from '../actions/transactions';
 import { fetchMyWalletAccounts, fetchWalletBalance } from '../actions/wallets';
 import CurrencyBalance from '../components/common/CurrencyBalance';
-import SendEtherForm from '../components/forms/SendEtherForm';
+import SendCryptoForm from '../components/forms/SendCryptoForm';
 import * as model from '../model';
 import { getGasPrices, getWalletAccount, getWalletBalance, listWalletAccountsIsLoading } from '../reducers';
 import './SendEtherPage.less';
@@ -75,12 +75,13 @@ class SendEtherPage extends React.Component {
                   <span>You do not own a wallet with address: {walletAddress}</span>
                 }
                 {!!walletAccount && !formDataLoading &&
-                  <SendEtherForm
+                  <SendCryptoForm
                     onSubmit={this.props.signAndSendTransaction}
                     onCancel={() => this.props.cancelSend()}
                     transactionFee={gasPrices.averagePrice * 21000}
                     balance={walletBalance.balance}
                     showPassword={walletAccount.type === 'PRIVATE'}
+                    minSend="0.0001"
                   />
                 }
               </Grid>

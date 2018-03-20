@@ -1,43 +1,74 @@
-import { bigNumberify, formatEther, parseEther, getAddress } from 'ethers/utils';
+import { bigNumberify, formatUnits, getAddress, parseUnits } from 'ethers/utils';
 import { isNil } from 'lodash';
 import { Button, CircularProgress } from 'material-ui';
 import * as PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
-import { numericality, required } from 'redux-form-validators';
+import { required } from 'redux-form-validators';
+import * as model from '../../model';
 import CurrencyDisplay from '../common/CurrencyDisplay';
 import FormError from './FormError';
 
-class SendEtherForm extends React.Component {
+class SendCryptoForm extends React.Component {
   static propTypes = {
-    transactionFee: PropTypes.number.isRequired,
     balance: PropTypes.string.isRequired,
     showPassword: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     error: PropTypes.string,
     submitting: PropTypes.bool.isRequired,
+    transactionFee: PropTypes.number,
+    token: model.token,
+    minSend: PropTypes.string,
   };
 
   static defaultProps = {
+    token: {
+      code: 'ETH',
+      decimals: 18,
+      name: 'Ether',
+    },
+    transactionFee: undefined,
     error: undefined,
+    minSend: undefined,
   };
-
-  minSendEther = '0.0001';
 
   validate = (message, condition) => (condition ? message : undefined);
 
-  notBelowMinEther = (value) => {
-    const minSend = parseEther(this.minSendEther);
-    const wei = (!isNil(value) || null) && parseEther(value);
-    return this.validate(`cannot be below ${this.minSendEther}`, !isNil(wei) && wei.lt(minSend));
+  parse = value => parseUnits(value, this.props.token.decimals);
+  format = value => formatUnits(value, this.props.token.decimals);
+  maxSend = () => bigNumberify(this.props.balance).sub(this.props.transactionFee || '0');
+
+  bigNumber = (value) => {
+    const { decimals } = this.props.token;
+    try {
+      if (value) {
+        parseUnits(value, decimals);
+      }
+      return undefined;
+    } catch (err) {
+      return `must be a numeric value with ${decimals} max decimals`;
+    }
   };
 
-  notExceedingMaxEther = (value) => {
-    const maxSend = bigNumberify(this.props.balance).sub(bigNumberify(this.props.transactionFee));
-    const wei = value && parseEther(value);
-    return this.validate(`cannot be above ${formatEther(maxSend)}`, !!wei && wei.gt(maxSend));
+  atLeastOneUnit = (value) => {
+    const wei = (!isNil(value) || null) && this.parse(value);
+    return this.validate(`cannot be below minimal unit of ${this.props.token.code}`, !isNil(wei) && wei.lt(this.parse('1')));
+  };
+
+  notBelowMin = (value) => {
+    const minSend = this.parse(this.props.minSend);
+    const wei = (!isNil(value) || null) && this.parse(value);
+    return this.validate(`cannot be below ${this.props.minSend}`, !isNil(wei) && wei.lt(minSend));
+  };
+
+  minValue = value => (this.props.minSend ? this.notBelowMin(value) : this.atLeastOneUnit(value));
+
+  notExceedingMax = (value) => {
+    const maxSend = this.maxSend();
+    const wei = value && this.parse(value);
+    return this.validate(`cannot be above ${this.format(maxSend)}`, !!wei && wei.gt(maxSend));
   };
 
   ethereumAddress = (value) => {
@@ -53,21 +84,22 @@ class SendEtherForm extends React.Component {
 
   render() {
     const {
-      handleSubmit, submitting, onCancel, error, balance, transactionFee, showPassword,
+      handleSubmit, submitting, onCancel, error, transactionFee, token, showPassword,
     } = this.props;
 
-    const minSend = parseEther(this.minSendEther);
-    const maxSend = bigNumberify(balance).sub(transactionFee);
-    const maxSendEther = formatEther(maxSend);
+    const minSend = this.parse(this.props.minSend);
+    const maxSend = this.maxSend();
+    const maxSendEther = this.format(maxSend);
 
     return (
       <Fragment>
         {maxSend.lt(minSend) &&
         <div>
           <p>
-            Your current balance is not high enough to cover the
-            transaction fee of <CurrencyDisplay value={transactionFee} code="ETH" strong/> and
-            allow for the minimum transfer of <CurrencyDisplay value={minSend} code="ETH" strong/>.
+            Your current balance is not high enough to cover the transaction fee
+            of <CurrencyDisplay value={transactionFee} code="ETH" strong/> and
+            allow for the minimum transfer of
+            <CurrencyDisplay value={minSend} code={token.code} decimals={token.decimals} strong/>.
           </p>
           <div className="actions">
             <Button
@@ -102,20 +134,21 @@ class SendEtherForm extends React.Component {
               <Field
                 name="amount"
                 component={TextField}
-                label="Amount (ETH)"
-                placeholder={`${this.minSendEther} to ${maxSendEther}`}
+                label={`Amount (${token.code})`}
+                placeholder={`${this.props.minSend || 'up'} to ${maxSendEther}`}
                 type="text"
                 validate={[
                   required(),
-                  numericality(),
-                  this.notBelowMinEther,
-                  this.notExceedingMaxEther,
+                  this.bigNumber,
+                  this.minValue,
+                  this.notExceedingMax,
                 ]}
                 disabled={submitting}
                 fullWidth
               />
             </div>
-            {showPassword &&
+            <div className="field">
+              {showPassword &&
               <div className="field">
                 <Field
                   name="password"
@@ -127,11 +160,13 @@ class SendEtherForm extends React.Component {
                   fullWidth
                 />
               </div>
-            }
+              }
           </div>
+          {!!transactionFee &&
           <div className="form-info">
             Transaction fee: <CurrencyDisplay value={transactionFee} code="ETH" strong/>
           </div>
+          }
           <div className="actions">
             {!submitting &&
             <Fragment>
@@ -160,4 +195,4 @@ class SendEtherForm extends React.Component {
   }
 }
 
-export default reduxForm({ form: 'sendEth' })(SendEtherForm);
+export default reduxForm({ form: 'sendTokens' })(SendCryptoForm);

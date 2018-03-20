@@ -25,7 +25,8 @@ class SendCryptoForm extends React.Component {
 
   static defaultProps = {
     token: {
-      code: 'ETH',
+      symbol: 'ETH',
+      address: '0x', // Dummy
       decimals: 18,
       name: 'Ether',
     },
@@ -54,7 +55,7 @@ class SendCryptoForm extends React.Component {
 
   atLeastOneUnit = (value) => {
     const wei = (!isNil(value) || null) && this.parse(value);
-    return this.validate(`cannot be below minimal unit of ${this.props.token.code}`, !isNil(wei) && wei.lt(this.parse('1')));
+    return this.validate(`cannot be below minimal unit of ${this.props.token.symbol}`, !isNil(wei) && wei.lt(this.parse('1')));
   };
 
   notBelowMin = (value) => {
@@ -99,7 +100,7 @@ class SendCryptoForm extends React.Component {
             Your current balance is not high enough to cover the transaction fee
             of <CurrencyDisplay value={transactionFee} code="ETH" strong/> and
             allow for the minimum transfer of
-            <CurrencyDisplay value={minSend} code={token.code} decimals={token.decimals} strong/>.
+            <CurrencyDisplay value={minSend} code={token.symbol} decimals={token.decimals} strong/>.
           </p>
           <div className="actions">
             <Button
@@ -134,7 +135,7 @@ class SendCryptoForm extends React.Component {
               <Field
                 name="amount"
                 component={TextField}
-                label={`Amount (${token.code})`}
+                label={`Amount (${token.symbol})`}
                 placeholder={`${this.props.minSend || 'up'} to ${maxSendEther}`}
                 type="text"
                 validate={[

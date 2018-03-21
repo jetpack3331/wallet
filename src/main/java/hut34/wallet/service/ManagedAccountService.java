@@ -25,7 +25,7 @@ public class ManagedAccountService {
     public Credentials loadCredentials(WalletAccount walletAccount) {
         assertManagedAccount(walletAccount);
         try {
-            String password = secretStorage.loadOrSetPassword();
+            String password = secretStorage.loadOrSetPassword(walletAccount.getAddress());
             WalletFile walletFile = getWalletFile(walletAccount.getSecretStorageJson());
             return Credentials.create(Wallet.decrypt(password, walletFile));
         } catch (CipherException e) {

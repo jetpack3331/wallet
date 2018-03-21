@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "hut34-wallet-dev",
+  "private_key_id": "a3515d0d41c99613669d129416f5216a02cf268a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC+xBiTUDv543R4\no0rq/urOh3RqTPnp2YICT+fV3vfq1rU8W5b7JSKByrqLElOa3pbTh2Y2owgaxoo4\nTn0g9NWF4n9Y3B3Uq+WhBQBJGhbKjSBvvD3oOT4lGsMmdp/GQnM8+euO839ugzh1\naHmlEuw3p0Z97lSOX2/9j+RE0dnt9WgnarMUTdaAZWAEu7b7Yd4PbGlQ3iYBWQ8y\nzP+Z8pqbksnzuZrcl15lwfyIT4S749zhTV2zooUQUtSPpegrUfRxR65P3B7wzlTd\nbx+GmsKuZCkABzii9LjTZ7HcqAg6TAmpM5RAxbB8/10IarBwJekRMSNTtXUbzH6A\nH833fbhrAgMBAAECggEAQYwSn6d9fC7t6be9+cHuf1lmpFHfuzzb4ZyAHeoXiG8O\n5fbYiWHome1FLJz28itSastG0TYyhjS68H7zmrvVlEPPmwJDE7ye0bVstDGNLDrS\nruHg6aallk08Sb6Pxqk1fHmpOTysiBX5c8oapiA63yKQY5vdHPBpBBiJiCYM+ih1\nJyZ+125WEq0bFBx6NRzC1R8qadYKVkVFObCUGKMlUukZZTID4500NG06SpU13SUx\nQeDK9iDzGhCotMR31/dNRW5TFw30OlQ7zLmaBe0eGOJKTxEr3AR0vkcE34dL/gZB\nxnzfWAvedEeSLd9e5yMqI4hKRvCR2rlQ8FehVedlsQKBgQDgiWA7dKSFkZ8t2Xf5\n0dfv8u/6u7z20qrhRb1s6tumWK7iuWZpnTbFksqDJw+AWYhcZopZ/AXsng4M8y7z\ncqF+avBEQA5K0CgB/x6BRoKReO/epaKAbfbYT20HF7fDf8owKZZ84vReKsKhYaPy\nNMJkpJe+A/d8/AoAME4k69JtWwKBgQDZf0sUcM3sJU/tYzVAfUX4Y8E40MZNmFTo\nqhAvAj86LS7f4tt2/FkXFgkXvRQbb3KRzG0jpAN3PqREChx3uHoyYrnWFItNlDXR\n/Ch9j2S1CX/fZ/2EjWlp6WfDMxLvru/gI/t/I3A31jf/n7un3sT1aa2mmQfH9swe\n4LEZYGx+MQKBgQC2ZwL06bmpA/YyseIj4JMxysGmhxJn1BWa8SODsnqC9LIFXqVS\nkLNo5ul6h6WxF4qNvYMQvIo3gOJbJMZ0YB/O6aKLXxn9LoIBtTUbwaLZ+EusLBQJ\njssjR8qDI4JV357pZy9n/pqTUNtRbFdZsABm78qRQvmu37RkGNmyZpxH1wKBgFf3\nHdyUixR5OsxeFYmRoR0G630ZIzr640x+i7EXjY7v+0ddrzl+cmHd7auGM32tI39I\nWNPTX/t4gGNsW3soR3Pdbh/hiz3DNclJ3O57clWuE+O9YVGdCAdn+Sl/nKcH78iN\nhQg0wwwyPc/LQNByTuKa7Tq2JemALapHYhlLYFXhAoGADaEIgdoefet6gnGVDBAQ\ndWlSFyCs71wBtfWSwn6iBmfdC+zq8j7oRlm3ww+O2RZr6XvuGE+rbLuhgWmfPHNd\nylwT4mwzoZQYoPOiAqpLFfYjuD/jX903fQSfQBPmWkPPyPKyF7lGmpk6XCJ5Gavb\niSymtBDph+6Iss0gPEIDVBY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "local-dev-kms@hut34-wallet-dev.iam.gserviceaccount.com",
+  "client_id": "110493419771807670724",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/local-dev-kms%40hut34-wallet-dev.iam.gserviceaccount.com"
+}

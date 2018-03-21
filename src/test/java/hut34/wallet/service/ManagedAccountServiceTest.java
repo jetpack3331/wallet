@@ -34,7 +34,7 @@ public class ManagedAccountServiceTest extends BaseTest {
         WalletAccount walletAccount = TestData.walletAccount("0xADDRESS");
         walletAccount.setType(WalletAccountType.MANAGED);
         walletAccount.setSecretStorageJson(loadFile("managed-wallet.json"));
-        when(secretStorage.loadOrSetPassword()).thenReturn("password");
+        when(secretStorage.loadOrSetPassword("0xADDRESS")).thenReturn("password");
 
         Credentials credentials = managedAccountService.loadCredentials(walletAccount);
 

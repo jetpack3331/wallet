@@ -98,7 +98,7 @@ public class WalletAccountServiceTest extends BaseTest {
     // This test is pretty slow due to the wallet creation/encryption
     @Test
     public void createManaged_willCreateManagedAddress() {
-        when(secretStorage.loadOrSetPassword()).thenReturn("password");
+        when(secretStorage.loadOrSetPassword(anyString())).thenReturn("password");
         when(walletAccountRepository.findById(anyString())).thenReturn(Optional.empty());
         when(userAdapter.getCurrentUserRequired()).thenReturn(user);
 
@@ -109,6 +109,7 @@ public class WalletAccountServiceTest extends BaseTest {
         assertThat(result.getSecretStorageJson(), notNullValue());
         assertThat(result, hasFieldWithUserRef("owner", user));
 
+        verify(secretStorage).loadOrSetPassword(result.getAddress());
         verify(walletAccountRepository).save(result);
     }
 

@@ -12,3 +12,9 @@ etherscan:
 
 web3j:
     clientUrl: https://client-url
+
+kms:
+  client:
+    enabled: true
+  keys:
+    drive: projects/hut34-wallet-junit/locations/global/keyRings/hut34-wallet-junit/cryptoKeys/drive-secret-storage

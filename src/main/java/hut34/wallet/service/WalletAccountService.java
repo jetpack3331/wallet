@@ -15,9 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.web3j.crypto.CipherException;
+import org.web3j.crypto.ECKeyPair;
 import org.web3j.crypto.Keys;
 import org.web3j.crypto.Wallet;
 import org.web3j.crypto.WalletFile;
+import org.web3j.utils.Numeric;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
@@ -54,11 +56,15 @@ public class WalletAccountService {
         LOG.info("Creating new managed wallet account");
 
         try {
-            LOG.debug("Retrieving managed password");
-            String password = secretStorage.loadOrSetPassword();
+            LOG.debug("Creating new address");
+            ECKeyPair ecKeyPair = Keys.createEcKeyPair();
+
+            String address = Numeric.prependHexPrefix(Keys.getAddress(ecKeyPair));
+            LOG.debug("Retrieving managed password for address {}", address);
+            String password = secretStorage.loadOrSetPassword(address);
 
             LOG.debug("Creating and encrypting wallet");
-            WalletFile walletFile = Wallet.createStandard(password, Keys.createEcKeyPair());
+            WalletFile walletFile = Wallet.createStandard(password, ecKeyPair);
             String secretJson = getWalletAsJson(walletFile);
 
             return create(MANAGED, walletFile.getAddress(), secretJson);

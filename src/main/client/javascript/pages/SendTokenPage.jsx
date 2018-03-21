@@ -1,21 +1,23 @@
-import { CircularProgress, Grid } from 'material-ui';
+import { bigNumberify } from 'ethers/utils/index';
+import { Button, CircularProgress, Grid } from 'material-ui';
 import * as PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { fetchGasPrices } from '../actions/gasPrices';
 import { sendTokens } from '../actions/transactions';
-import { fetchMyWalletAccounts, fetchTokenBalanceBySymbol } from '../actions/wallets';
+import { fetchMyWalletAccounts, fetchTokenBalanceBySymbol, fetchWalletBalance } from '../actions/wallets';
 import CurrencyBalance from '../components/common/CurrencyBalance';
 import SendCryptoForm from '../components/forms/SendCryptoForm';
 import * as model from '../model';
-import { getBalanceByTokenSymbolAndAddress, getGasPrices, getToken, getWalletAccount } from '../reducers';
+import { getBalanceByTokenSymbolAndAddress, getGasPrices, getToken, getWalletAccount, getWalletBalance } from '../reducers';
 import './SendEtherPage.less';
 import './WalletContainer.less';
 
 class SendTokenPage extends React.Component {
   static propTypes = {
     token: model.token.isRequired,
+    fetchWalletBalance: PropTypes.func.isRequired,
     fetchTokenBalance: PropTypes.func.isRequired,
     sendTokens: PropTypes.func.isRequired,
     fetchMyWalletAccounts: PropTypes.func.isRequired,
@@ -23,12 +25,14 @@ class SendTokenPage extends React.Component {
     cancelSend: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     walletAccount: model.walletAccount,
+    walletBalance: model.walletBalance,
     tokenBalance: model.walletTokenBalance,
     gasPrices: model.gasPrices,
   };
 
   static defaultProps = {
     walletAccount: undefined,
+    walletBalance: undefined,
     tokenBalance: undefined,
     gasPrices: undefined,
   };
@@ -39,15 +43,30 @@ class SendTokenPage extends React.Component {
     }
     this.props.fetchGasPrices();
     this.props.fetchTokenBalance();
+    this.props.fetchWalletBalance();
   }
 
 
   render() {
     const { walletAddress } = this.props.params;
     const {
-      walletAccount, tokenBalance, token, gasPrices,
+      walletAccount, walletBalance, tokenBalance, token, gasPrices,
     } = this.props;
-    const formDataLoading = !walletAccount || !tokenBalance || !gasPrices;
+    const formDataLoading = !walletAccount || !tokenBalance || !gasPrices || !walletBalance;
+    const nonZeroEther = walletBalance && bigNumberify(walletBalance.balance).gt(0);
+
+    const returnToWallet = (
+      <div className="actions">
+        <Button
+          className="btn-primary"
+          variant="raised"
+          type="button"
+          onClick={this.props.cancelSend}
+        >
+        Return to wallet
+        </Button>
+      </div>
+    );
 
     return (
       <div className="wallet-container send-ether-page">
@@ -73,9 +92,18 @@ class SendTokenPage extends React.Component {
               <Grid className="form-container" item xs={12}>
                 {formDataLoading && <CircularProgress/>}
                 {!formDataLoading && !walletAccount &&
+                <div>
                   <span>You do not own a wallet with address: {walletAddress}</span>
+                  {returnToWallet}
+                </div>
                 }
-                {!!walletAccount && !formDataLoading &&
+                {!!walletAccount && !formDataLoading && !nonZeroEther &&
+                <div>
+                  <span>You do not have an Ether balance to cover transaction fees.</span>
+                  {returnToWallet}
+                </div>
+                }
+                {!!walletAccount && !formDataLoading && nonZeroEther &&
                   <SendCryptoForm
                     onSubmit={this.props.sendTokens}
                     onCancel={() => this.props.cancelSend()}
@@ -95,6 +123,7 @@ class SendTokenPage extends React.Component {
 
 const mapStateToProps = (state, { params }) => ({
   walletAccount: getWalletAccount(state, params.walletAddress),
+  walletBalance: getWalletBalance(state, params.walletAddress),
   token: getToken(state, params.tokenSymbol),
   tokenBalance: getBalanceByTokenSymbolAndAddress(state, params.tokenSymbol, params.walletAddress),
   gasPrices: getGasPrices(state),
@@ -106,6 +135,7 @@ const mapDispatchToProps = (dispatch, { params }) => ({
     .then(() => dispatch(push(`/addresses/${params.walletAddress}`))),
   fetchTokenBalance: () =>
     dispatch(fetchTokenBalanceBySymbol(params.walletAddress, params.tokenSymbol)),
+  fetchWalletBalance: () => dispatch(fetchWalletBalance(params.walletAddress)),
   cancelSend: () => dispatch(push(`/addresses/${params.walletAddress}`)),
   fetchGasPrices: () => dispatch(fetchGasPrices()),
 });

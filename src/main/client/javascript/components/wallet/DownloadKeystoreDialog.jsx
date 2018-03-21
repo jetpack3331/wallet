@@ -22,7 +22,7 @@ const encryptManagedKeystore = (walletAccount, password) =>
 
 const loadKeystore = (walletAccount, password) => (
   privateKeystore(walletAccount) ?
-    Promise.resolve(walletAccount.secretStorageJson) :
+    Promise.resolve(walletAccount) :
     encryptManagedKeystore(walletAccount, password)
 );
 

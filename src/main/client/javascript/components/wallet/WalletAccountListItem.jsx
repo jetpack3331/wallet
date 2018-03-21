@@ -29,7 +29,7 @@ class WalletAccountListItem extends React.Component {
 
   render() {
     const { walletAccount, accountBalance, tokens } = this.props;
-    const isPrivate = walletAccount.type !== 'MANAGED';
+    const isPrivate = walletAccount.type === 'PRIVATE';
     return (
       <div className="wallet-account-list-item" key={walletAccount.address}>
         <Link to={`/addresses/${walletAccount.address}`}>

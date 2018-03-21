@@ -9,6 +9,7 @@ import hut34.wallet.controller.dto.SimpleResponse;
 import hut34.wallet.model.WalletAccount;
 import hut34.wallet.service.ManagedAccountService;
 import hut34.wallet.service.WalletAccountService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,12 +56,14 @@ public class TransactionController {
     public SimpleResponse<String> signTransaction(@Valid @RequestBody CreateTransactionRequest txnRequest) {
         LOG.info("Creating signed transaction");
 
-        RawTransaction rawTransaction = RawTransaction.createEtherTransaction(
+        RawTransaction rawTransaction = RawTransaction.createTransaction(
             new BigInteger(txnRequest.getNonce()),
             new BigInteger(txnRequest.getGasPrice()),
             new BigInteger(txnRequest.getGasLimit()),
             txnRequest.getTo(),
-            new BigInteger(txnRequest.getValue()));
+            new BigInteger(txnRequest.getValue()),
+            StringUtils.defaultString(txnRequest.getData()));
+
 
         WalletAccount walletAccount = walletAccountService.getOrThrow(txnRequest.getFrom());
         Credentials credentials = managedAccountService.loadCredentials(walletAccount);

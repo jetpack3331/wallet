@@ -74,6 +74,23 @@ public class TransactionControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void signTransaction_withData() throws Exception {
+        WalletAccount walletAccount = TestData.walletAccount("0xFROM");
+        when(walletAccountService.getOrThrow("0xFROM")).thenReturn(walletAccount);
+        when(managedAccountService.loadCredentials(walletAccount)).thenReturn(Credentials.create(Keys.createEcKeyPair()));
+        CreateTransactionRequest txnRequest = validTransactionRequest()
+            .setData("some data goes here");
+
+        mvc.perform(
+            post("/api/transactions/sign")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asString(txnRequest)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("result", any(String.class)));
+    }
+
+    @Test
     public void signTransaction_willFailValidationIfFromAddressMissing() throws Exception {
         CreateTransactionRequest request = validTransactionRequest().setFrom(null);
         expectBadRequest("/api/transactions/sign", request);

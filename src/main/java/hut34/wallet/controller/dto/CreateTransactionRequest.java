@@ -16,6 +16,7 @@ public class CreateTransactionRequest {
     private String gasLimit;
     @NotBlank
     private String value;
+    private String data;
 
     public CreateTransactionRequest() {
     }
@@ -71,6 +72,15 @@ public class CreateTransactionRequest {
 
     public CreateTransactionRequest setValue(String value) {
         this.value = value;
+        return this;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public CreateTransactionRequest setData(String data) {
+        this.data = data;
         return this;
     }
 }

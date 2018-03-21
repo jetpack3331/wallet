@@ -90,8 +90,8 @@ export const sendTokens = (request, walletAddress, tokenSymbol, priceField) =>
     const options = {
       to: token.address,
       data: transferFunction.data,
-      value: 0,
+      value: bigNumberify(0),
     };
 
-    return dispatch(signAndSendTransaction(request, walletAddress, 200000, priceField, options));
+    return dispatch(signAndSendTransaction(request, walletAddress, 100000, priceField, options));
   };

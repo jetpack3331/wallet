@@ -109,7 +109,7 @@ class SendTokenPage extends React.Component {
                     onCancel={() => this.props.cancelSend()}
                     balance={tokenBalance.balance}
                     token={token}
-                    showPassword
+                    showPassword={walletAccount.type === 'PRIVATE'}
                   />
                 }
               </Grid>

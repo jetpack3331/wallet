@@ -37,7 +37,6 @@ class AddressWithBalance extends React.Component {
   render() {
     const { walletBalance, walletAccount, linkToTransactions } = this.props;
     const { address: walletAddress } = walletAccount;
-    const privateWallet = walletAccount.type !== 'MANAGED';
     const nonZeroBalance = walletBalance && bigNumberify(walletBalance.balance).gt(0);
 
     return (
@@ -55,9 +54,7 @@ class AddressWithBalance extends React.Component {
           <Grid item xs={12} sm={5} md={4}>
             <div className="wallet-actions">
               <div className="wallet-action">
-                {privateWallet &&
-                <DownloadKeystoreButton walletAddress={walletAddress}/>
-                }
+                <DownloadKeystoreButton walletAccount={walletAccount}/>
                 <ViewPrivateKeyButton walletAccount={walletAccount}/>
               </div>
             </div>

@@ -43,7 +43,21 @@ public class SessionExpiryHeaderWriterTest {
 
         sessionExpiryHeaderWriter.writeHeaders(request, response);
 
+        // Calculated expiry should be now + 5 minutes - 5 seconds
         assertThat(response.containsHeader("Session-Expiry"), is(true));
-        assertThat(response.getHeader("Session-Expiry"), is(String.valueOf(1520817998337L)));
+        assertThat(response.getHeader("Session-Expiry"), is(String.valueOf(1520817993337L)));
+    }
+
+    @Test
+    public void writeHeaders_WillUpdateSessionTrackingAttribute() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        MockHttpSession session = new MockHttpSession();
+        request.setSession(session);
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        DateTimeUtils.setClockTime(OffsetDateTime.parse("2018-03-12T01:16:38.337Z"));
+
+        sessionExpiryHeaderWriter.writeHeaders(request, response);
+
+        assertThat(session.getAttribute("SessionUpdate"), is("1520817398"));
     }
 }

@@ -48,3 +48,7 @@ oauth:
         - https://www.googleapis.com/auth/drive.appdata
     resource:
       userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+
+kms:
+  client:
+    enabled: true

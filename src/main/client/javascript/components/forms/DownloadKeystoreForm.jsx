@@ -14,7 +14,7 @@ const DownloadKeystoreForm = ({
     {showPassword &&
     <Fragment>
       <p>
-        Your keystore can be downloaded in standard UTC JSON format used by most Etherium clients.
+        Your keystore can be downloaded in standard UTC JSON format used by most Ethereum clients.
         This will be encrypted using the password you provide here.
       </p>
       <div className="fields">
@@ -53,7 +53,7 @@ const DownloadKeystoreForm = ({
     }
     {!showPassword &&
     <p>
-      Your keystore can be downloaded in standard UTC JSON format used by most Etherium clients.
+      Your keystore can be downloaded in standard UTC JSON format used by most Ethereum clients.
       This is encrypted with the password you provided when creating the wallet.
     </p>
     }

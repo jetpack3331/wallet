@@ -5,6 +5,7 @@ import { Grid } from 'material-ui';
 import AcceptTermsForm from '../components/forms/AcceptTermsForm';
 import { acceptTerms, logoutToHome } from '../actions/auth';
 import './FirstLoginPage.less';
+
 import IconWalletLock from '../../images/icons/icon-wallet-lock.png';
 import IconPhishing from '../../images/icons/icon-phishing.png';
 import IconScam from '../../images/icons/icon-scam.png';
@@ -33,7 +34,7 @@ const FirstLoginPage = ({ onAcceptTerms, onRejectTerms }) => (
                   and stored in the Google Cloud Platform as associated with
                   your Google account. We utilise enterprise grade security
                   in the handling of all data, and you, and only you, are able
-                  to decrpyt the keys to each address. We talk about this a lot,
+                  to decrypt the keys to each address. We talk about this a lot,
                   get in touch to learn more.
                 </div>
               </div>
@@ -71,7 +72,7 @@ const FirstLoginPage = ({ onAcceptTerms, onRejectTerms }) => (
                 <div className="info-description">
                   Always keep in mind that once you send a transaction to the Ethereum blockchain,
                   you will not be able to undo it. We support decentralised &apos;trustless&apos;
-                  models wherever possible that avoid you having to trut any third party with your
+                  models wherever possible that avoid you having to trust any third party with your
                   tokens.
 
                   The Hut34 Wallet is a tool to make your life a little easier when interacting

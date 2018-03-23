@@ -10,7 +10,6 @@ const FirstLoginPage = ({ onAcceptTerms, onRejectTerms }) => (
     <div className="container">
       <div className="widgets">
         <div className="container">
-          <h1 className="display-1">Not Found</h1>
 
           <div className="terms-container">
             <AcceptTermsForm onSubmit={onAcceptTerms} onCancel={onRejectTerms}/>

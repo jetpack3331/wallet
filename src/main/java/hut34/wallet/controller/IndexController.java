@@ -42,7 +42,7 @@ public class IndexController {
         IndexMeta meta = new IndexMeta()
             .setTitle(applicationName)
             .setUrl(request.getRequestURI())
-            .setDescription(String.format("Try %s today!", applicationName))
+            .setDescription("Making Ethereum wallets easier for AI, bots, and people")
             .setImage("https://avatars3.githubusercontent.com/u/29348141?s=200&v=4");
 
         model.addAttribute("meta", meta);

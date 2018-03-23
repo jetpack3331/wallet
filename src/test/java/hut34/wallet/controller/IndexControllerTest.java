@@ -55,7 +55,7 @@ public class IndexControllerTest extends BaseControllerTest {
         IndexMeta expected = new IndexMeta()
             .setTitle("APP NAME")
             .setUrl(url)
-            .setDescription("Try APP NAME today!")
+            .setDescription("Making Ethereum wallets easier for AI, bots, and people")
             .setImage("https://avatars3.githubusercontent.com/u/29348141?s=200&v=4");
 
 

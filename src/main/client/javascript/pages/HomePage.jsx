@@ -14,7 +14,6 @@ const HomePage = () => (
     <div className="container">
       <div className="main-icon"><img className="logo" src={IconWalletNext} alt="HUT34 Wallet"/></div>
       <h1 className="display-1"><strong>Sign in</strong></h1>
-      <p>Sign in using your Google account.</p>
       <Link className="google-login" to="/login/google" target="_self"><img className="google-icon" src={IconGoogle} alt="G"/> Sign in using Google</Link>
     </div>
 
@@ -41,7 +40,8 @@ const HomePage = () => (
             <img src={IconPiggyBank} alt="bank"/>
           </div>
           <div className="info-title">
-            We&apos;re not a bank or financial services licensee
+            <span>We&apos;re not a bank</span>
+            <span className="sub-heading">or financial services licensee</span>
           </div>
           <div className="info-description">
             <p>

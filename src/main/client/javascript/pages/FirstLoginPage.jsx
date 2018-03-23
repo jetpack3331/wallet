@@ -83,7 +83,7 @@ const FirstLoginPage = ({ onAcceptTerms, onRejectTerms }) => (
                   <img src={IconScam} alt="scam"/>
                 </div>
                 <div className="info-title">
-                  Protect from Scams
+                  Protect from scams
                 </div>
                 <div className="info-description">
                   <p>

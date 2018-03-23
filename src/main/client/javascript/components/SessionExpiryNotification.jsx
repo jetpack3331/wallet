@@ -47,7 +47,9 @@ class SessionExpiryNotification extends Component {
     this.setState({ showSnackbar, secondsRemaining });
     if (secondsRemaining <= 0) {
       this.clearTimer();
-      this.props.onSessionTimeout();
+      if (this.props.sessionExpiresAt !== -9999) {
+        this.props.onSessionTimeout();
+      }
     }
   };
 

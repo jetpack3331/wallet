@@ -10,6 +10,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.contrib.gae.security.GaeUser;
 
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -30,6 +31,7 @@ public class User extends BaseEntityCore implements GaeUser, Serializable {
 
     private String externalId;
     private AuthProvider provider = AuthProvider.INTERNAL;
+    private OffsetDateTime termsAccepted;
 
     private User() {
     }
@@ -147,6 +149,15 @@ public class User extends BaseEntityCore implements GaeUser, Serializable {
 
     public User setEnabled(boolean enabled) {
         this.enabled = enabled;
+        return this;
+    }
+
+    public OffsetDateTime getTermsAccepted() {
+        return termsAccepted;
+    }
+
+    public User setTermsAccepted(OffsetDateTime termsAccepted) {
+        this.termsAccepted = termsAccepted;
         return this;
     }
 

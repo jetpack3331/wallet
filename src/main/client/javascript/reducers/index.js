@@ -35,6 +35,9 @@ export const getIsAuthenticated = state =>
 export const getSessionExpiresAt = state =>
   fromAuth.getSessionExpiresAt(state.auth);
 
+export const getTermsAccepted = state =>
+  fromAuth.getTermsAccepted(state.auth);
+
 export const getWalletAccount = (state, address) =>
   fromWalletAccounts.getById(state.walletAccounts, address);
 

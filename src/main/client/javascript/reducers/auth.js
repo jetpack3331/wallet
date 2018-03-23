@@ -47,10 +47,10 @@ const error = (state = null, action) => {
   }
 };
 
-const sessionExpiresAt = (state = -1, action) => {
+const sessionExpiresAt = (state = -9999, action) => {
   switch (action.type) {
     case 'REQUEST_LOGOUT_SUCCESS':
-      return -1;
+      return -9999;
     case 'SET_SESSION_EXPIRY':
       return action.value;
     default:
@@ -66,6 +66,9 @@ export const getIsAuthenticated = state =>
 
 export const getSessionExpiresAt = state =>
   state.sessionExpiresAt;
+
+export const getTermsAccepted = state =>
+  !!(state.user && state.user.termsAccepted);
 
 export default combineReducers({
   user,

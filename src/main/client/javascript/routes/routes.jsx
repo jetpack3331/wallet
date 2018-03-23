@@ -4,7 +4,7 @@ import EtherTransactionsPage from '../pages/EtherTransactionsPage';
 import ProtectedEnvironmentPage from '../pages/ProtectedEnvironmentPage';
 import SendTokenPage from '../pages/SendTokenPage';
 import { history } from '../store';
-import { initSession } from './hooks';
+import { initSession, checkUserAuth, composeOnEnterHooks } from './hooks';
 import Layout from '../pages/Layout';
 import NotFoundPage from '../pages/NotFoundPage';
 import SendEtherPage from '../pages/SendEtherPage';
@@ -20,7 +20,7 @@ const getRoutes = () => (
     <Route path="/protected-environment" component={Layout}>
       <IndexRoute component={ProtectedEnvironmentPage}/>
     </Route>
-    <Route path="/" component={Layout} onEnter={initSession}>
+    <Route path="/" component={Layout} onEnter={composeOnEnterHooks(initSession, checkUserAuth)}>
       <IndexRoute component={LandingPage}/>
       <Route path="addresses/add" component={AddAddressPage}/>
       <Route path="addresses/:walletAddress" component={ViewAddressPage}/>

@@ -1,5 +1,6 @@
 import { push } from 'react-router-redux';
 import users from '../services/api/users';
+import { asyncAction } from './actions';
 
 export const setUser = user => ({
   type: 'SET_USER',
@@ -56,3 +57,10 @@ export const logoutToHome = () => dispatch =>
 
 export const setSessionExpiry = value => dispatch =>
   dispatch({ type: 'SET_SESSION_EXPIRY', value });
+
+export const acceptTerms = () => asyncAction(
+  'ACCEPT_TERMS',
+  users.acceptTerms(), {
+    onSuccess: (user, dispatch) => dispatch(setUser(user)),
+  },
+);

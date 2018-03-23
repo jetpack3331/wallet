@@ -9,9 +9,12 @@ const logout = () =>
 const me = () =>
   requestJSON('/users/me', 'GET');
 
+const acceptTerms = () =>
+  requestJSON('/users/terms', 'POST', null);
 
 export default {
   login,
   logout,
   me,
+  acceptTerms,
 };

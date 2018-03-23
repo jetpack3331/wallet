@@ -119,7 +119,7 @@ class CreateWallet extends React.Component {
   render() {
     return (
       <div className="row no-wallet">
-        <div className="main-icon"><img className="icon no-wallet" src={NoWalletIcon} alt="No Wallet"/></div>
+        <div className="main-icon"><img className="logo" src={NoWalletIcon} alt="No Wallet"/></div>
         <h1 className="display-1"><strong>Add Address</strong></h1>
         {this.state.createMode === 'create' &&
         <CreateManagedWalletFragment

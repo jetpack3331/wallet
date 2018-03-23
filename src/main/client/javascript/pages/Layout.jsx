@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { AppBar, IconButton, Menu, MenuItem, Toolbar } from 'material-ui';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { push } from 'react-router-redux';
 import './Layout.less';
 import { getLoggedInUser } from '../reducers';
@@ -72,7 +73,12 @@ class Layout extends Component {
         </AppBar>
         <div className="default-layout">
           {children}
-          <footer><p className="footer-disclaimer">2018&copy; Hut34 Wallet | Making Ethereum wallets easier for AI, bots, and people</p></footer>
+          <footer>
+            <p className="footer-disclaimer">
+              2018&copy; Hut34 Wallet |
+              Making Ethereum wallets easier for AI, bots, and people | <Link href="https://docsend.com/view/sxfgj6w" target="_blank">Terms and Conditions</Link>
+            </p>
+          </footer>
         </div>
         <SessionExpiryNotification/>
       </div>

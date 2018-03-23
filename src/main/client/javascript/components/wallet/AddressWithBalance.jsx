@@ -1,6 +1,7 @@
 import { bigNumberify } from 'ethers/utils/index';
 import { Button, Grid } from 'material-ui';
 import SendIcon from 'material-ui-icons/Send';
+import LaunchIcon from 'material-ui-icons/Launch';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -47,7 +48,9 @@ class AddressWithBalance extends React.Component {
               <img src={KeysIcon} className="icon-wallet" alt="Address icon"/>
               <div className="details">
                 <h1 className="display-1 inline-title"><strong>My Address</strong></h1>
-                <p className="wallet-address" title="Wallet Address">{walletAddress}</p>
+                <p className="wallet-address" title="Wallet Address">{walletAddress}
+                  <Link href={`https://etherscan.io/address/${walletAddress}`} target="_blan"><LaunchIcon className="icon-launch-small"/></Link>
+                </p>
               </div>
             </div>
           </Grid>

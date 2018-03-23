@@ -15,7 +15,10 @@ const DownloadKeystoreForm = ({
     <Fragment>
       <p>
         Your keystore can be downloaded in standard UTC JSON format used by most Ethereum clients.
-        This will be encrypted using the password you provide here.
+      </p>
+      <p>
+        This will create a new keystore encrypted using the password you provide here. This will not
+        affect access to your online keystore via Hut34 Wallet.
       </p>
       <div className="fields">
         <div className="field">

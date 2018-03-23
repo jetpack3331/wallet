@@ -23,6 +23,13 @@
     "react/jsx-space-before-closing": 0,
     "react/jsx-tag-spacing": 0,
     "react/no-typos": 0,
+    "max-len": ["error", 150, 2, {
+      "ignoreUrls": true,
+      "ignoreComments": false,
+      "ignoreRegExpLiterals": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true,
+    }],
     "import/prefer-default-export": ["off"]
   }
 }

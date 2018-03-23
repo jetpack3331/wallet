@@ -1,6 +1,7 @@
 import React from 'react';
 import { IndexRoute, Route, Router } from 'react-router';
 import EtherTransactionsPage from '../pages/EtherTransactionsPage';
+import ProtectedEnvironmentPage from '../pages/ProtectedEnvironmentPage';
 import SendTokenPage from '../pages/SendTokenPage';
 import { history } from '../store';
 import { initSession } from './hooks';
@@ -16,6 +17,9 @@ import AddAddressPage from '../pages/AddAddressPage';
  */
 const getRoutes = () => (
   <Router history={history}>
+    <Route path="/protected-environment" component={Layout}>
+      <IndexRoute component={ProtectedEnvironmentPage}/>
+    </Route>
     <Route path="/" component={Layout} onEnter={initSession}>
       <IndexRoute component={LandingPage}/>
       <Route path="addresses/add" component={AddAddressPage}/>

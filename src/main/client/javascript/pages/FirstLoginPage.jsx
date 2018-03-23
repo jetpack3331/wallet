@@ -5,6 +5,7 @@ import { Grid } from 'material-ui';
 import AcceptTermsForm from '../components/forms/AcceptTermsForm';
 import { acceptTerms, logoutToHome } from '../actions/auth';
 import './FirstLoginPage.less';
+import './InfoContainer.less';
 
 import IconWalletLock from '../../images/icons/icon-wallet-lock.png';
 import IconPhishing from '../../images/icons/icon-phishing.png';

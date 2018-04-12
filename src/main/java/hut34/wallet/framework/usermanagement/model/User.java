@@ -6,7 +6,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import hut34.wallet.framework.BaseEntityCore;
 import hut34.wallet.framework.usermanagement.Role;
-import org.apache.commons.lang3.RandomStringUtils;
+import hut34.wallet.util.PasswordGenerator;
 import org.springframework.contrib.gae.security.GaeUser;
 
 import java.io.Serializable;
@@ -63,7 +63,7 @@ public class User extends BaseEntityCore implements GaeUser, Serializable {
         User user = byEmail(email, null);
         user.setProvider(provider);
         user.setExternalId(externalId);
-        user.setPassword(RandomStringUtils.randomAlphanumeric(24));
+        user.setPassword(PasswordGenerator.alphanumeric(24));
         return user;
     }
 

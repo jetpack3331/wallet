@@ -3,17 +3,17 @@ package hut34.wallet.service;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.services.drive.model.File;
 import hut34.wallet.framework.drive.GoogleDriveAppData;
+import hut34.wallet.util.PasswordGenerator;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
-
 @Service
 public class GoogleDriveSecretStorage implements SecretStorage {
 
     private static final String FILENAME_PREFIX = "hut34-v1";
+    private static final int PASSWORD_LENGTH = 24;
 
     private final OAuth2ClientContext oAuth2ClientContext;
     private final HttpTransport httpTransport;
@@ -46,7 +46,7 @@ public class GoogleDriveSecretStorage implements SecretStorage {
     }
 
     private File createPasswordFile(GoogleDriveAppData googleDriveAppData, String filename) {
-        String encryptedPassword = secretEncryption.encrypt(randomAlphanumeric(24));
+        String encryptedPassword = secretEncryption.encrypt(PasswordGenerator.alphanumeric(PASSWORD_LENGTH));
         return googleDriveAppData.createFile(filename, encryptedPassword);
     }
 }
